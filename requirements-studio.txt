@@ -1,0 +1,5 @@
+# Studio-only dependencies (free, local). Install after `uv sync`:
+#   uv pip install -r requirements-studio.txt
+# Kept out of pyproject.toml so upstream files stay unchanged.
+parakeet-mlx>=0.3
+pytest
