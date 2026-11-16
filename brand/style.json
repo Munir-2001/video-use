@@ -81,8 +81,10 @@
           "target": 1,
           "max": 1
         },
-        "size_px": 140,
-        "y_fraction": 0.68
+        "size_px": 150,
+        "y_fraction": 0.64,
+        "cta_pill_y": 0.715,
+        "tagline_y": 0.76
       },
       "panel": {
         "description": "small line at the bottom edge of a split_top panel",
@@ -91,7 +93,7 @@
           "max": 3
         },
         "size_px": 56,
-        "y_fraction": 0.44
+        "y_fraction": 0.465
       }
     }
   },
@@ -133,14 +135,14 @@
       }
     },
     "split_top": {
-      "description": "Graphic panel in the top ~47 % of a 9:16 frame, speaker fills the bottom; captions sit at the panel's bottom edge, small.",
+      "description": "Graphic panel in the top 50 % of a 9:16 frame (measured on the reference reel), speaker fills the bottom; captions sit at the panel's bottom edge, small.",
       "panel": {
-        "top_fraction": 0.47,
+        "top_fraction": 0.5,
         "color": "surface",
         "dot_grid": true
       },
       "caption": {
-        "y_fraction": 0.44,
+        "y_fraction": 0.465,
         "size_px": 56,
         "words_per_cue": {
           "target": 2,
@@ -165,7 +167,11 @@
     "easing": "cubic",
     "enter_ms": 350,
     "exit_ms": 250,
-    "min_gap_between_new_elements_s": 3
+    "min_gap_between_new_elements_s": 3,
+    "pop_ms": 170,
+    "swap_ms": 250,
+    "fade_ms": 125,
+    "_note": "enter/exit 350/250 are for large panels and windows; pop = a card or word landing, swap = one item replacing another, fade = small reveals. Measured on the 2026-11-16 reference reel, see brand/motion.md."
   },
   "sound": {
     "music_under_speech_db": -12,

@@ -11,6 +11,7 @@ One rule per line. Each line ends with `(date · origin)`. Origins: `seed` = ini
 - Text beside my face goes in a card in the empty side of the frame, never across the face. (2026-11-16 · seed)
 - Captions are applied last, after every overlay, so nothing hides them. (2026-11-16 · seed)
 - Captions are big (96 px at 1080x1920, 80 px at 1080p) and they move: the spoken word pops in and each cue rises into place. Static subtitles are wrong. (2026-11-16 · rule)
+- Two layout exceptions to the size and band lines above, from the reel reference I liked: in a `split_top` stretch the captions are a small line (56 px) at the panel's bottom edge (y ≈ 0.465); a hook or call-to-action stretch may use the `giant` preset, one word per cue at ~150 px, y 0.64, with the CTA pill under it. Everything else follows the lines above. (2026-11-16 · review)
 
 ## Framing and safe areas
 - Vertical: the bottom 20% and the right edge stay clear of captions and graphics (platform UI lives there). (2026-11-16 · seed)
