@@ -81,3 +81,11 @@ def test_load_brief_defaults_and_validates_mode(tmp_path):
         assert False, "expected ValueError"
     except ValueError:
         pass
+
+
+def test_split_top_stretch_anchors_footage_at_the_bottom(tmp_path):
+    (tmp_path / "c.mp4").write_bytes(b"x")
+    plan = vo.plan_video_track([{"id": "s", "start": 0, "end": 2, "layout": "split_top", "footage": {"file": "c.mp4"}}], 2.0)
+    cmd = vo.segment_command(plan[0], tmp_path, 1080, 1920, 30, "#0B0B0F", tmp_path / "o.mp4")
+
+    assert plan[0]["anchor"] == "bottom" and "pad=1080:1920:(ow-iw)/2:oh-ih:0x0B0B0F" in cmd[cmd.index("-vf") + 1]

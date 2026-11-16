@@ -73,6 +73,26 @@
       "rise_px": 28,
       "fade_in_ms": 80,
       "note": "spoken word pops from 86 % to the highlight scale; each cue rises into place with a short fade (ASS tags, burned by libass)"
+    },
+    "presets": {
+      "giant": {
+        "description": "one huge word per cue over a full-frame face (hook / CTA moments)",
+        "words_per_cue": {
+          "target": 1,
+          "max": 1
+        },
+        "size_px": 140,
+        "y_fraction": 0.68
+      },
+      "panel": {
+        "description": "small line at the bottom edge of a split_top panel",
+        "words_per_cue": {
+          "target": 2,
+          "max": 3
+        },
+        "size_px": 56,
+        "y_fraction": 0.44
+      }
     }
   },
   "safe_areas": {
@@ -110,6 +130,22 @@
         "corner": "bottom_right_above_safe",
         "margin_px": 48,
         "radius_px": 28
+      }
+    },
+    "split_top": {
+      "description": "Graphic panel in the top ~47 % of a 9:16 frame, speaker fills the bottom; captions sit at the panel's bottom edge, small.",
+      "panel": {
+        "top_fraction": 0.47,
+        "color": "surface",
+        "dot_grid": true
+      },
+      "caption": {
+        "y_fraction": 0.44,
+        "size_px": 56,
+        "words_per_cue": {
+          "target": 2,
+          "max": 3
+        }
       }
     }
   },

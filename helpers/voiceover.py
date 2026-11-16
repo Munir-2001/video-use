@@ -114,7 +114,8 @@ def plan_video_track(stretches: list[dict], total: float) -> list[dict]:
             skip = start - float(s["start"])  # if an overlap trimmed the head, advance the in-point too
             plan.append({"kind": FOOTAGE_KIND, "start": round(start, 3), "end": round(end, 3),
                          "file": foot["file"], "in_s": round(float(foot.get("in_s", 0.0)) + skip, 3),
-                         "fit": foot.get("fit", "contain"), "stretch": s.get("id")})
+                         "fit": foot.get("fit", "contain"), "stretch": s.get("id"),
+                         "anchor": "bottom" if s.get("layout") == "split_top" else "center"})
         else:
             plan.append({"kind": GAP_KIND, "start": round(start, 3), "end": round(end, 3), "stretch": s.get("id")})
         cursor = end
@@ -123,13 +124,17 @@ def plan_video_track(stretches: list[dict], total: float) -> list[dict]:
     return plan
 
 
-def video_filter(width: int, height: int, fps: int, bg_hex: str, fit: str, dur: float) -> str:
+def video_filter(width: int, height: int, fps: int, bg_hex: str, fit: str, dur: float,
+                 anchor: str = "center") -> str:
+    """`anchor` bottom = split_top layout: the footage sits in the lower part of the
+    frame and the graphic panel owns the top."""
     colour = "0x" + bg_hex.lstrip("#")
+    y = "oh-ih" if anchor == "bottom" else "(oh-ih)/2"
     if fit == "cover":
         fitting = f"scale={width}:{height}:force_original_aspect_ratio=increase,crop={width}:{height}"
     else:
         fitting = (f"scale={width}:{height}:force_original_aspect_ratio=decrease,"
-                   f"pad={width}:{height}:(ow-iw)/2:(oh-ih)/2:{colour}")
+                   f"pad={width}:{height}:(ow-iw)/2:{y}:{colour}")
     # tpad clones the last frame if the clip is shorter than the stretch, so concat timing never drifts
     return f"{fitting},fps={fps},setsar=1,format=yuv420p,tpad=stop_mode=clone:stop_duration={dur:.3f}"
 
@@ -144,7 +149,7 @@ def segment_command(seg: dict, folder: Path, width: int, height: int, fps: int, 
     src = (folder / seg["file"]).resolve() if not Path(seg["file"]).is_absolute() else Path(seg["file"])
     if not src.exists():
         raise FileNotFoundError(f"footage not found: {src}")
-    vf = video_filter(width, height, fps, bg_hex, seg.get("fit", "contain"), dur)
+    vf = video_filter(width, height, fps, bg_hex, seg.get("fit", "contain"), dur, seg.get("anchor", "center"))
     if src.suffix.lower() in IMAGE_EXTS:
         return ["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-t", f"{dur:.3f}", "-i", str(src), "-vf", vf, *enc]
     return ["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{float(seg['in_s']):.3f}", "-i", str(src), "-vf", vf, *enc]

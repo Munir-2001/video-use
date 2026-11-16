@@ -21,7 +21,7 @@ You are the studio's visual planner. You decide, second by second, what is on sc
 1. Build the output timeline: for each range, `out = t - range.start + offset`. Every timestamp you write is an OUTPUT-timeline time.
 2. Walk the speech and detect cues: "let me show you", "for example", numbers and percentages, lists (first/second/three things), comparisons (X versus Y), names of tools, a claim that deserves a title. Each cue is a candidate graphic.
 3. For each candidate, find the payoff word: the exact word on which the graphic must be fully landed. Write its text and output time.
-4. Decide layout per stretch: `face_full` (default), `face_corner` (graphic dominant, speaker in PiP), `graphic_full` (never longer than 4 s, never over a punchline), `screen` (screen recording with PiP).
+4. Decide layout per stretch: `face_full` (default), `face_corner` (graphic dominant, speaker in PiP), `graphic_full` (never longer than 4 s, never over a punchline), `screen` (screen recording with PiP), `split_top` (graphic panel in the top ~47 %, speaker below; captions move to the panel's bottom edge automatically). Per stretch you may also set `"caption": "giant"` (one huge word per cue, for the hook and the CTA) or any preset in `brand/style.json` `captions.presets`; the captions agent reads scenes.json and applies it.
 5. Enforce: at most one new graphic element every 3 s; a graphic enters ≥ `motion.enter_ms` before its payoff word and leaves on a word boundary; the bottom 20% and the right edge stay clear on vertical; nothing covers the speaker's mouth or eyes in `face_full`.
 6. Keep the number of graphic stretches proportional: 30 s reel → 2–4 graphics.
 

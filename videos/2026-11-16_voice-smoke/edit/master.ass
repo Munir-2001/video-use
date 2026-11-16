@@ -28,14 +28,14 @@ Dialogue: 0,0:00:02.87,0:00:03.03,Cap,,0,0,0,,{\an5\pos(470,1306)}test {\c&H0066
 Dialogue: 0,0:00:03.03,0:00:03.35,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}my{\r} local
 Dialogue: 0,0:00:03.35,0:00:03.91,Cap,,0,0,0,,{\an5\pos(470,1306)}my {\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}local{\r}
 Dialogue: 0,0:00:03.91,0:00:04.47,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}setup{\r}
-Dialogue: 0,0:00:04.79,0:00:05.11,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}for{\r} video
-Dialogue: 0,0:00:05.11,0:00:05.43,Cap,,0,0,0,,{\an5\pos(470,1306)}for {\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}video{\r}
-Dialogue: 0,0:00:05.67,0:00:06.31,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}transcription{\r} using
-Dialogue: 0,0:00:06.31,0:00:06.63,Cap,,0,0,0,,{\an5\pos(470,1306)}transcription {\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}using{\r}
-Dialogue: 0,0:00:06.63,0:00:06.92,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}clot{\r}
-Dialogue: 0,0:00:06.92,0:00:07.40,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}there{\r} versus
-Dialogue: 0,0:00:07.40,0:00:07.96,Cap,,0,0,0,,{\an5\pos(470,1306)}there {\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}versus{\r}
-Dialogue: 0,0:00:07.96,0:00:08.44,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}there{\r} or
-Dialogue: 0,0:00:08.44,0:00:08.76,Cap,,0,0,0,,{\an5\pos(470,1306)}there {\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}or{\r}
-Dialogue: 0,0:00:08.76,0:00:09.00,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}any{\r} differences.
-Dialogue: 0,0:00:09.00,0:00:09.56,Cap,,0,0,0,,{\an5\pos(470,1306)}any {\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}differences.{\r}
+Dialogue: 0,0:00:04.79,0:00:05.11,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)\fs140}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}for{\r}
+Dialogue: 0,0:00:05.11,0:00:05.46,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)\fs140}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}video{\r}
+Dialogue: 0,0:00:05.67,0:00:06.31,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)\fs140}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}transcription{\r}
+Dialogue: 0,0:00:06.31,0:00:06.63,Cap,,0,0,0,,{\an5\move(470,1334,470,1306,0,120)\fad(80,0)\fs140}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}using{\r}
+Dialogue: 0,0:00:06.63,0:00:06.92,Cap,,0,0,0,,{\an5\move(470,873,470,845,0,120)\fad(80,0)\fs56}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}clot{\r} there
+Dialogue: 0,0:00:06.92,0:00:07.24,Cap,,0,0,0,,{\an5\pos(470,845)\fs56}clot {\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}there{\r}
+Dialogue: 0,0:00:07.40,0:00:07.96,Cap,,0,0,0,,{\an5\move(470,873,470,845,0,120)\fad(80,0)\fs56}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}versus{\r} there
+Dialogue: 0,0:00:07.96,0:00:08.28,Cap,,0,0,0,,{\an5\pos(470,845)\fs56}versus {\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}there{\r}
+Dialogue: 0,0:00:08.44,0:00:08.76,Cap,,0,0,0,,{\an5\move(470,873,470,845,0,120)\fad(80,0)\fs56}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}or{\r} any
+Dialogue: 0,0:00:08.76,0:00:09.00,Cap,,0,0,0,,{\an5\pos(470,845)\fs56}or {\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}any{\r}
+Dialogue: 0,0:00:09.00,0:00:09.56,Cap,,0,0,0,,{\an5\move(470,873,470,845,0,120)\fad(80,0)\fs56}{\c&H0066D1FF\fscx86\fscy86\t(0,120,\fscx112\fscy112)}differences.{\r}

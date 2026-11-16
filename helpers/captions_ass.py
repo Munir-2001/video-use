@@ -139,9 +139,9 @@ def chunk_words(words: list[dict], target: int = 2, max_words: int = 3) -> list[
     return chunks
 
 
-def output_cues(edl: dict, transcripts_dir: Path, target: int, max_words: int) -> list[dict]:
-    """Cues on the output timeline: [{start, end, words: [{text, start, end}]}]."""
-    cues: list[dict] = []
+def output_words(edl: dict, transcripts_dir: Path) -> list[dict]:
+    """Every spoken word on the output timeline: [{text, start, end}] in order."""
+    words: list[dict] = []
     seg_offset = 0.0
     for r in edl["ranges"]:
         seg_start, seg_end = float(r["start"]), float(r["end"])
@@ -152,20 +152,68 @@ def output_cues(edl: dict, transcripts_dir: Path, target: int, max_words: int) -
             seg_offset += seg_dur
             continue
         transcript = json.loads(tr_path.read_text())
-        for chunk in chunk_words(words_in_range(transcript, seg_start, seg_end), target, max_words):
-            ws = []
-            for w in chunk:
-                a = max(0.0, max(seg_start, w["start"]) - seg_start) + seg_offset
-                b = max(0.0, min(seg_end, w["end"]) - seg_start) + seg_offset
-                ws.append({"text": re.sub(r"\s+", " ", w["text"]).strip(), "start": a, "end": max(b, a + 0.05)})
-            cue_start, cue_end = ws[0]["start"], ws[-1]["end"]
-            if cue_end - cue_start < MIN_CUE_S:
-                cue_end = cue_start + MIN_CUE_S
-            cues.append({"start": cue_start, "end": cue_end, "words": ws})
+        for w in words_in_range(transcript, seg_start, seg_end):
+            a = max(0.0, max(seg_start, w["start"]) - seg_start) + seg_offset
+            b = max(0.0, min(seg_end, w["end"]) - seg_start) + seg_offset
+            words.append({"text": re.sub(r"\s+", " ", w["text"]).strip(), "start": a, "end": max(b, a + 0.05)})
         seg_offset += seg_dur
+    return words
+
+
+def cues_from_words(words: list[dict], target: int, max_words: int, caption: dict | None = None) -> list[dict]:
+    cues = []
+    for chunk in chunk_words(words, target, max_words):
+        cue_start, cue_end = chunk[0]["start"], chunk[-1]["end"]
+        if cue_end - cue_start < MIN_CUE_S:
+            cue_end = cue_start + MIN_CUE_S
+        cue = {"start": cue_start, "end": cue_end, "words": list(chunk)}
+        if caption:
+            cue["caption"] = caption
+        cues.append(cue)
+    return cues
+
+
+def stretch_caption(stretch: dict, style: dict) -> dict | None:
+    """Per-stretch caption override from scenes.json: `caption` may be a preset
+    name (captions.presets), a dict {y_fraction, size_px, words_per_cue}, or
+    absent, in which case the layout's own `caption` block (e.g. split_top) applies."""
+    cap = stretch.get("caption")
+    if isinstance(cap, str):
+        preset = style.get("captions", {}).get("presets", {}).get(cap)
+        if preset is None:
+            raise ValueError(f"unknown caption preset {cap!r} in stretch {stretch.get('id')}")
+        return {k: v for k, v in preset.items() if k != "description"}
+    if isinstance(cap, dict):
+        return cap
+    layout_cap = style.get("layouts", {}).get(stretch.get("layout", ""), {}).get("caption")
+    return dict(layout_cap) if layout_cap else None
+
+
+def output_cues(edl: dict, transcripts_dir: Path, target: int, max_words: int,
+                scenes: dict | None = None, style: dict | None = None) -> list[dict]:
+    """Cues on the output timeline: [{start, end, words: [{text, start, end}], caption?}].
+    With scenes.json, words are grouped per stretch so a stretch can change the
+    words-per-cue, size and band (giant single words over a full face, a small
+    line under a split_top panel)."""
+    words = output_words(edl, transcripts_dir)
+    stretches = sorted((scenes or {}).get("stretches", []), key=lambda s: float(s["start"]))
+    overrides = [(float(s["start"]), float(s["end"]), stretch_caption(s, style or {})) for s in stretches]
+    if not any(o[2] for o in overrides):
+        cues = cues_from_words(words, target, max_words)
+    else:
+        cues = []
+        groups: list[tuple[dict | None, list[dict]]] = []
+        for w in words:
+            ov = next((o[2] for o in overrides if o[0] <= w["start"] < o[1]), None)
+            if groups and groups[-1][0] == ov:
+                groups[-1][1].append(w)
+            else:
+                groups.append((ov, [w]))
+        for ov, ws in groups:
+            wpc = (ov or {}).get("words_per_cue") or {}
+            cues += cues_from_words(ws, int(wpc.get("target", target)), int(wpc.get("max", max_words)), ov)
     cues.sort(key=lambda c: c["start"])
-    # a cue may not run into the next one
-    for i in range(len(cues) - 1):
+    for i in range(len(cues) - 1):  # a cue may not run into the next one
         cues[i]["end"] = min(cues[i]["end"], cues[i + 1]["start"])
     return cues
 
@@ -206,7 +254,7 @@ DEFAULT_MOTION = {"pop_ms": 120, "pop_from": 0.86, "rise_px": 28, "fade_in_ms": 
 
 
 def word_events(cue: dict, layout: dict, highlight: str, base: str, scale: int,
-                motion: dict | None = None) -> list[tuple[float, float, str]]:
+                motion: dict | None = None, extra_tags: str = "") -> list[tuple[float, float, str]]:
     """One event per word: that word highlighted + scaled, the others base.
 
     Motion (brand/style.json captions.motion): the spoken word pops in from
@@ -240,7 +288,7 @@ def word_events(cue: dict, layout: dict, highlight: str, base: str, scale: int,
             fade = f"\\fad({fade_ms},0)" if fade_ms > 0 else ""
         else:
             place, fade = f"\\pos({x},{y})", ""
-        text = f"{{\\an{layout['an']}{place}{fade}}}" + " ".join(parts)
+        text = f"{{\\an{layout['an']}{place}{fade}{extra_tags}}}" + " ".join(parts)
         events.append((start, end, text))
     return events
 
@@ -281,8 +329,11 @@ def build_ass(cues: list[dict], style: dict, profile: str, width: int, height: i
     ]
     lines = list(header)
     for cue in cues:
-        for start, end, text in word_events(cue, layout, ass_colour(hl_hex), ass_colour(base_hex), scale,
-                                            caps.get("motion")):
+        ov = cue.get("caption") or {}
+        cue_layout = layout_for(style, profile, width, height, ov.get("y_fraction", y_fraction)) if ov else layout
+        extra = f"\\fs{int(ov['size_px'])}" if ov.get("size_px") else ""
+        for start, end, text in word_events(cue, cue_layout, ass_colour(hl_hex), ass_colour(base_hex), scale,
+                                            caps.get("motion"), extra):
             lines.append(f"Dialogue: 0,{ass_time(start)},{ass_time(end)},Cap,,0,0,0,,{text}")
     return "\n".join(lines) + "\n", warnings
 
@@ -302,6 +353,8 @@ def main() -> None:
     ap.add_argument("--words-from", default=None, metavar="STEM",
                     help="commentary mode: take the words from edit/transcripts/<STEM>.json instead of the EDL ranges")
     ap.add_argument("--offset", type=float, default=0.0, help="with --words-from: seconds the recording starts into the video")
+    ap.add_argument("--scenes", type=Path, default=None,
+                    help="scenes.json with per-stretch caption overrides (default: <edit>/scenes.json if it exists; --scenes none to ignore)")
     ap.add_argument("--y-fraction", type=float, default=None,
                     help="override the caption band centre (0-1 of frame height); default from brand/style.json")
     args = ap.parse_args()
@@ -326,7 +379,11 @@ def main() -> None:
         cues = voice_cues(json.loads(tr.read_text()), args.offset, edl.get("total_duration_s"),
                           int(wpc.get("target", 2)), int(wpc.get("max", 3)))
     else:
-        cues = output_cues(edl, edit_dir / "transcripts", int(wpc.get("target", 2)), int(wpc.get("max", 3)))
+        scenes = None
+        scenes_path = None if (args.scenes and str(args.scenes) == "none") else (args.scenes or edit_dir / "scenes.json")
+        if scenes_path and scenes_path.exists():
+            scenes = json.loads(scenes_path.read_text())
+        cues = output_cues(edl, edit_dir / "transcripts", int(wpc.get("target", 2)), int(wpc.get("max", 3)), scenes, style)
     text, warnings = build_ass(cues, style, profile, width, height, args.y_fraction)
 
     out = (args.output or (edit_dir / "master.ass")).resolve()

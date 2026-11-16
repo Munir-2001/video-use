@@ -137,3 +137,30 @@ def test_voice_cues_shift_by_offset_and_stop_at_total():
 
     assert cues[0]["start"] == 2.0 and cues[0]["words"][1]["end"] == 2.9
     assert len(cues) == 1  # "again" would start at 7.0, past the 6 s video
+
+
+def test_output_cues_per_stretch_caption_overrides(tmp_path):
+    import json
+    (tmp_path / "t.json").write_text(json.dumps({"words": [w("Fifty", 0.0, 0.4), w("free", 0.5, 0.9), w("backlinks", 1.0, 1.4),
+                                                            w("Comment", 3.0, 3.4), w("backlinks", 3.5, 3.9)]}))
+    edl = {"ranges": [{"source": "t", "start": 0.0, "end": 5.0}]}
+    style = {**STYLE, "captions": {**STYLE["captions"], "presets": {"giant": {"words_per_cue": {"target": 1, "max": 1}, "size_px": 140, "y_fraction": 0.68}}},
+             "layouts": {"split_top": {"caption": {"y_fraction": 0.44, "size_px": 56}}}}
+    scenes = {"stretches": [{"id": "s1", "start": 0.0, "end": 2.0, "layout": "split_top"},
+                            {"id": "s2", "start": 2.0, "end": 5.0, "layout": "face_full", "caption": "giant"}]}
+
+    cues = ca.output_cues(edl, tmp_path, 2, 3, scenes, style)
+
+    assert [len(c["words"]) for c in cues] == [2, 1, 1, 1]
+    assert cues[0]["caption"]["y_fraction"] == 0.44 and cues[2]["caption"]["size_px"] == 140
+    text, _ = ca.build_ass(cues, style, "vertical", 1080, 1920)
+    assert "\\pos(470,845)\\fad" in text or "\\move(470,873,470,845" in text  # 0.44 * 1920 = 845
+    assert "\\fs140}" in text and "\\fs56}" in text
+
+
+def test_unknown_caption_preset_fails_loudly():
+    try:
+        ca.stretch_caption({"id": "s1", "caption": "huge"}, STYLE)
+        assert False, "expected ValueError"
+    except ValueError:
+        pass
