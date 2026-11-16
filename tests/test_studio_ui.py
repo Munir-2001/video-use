@@ -63,3 +63,55 @@ def test_write_feedback_rejects_path_traversal(tmp_path, monkeypatch):
         assert False, "expected ValueError"
     except ValueError:
         pass
+
+
+def _mp(fields, files):
+    """Build a multipart/form-data body the way a browser does."""
+    b = "xyzBOUNDARY42"
+    out = b""
+    for k, v in fields.items():
+        out += f"--{b}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode()
+    for k, (fname, data) in files.items():
+        out += f"--{b}\r\nContent-Disposition: form-data; name=\"{k}\"; filename=\"{fname}\"\r\nContent-Type: application/octet-stream\r\n\r\n".encode() + data + b"\r\n"
+    return out + f"--{b}--\r\n".encode(), b
+
+
+def test_parse_multipart_fields_and_binary_files():
+    body, b = _mp({"slug": "My Reel", "mode": "voiceover"}, {"voice": ("take 1.mp3", b"\x00\xff\r\n--not-a-boundary\r\n")})
+
+    parts = ui.parse_multipart(body, b)
+
+    assert [(p["name"], p["filename"]) for p in parts] == [("slug", None), ("mode", None), ("voice", "take 1.mp3")]
+    assert parts[0]["data"] == b"My Reel" and parts[2]["data"] == b"\x00\xff\r\n--not-a-boundary\r\n"
+
+
+def test_save_upload_creates_folder_voice_subdir_brief_and_index(tmp_path, monkeypatch):
+    monkeypatch.setattr(ui, "VIDEOS_DIR", tmp_path)
+    body, b = _mp({"slug": "My Reel!", "mode": "voiceover", "notes": "voice over the phone clip"},
+                  {"footage": ("IMG_0001.MOV", b"vid"), "voice": ("take 1.mp3", b"aud"), "other": ("notes.txt", b"x")})
+
+    r = ui.save_upload(ui.parse_multipart(body, b))
+
+    folder = tmp_path / r["folder"]
+    assert r["folder"].endswith("_my-reel") and r["footage"] == ["IMG_0001.MOV"] and r["voice"] == ["voice/take_1.mp3"]
+    assert r["skipped"] == ["notes.txt"] and (folder / "IMG_0001.MOV").read_bytes() == b"vid" and (folder / "voice" / "take_1.mp3").exists()
+    brief = json.loads((folder / "edit" / "brief.json").read_text())
+    assert brief["mode"] == "voiceover" and brief["notes"] == "voice over the phone clip" and brief["voice_offset_s"] == 0.0
+    assert "· my-reel · raw (uploaded from the studio: 1 clip(s), 1 voice file(s), mode voiceover)" in (tmp_path / "index.md").read_text()
+
+
+def test_save_upload_into_existing_folder_merges_brief_and_rejects_traversal(tmp_path, monkeypatch):
+    monkeypatch.setattr(ui, "VIDEOS_DIR", tmp_path)
+    (tmp_path / "2026-11-16_x").mkdir()
+    ui.write_brief(tmp_path / "2026-11-16_x", "clips", ["a.mp4"], [])
+    body, b = _mp({"mode": "commentary", "voice_offset_s": "2.5"}, {"voice": ("v.m4a", b"a")})
+
+    r = ui.save_upload(ui.parse_multipart(body, b), "2026-11-16_x")
+
+    assert r["brief"]["footage"] == ["a.mp4"] and r["brief"]["voice"] == ["voice/v.m4a"] and r["brief"]["mode"] == "commentary" and r["brief"]["voice_offset_s"] == 2.5
+    for bad in ("../x", "a/b"):
+        try:
+            ui.save_upload([], bad)
+            assert False, "expected ValueError"
+        except ValueError:
+            pass

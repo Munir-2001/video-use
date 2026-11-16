@@ -376,3 +376,10 @@ Overlays: the planner's slots become EDL `overlays` entries (`file`, `start_in_o
 
 ### Persist
 End of session: append to `edit/project.md` (format above), copy the approved `edl.json` to `examples/<date>_<slug>.edl.json` with a line in `examples/index.md`, update `videos/index.md`, commit. Any change to helpers, agents, folders or workflow gets a `DECISIONS.md` entry and a `HOW_IT_WORKS.md` update in the same commit.
+
+### Voice recordings (separate audio)
+A video folder may carry `voice/*.mp3|m4a|wav` next to the clips and `edit/brief.json` (written by the studio upload form or by hand): `{"mode": "voiceover"|"commentary"|"clips", "footage": [...], "voice": [...], "voice_offset_s": 0, "notes": "..."}`. Inventory runs `helpers/voiceover.py transcribe videos/<folder>` after `transcribe_batch.py`, so the voice words are in `takes_packed.md` too.
+
+- **voiceover** (I narrate over phone clips or screen recordings): editor cuts the voice (ranges over the voice source) → planner gives every stretch a `footage` entry → motion/captions/sound as usual → `helpers/voiceover.py build videos/<folder>` writes `edit/voice_master.mp4` + `edit/edl_master.json` → `render.py edit/edl_master.json --preview --no-loudnorm` (overlays + captions from `edl.json`'s `master.ass`) → `sound_mix.py --mux` → critic.
+- **commentary** (reaction over a clip that keeps its sound): editor cuts the clip; captions from the voice with `--words-from <stem> --offset <voice_offset_s>`; sound agent adds the `voice` entry to `sound.json` and the mixer ducks the clip under me.
+- **clips**: the normal pipeline.

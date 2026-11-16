@@ -1,0 +1,13 @@
+{
+  "mode": "voiceover",
+  "footage": [
+    "testclip.mov"
+  ],
+  "voice": [
+    "voice/commentary_take_1.mp3"
+  ],
+  "voice_offset_s": 0.0,
+  "notes": "narration over the test clip",
+  "updated": "2026-11-16T19:38:42+00:00",
+  "created": "2026-11-16T19:38:42+00:00"
+}

@@ -6,6 +6,7 @@ Reads <edit>/sound.json (written by the sound agent):
      "music": {"file": "brand/music/x.mp3", "gain_db": -12, "fade_in_s": 1, "fade_out_s": 2},
      "effects": [{"effect": "pop", "file": "brand/sfx/pop.wav", "contact_s": 5.1,
                   "event": "90% lands", "gain_db": -6}],
+     "voice": {"file": "../voice/take1.mp3", "offset_s": 0.0, "gain_db": 0},   # commentary mode only
      "sections": [{"name": "hook", "start": 0.0, "end": 4.2}]}
 
 Steps: extract the speech track from the video; measure each effect's attack
@@ -124,13 +125,29 @@ def plan_effects(effects: list[dict], edit_dir: Path) -> tuple[list[dict], list[
     return planned, skipped
 
 
-def build_filter(speech_dur: float, music: dict | None, effects: list[dict]) -> tuple[list[str], str]:
-    """Return (ffmpeg inputs after the speech input, filter_complex)."""
+def build_filter(speech_dur: float, music: dict | None, effects: list[dict],
+                 voice: dict | None = None) -> tuple[list[str], str]:
+    """Return (ffmpeg inputs after the speech input, filter_complex).
+
+    `voice` (commentary mode, from brief.json): {path, offset_s, gain_db}. The
+    recording starts `offset_s` into the video and the video's own sound is
+    ducked under it with the same sidechain the music uses."""
     inputs: list[str] = []
     parts: list[str] = []
     mix_labels = ["[sp]"]
-    parts.append("[0:a]aformat=sample_rates=48000:channel_layouts=stereo,asplit=2[sp][key]")
+    parts.append("[0:a]aformat=sample_rates=48000:channel_layouts=stereo,asplit=2[sp0][key]")
     idx = 1
+    if voice:
+        inputs += ["-i", voice["path"]]
+        delay_ms = int(round(float(voice.get("offset_s", 0.0)) * 1000))
+        gain = float(voice.get("gain_db", 0.0))
+        parts.append(f"[{idx}:a]aformat=sample_rates=48000:channel_layouts=stereo,volume={gain}dB,"
+                     f"adelay={delay_ms}|{delay_ms},asplit=2[vo][vkey]")
+        parts.append(f"[sp0][vkey]sidechaincompress={DUCK}[sp]")
+        mix_labels.append("[vo]")
+        idx += 1
+    else:
+        parts.append("[sp0]anull[sp]")
     if music:
         inputs += ["-stream_loop", "-1", "-i", music["path"]]
         fi, fo = float(music.get("fade_in_s", 1.0)), float(music.get("fade_out_s", 2.0))
@@ -190,10 +207,18 @@ def main() -> None:
     for s in skipped:
         print(f"  skipped effect: {s}")
 
+    voice = None
+    if spec.get("voice") and spec["voice"].get("file"):
+        vpath = resolve(spec["voice"]["file"], edit_dir)
+        if vpath.exists():
+            voice = {**spec["voice"], "path": str(vpath)}
+        else:
+            print(f"  voice file missing, mixing without it: {spec['voice']['file']}")
+
     with tempfile.TemporaryDirectory() as tmp:
         speech = Path(tmp) / "speech.wav"
         run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(video), "-vn", "-ac", "2", "-ar", str(SAMPLE_RATE), "-c:a", "pcm_s16le", str(speech)])
-        inputs, graph = build_filter(dur, music, effects)
+        inputs, graph = build_filter(dur, music, effects, voice)
         premix = Path(tmp) / "premix.wav"
         run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(speech), *inputs, "-filter_complex", graph,
              "-map", "[mix]", "-ar", str(SAMPLE_RATE), "-c:a", "pcm_s24le", str(premix)])
@@ -209,6 +234,8 @@ def main() -> None:
             "video": str(video), "output": str(out_wav), "duration_s": round(dur, 3),
             "speech_track": measure_ebur128(speech),
             "music": None if music is None else {"file": music["path"], "gain_db": music.get("gain_db", -12)},
+            "voice": None if voice is None else {"file": voice["path"], "offset_s": float(voice.get("offset_s", 0.0)),
+                                                 "gain_db": float(voice.get("gain_db", 0.0))},
             "effects": [{k: v for k, v in fx.items() if k != "path"} | {"file": fx["path"]} for fx in effects],
             "skipped": skipped,
             "premix_measured": {"integrated_lufs": float(m["input_i"]), "true_peak_dbtp": float(m["input_tp"]), "lra_lu": float(m["input_lra"])},
@@ -232,7 +259,7 @@ def main() -> None:
     (edit_dir / "sound_report.json").write_text(json.dumps(report, indent=2))
     f = report["final"]
     print(f"mix -> {out_wav.name}: I={f.get('integrated_lufs')} LUFS, TP={f.get('true_peak_dbtp')} dBTP, "
-          f"{len(effects)} effects, music={'yes' if music else 'no'}")
+          f"{len(effects)} effects, music={'yes' if music else 'no'}, voice={'yes' if voice else 'no'}")
     for fx in effects:
         print(f"  {fx['effect']:<12} contact {fx['contact_s']:>7.3f}s  attack {fx['attack_s']:.3f}s  start {fx['start_s']:>7.3f}s  <- {fx.get('event', '')}")
     for sec in report["sections"]:

@@ -96,3 +96,6 @@ node_modules/
 
 # HyperFrames per-slot artifacts/cache (studio)
 videos/**/hf/.hyperframes/
+
+# voice recordings are media, not text (studio)
+videos/**/voice/*

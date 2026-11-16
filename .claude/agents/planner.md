@@ -39,3 +39,6 @@ Write `videos/<folder>/edit/scenes.json`:
  ]}
 ```
 `kind` is `overlay_transparent` (over the speaker; transparent ProRes 4444 .mov) or `full_frame` (opaque .mp4). Then reply with the stretch table (start, end, layout, graphic or "-") and the list of slots for the motion agents.
+
+## Voice-over videos (`edit/brief.json` mode `voiceover`)
+The voice is cut already (EDL ranges over `voice/` files); you decide which clip is on screen under every second. Every stretch that is not `graphic_full` carries `"footage": {"file": "<clip name as in brief.footage>", "in_s": <seconds into that clip>, "fit": "contain" | "cover"}`; `screen` is the normal layout here (footage full frame), `face_full` only when a clip of my face exists. `brief.notes` says what I talk over; the voice transcript's words tell you when. Cover the whole timeline: stretches without `footage` render as brand background. `helpers/voiceover.py build videos/<folder>` turns your scenes.json + edl.json into `edit/voice_master.mp4` and `edit/edl_master.json`.

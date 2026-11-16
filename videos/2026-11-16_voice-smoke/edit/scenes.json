@@ -1,0 +1,32 @@
+{
+  "stretches": [
+    {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "layout": "screen",
+      "footage": {
+        "file": "testclip.mov",
+        "in_s": 10.0,
+        "fit": "cover"
+      }
+    },
+    {
+      "id": "s2",
+      "start": 4.0,
+      "end": 6.5,
+      "layout": "graphic_full"
+    },
+    {
+      "id": "s3",
+      "start": 6.5,
+      "end": 9.6,
+      "layout": "screen",
+      "footage": {
+        "file": "testclip.mov",
+        "in_s": 0.0,
+        "fit": "contain"
+      }
+    }
+  ]
+}

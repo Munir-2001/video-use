@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "profile": "vertical",
+  "sources": {
+    "voice_master": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-16_voice-smoke/edit/voice_master.mp4"
+  },
+  "ranges": [
+    {
+      "source": "voice_master",
+      "start": 0.0,
+      "end": 9.6,
+      "beat": "ALL",
+      "quote": "",
+      "reason": "voice master built by voiceover.py from edl.json + scenes.json"
+    }
+  ],
+  "grade": "none",
+  "overlays": [],
+  "subtitles": "master.ass",
+  "total_duration_s": 9.6,
+  "_from": "edl.json"
+}

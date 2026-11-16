@@ -10,6 +10,46 @@ async function loadState() { STATE = await (await fetch("/api/state")).json(); d
 
 function setNav(name) { document.querySelectorAll("nav a").forEach((a) => a.classList.toggle("active", a.dataset.nav === name)); }
 
+
+/* ---------- Upload (clips + separate voice recordings) ---------- */
+const MODE_HINT = { voiceover: "my recording drives the cut; the clips are footage under it", commentary: "the clip keeps its own sound; my voice rides on top and the clip ducks under me", clips: "talking-head clips, no separate audio" };
+function uploadForm(folder, mode) {
+  const m = mode || "voiceover";
+  return `<form class="upload" data-folder="${esc(folder || "")}">
+    ${folder ? "" : `<label>Name <input name="slug" placeholder="e.g. claude-code-hooks" required></label>`}
+    <div class="modes">${Object.entries(MODE_HINT).map(([k, hint]) => `<label><input type="radio" name="mode" value="${k}" ${k === m ? "checked" : ""}> <b>${k}</b><span>${hint}</span></label>`).join("")}</div>
+    <label>Video clips <input type="file" name="footage" accept="video/*,.mov,.mp4,.m4v,.mkv,.webm" multiple></label>
+    <label>Voice recording <input type="file" name="voice" accept="audio/*,.mp3,.m4a,.wav,.aac,.flac,.ogg" multiple></label>
+    <label>Voice starts at <input name="voice_offset_s" type="number" step="0.1" min="0" value="0" style="width:80px"> s into the clip <span class="muted">(commentary only)</span></label>
+    <label>Notes for the edit <input name="notes" placeholder="what the voice says over which clip; anything to keep or cut"></label>
+    <div class="row"><button class="primary" type="submit">${folder ? "Add files" : "Create video"}</button><progress value="0" max="100" hidden></progress><span class="muted upstatus"></span></div>
+  </form>`;
+}
+function wireUpload(form) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const files = [...form.querySelectorAll("input[type=file]")].flatMap((i) => [...i.files]);
+    const folder = form.dataset.folder;
+    if (!files.length) return toast("pick at least one file");
+    const prog = form.querySelector("progress"), st = form.querySelector(".upstatus");
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", folder ? "/api/upload/" + encodeURIComponent(folder) : "/api/upload");
+    prog.hidden = false;
+    xhr.upload.onprogress = (ev) => { if (ev.lengthComputable) prog.value = Math.round((ev.loaded / ev.total) * 100); };
+    xhr.onload = async () => {
+      let r = {}; try { r = JSON.parse(xhr.responseText); } catch (_) { /* not json */ }
+      if (xhr.status !== 200 || r.error) { st.textContent = r.error || `upload failed (${xhr.status})`; prog.hidden = true; return; }
+      toast(`saved to videos/${r.folder}` + (r.skipped.length ? ` · skipped ${r.skipped.join(", ")}` : ""));
+      await loadState();
+      const target = "#/video/" + encodeURIComponent(r.folder);
+      if (location.hash === target) route(); else location.hash = target;
+    };
+    xhr.onerror = () => { st.textContent = "upload failed (network)"; prog.hidden = true; };
+    st.textContent = `uploading ${files.length} file${files.length === 1 ? "" : "s"}… (${(files.reduce((a, f) => a + f.size, 0) / 1e6).toFixed(0)} MB)`;
+    xhr.send(new FormData(form));
+  });
+}
+
 /* ---------- Library ---------- */
 function library() {
   setNav("library");
@@ -17,6 +57,7 @@ function library() {
   const done = v.filter((x) => x.status === "done").length;
   app.innerHTML = `
     <h1>Library</h1><div class="sub">${v.length} video folder${v.length === 1 ? "" : "s"} · ${done} done · ${STATE.cards.length}/12 cards · ${STATE.inbox.length} drop${STATE.inbox.length === 1 ? "" : "s"} in the inbox</div>
+    <details class="panel" id="newvideo"><summary><b>＋ New video</b> <span class="muted">— upload phone clips and, if you recorded one, a separate voice file</span></summary>${uploadForm(null)}</details>
     <div class="grid">${v.map((x, i) => `
       <a class="card" href="#/video/${encodeURIComponent(x.folder)}" style="animation-delay:${i * 40}ms">
         <div class="thumb ${x.clips[0] && x.clips[0].height > x.clips[0].width ? "vertical" : ""}" style="${x.thumb ? `background-image:url('${x.thumb}')` : ""}">
@@ -24,15 +65,17 @@ function library() {
         </div>
         <div class="body">
           <div class="title">${esc(x.slug)}</div>
-          <div class="row"><span class="pill status-${esc(x.status)}">${esc(x.status)}</span><span class="muted">${esc(x.date)}</span><span class="muted">· ${x.clips.length} clip${x.clips.length === 1 ? "" : "s"}</span></div>
+          <div class="row"><span class="pill status-${esc(x.status)}">${esc(x.status)}</span><span class="muted">${esc(x.date)}</span><span class="muted">· ${x.clips.length} clip${x.clips.length === 1 ? "" : "s"}</span>${x.voice && x.voice.length ? `<span class="pill kind-sound" title="${esc(x.brief ? x.brief.mode : "")}">🎙 ${x.brief ? esc(x.brief.mode) : "voice"}</span>` : ""}</div>
           ${x.note ? `<div class="muted" style="margin-top:6px;font-size:13px">${esc(x.note)}</div>` : ""}
           <div class="dots" title="transcript · EDL · scenes · captions · sound · critic">
             ${["takes_packed.md", "edl.json", "scenes.json", "master.ass", "sound.json", "critic.md"].map((k) => `<span class="dot ${x.has[k] ? "on" : ""}"></span>`).join("")}
           </div>
         </div>
       </a>`).join("")}
-      ${v.length === 0 ? `<div class="empty">No videos yet. Drop clips into <code>videos/YYYY-MM-DD_slug/</code>.</div>` : ""}
+      ${v.length === 0 ? `<div class="empty">No videos yet. Use “New video” above or drop clips into <code>videos/YYYY-MM-DD_slug/</code>.</div>` : ""}
     </div>`;
+  wireUpload(document.querySelector("#newvideo form"));
+  if (v.length === 0) document.getElementById("newvideo").open = true;
 }
 
 /* ---------- Video ---------- */
@@ -88,7 +131,15 @@ async function video(folder) {
         </div>
         <div class="panel">
           <h3>Sources</h3>
-          ${d.clips.map((c) => `<div class="kv" style="margin-bottom:8px"><b>${esc(c.name)}</b><span class="mono">${c.width}×${c.height} · ${c.fps} fps · ${fmt(c.duration)} · ${c.size_mb} MB</span></div>`).join("") || `<span class="muted">none</span>`}
+          ${d.brief ? `<div class="row" style="margin-bottom:10px"><span class="pill kind-sound">${esc(d.brief.mode)}</span><span class="muted" style="font-size:12px">${esc(MODE_HINT[d.brief.mode] || "")}</span></div>` : ""}
+          ${d.clips.map((c) => `<div class="kv" style="margin-bottom:8px"><b>${esc(c.name)}</b><span class="mono">${c.width}×${c.height} · ${c.fps} fps · ${fmt(c.duration)} · ${c.size_mb} MB</span></div>`).join("") || `<span class="muted">no clips</span>`}
+          ${(d.voice || []).map((v) => `<div class="kv" style="margin-top:8px"><b>🎙 ${esc(v.name)}</b><span class="mono">${fmt(v.duration)} · ${v.size_mb} MB</span></div><audio controls preload="none" src="${v.url}" style="width:100%;height:32px;margin:4px 0 6px"></audio>`).join("")}
+          ${d.brief ? `<form id="brieff" class="upload" style="margin-top:10px">
+            <label>Mode <select name="mode">${Object.keys(MODE_HINT).map((k) => `<option value="${k}" ${d.brief.mode === k ? "selected" : ""}>${k}</option>`).join("")}</select></label>
+            <label>Voice starts at <input name="voice_offset_s" type="number" step="0.1" min="0" value="${+d.brief.voice_offset_s || 0}" style="width:80px"> s</label>
+            <label>Notes <input name="notes" value="${esc(d.brief.notes || "")}"></label>
+            <button type="submit">Save brief</button></form>` : ""}
+          <details style="margin-top:12px"><summary>Add files</summary>${uploadForm(d.folder, d.brief ? d.brief.mode : "clips")}</details>
         </div>
         <div class="panel">
           <h3>Artifacts</h3>
@@ -97,6 +148,15 @@ async function video(folder) {
       </aside>
     </div>`;
 
+  wireUpload(document.querySelector("aside .upload[data-folder]"));
+  const brieff = document.getElementById("brieff");
+  if (brieff) brieff.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fd = new FormData(brieff);
+    const r = await (await fetch("/api/brief/" + encodeURIComponent(folder), { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mode: fd.get("mode"), voice_offset_s: +fd.get("voice_offset_s") || 0, notes: fd.get("notes") }) })).json();
+    toast(r.error ? r.error : "brief saved");
+  });
   const vid = document.getElementById("vid");
   const tl = document.getElementById("tl");
   const ph = document.getElementById("ph");

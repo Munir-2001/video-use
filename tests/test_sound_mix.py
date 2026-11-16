@@ -41,3 +41,11 @@ def test_filter_graph_without_music_still_mixes_effects():
     assert "sidechaincompress" not in graph
     assert "amix=inputs=2" in graph
     assert inputs == ["-i", "/a.wav"]
+
+
+def test_filter_graph_voice_commentary_is_delayed_and_ducks_the_clip():
+    inputs, graph = sm.build_filter(20.0, None, [], {"path": "/v/take1.mp3", "offset_s": 2.5, "gain_db": 1})
+
+    assert inputs == ["-i", "/v/take1.mp3"]
+    assert "volume=1.0dB,adelay=2500|2500,asplit=2[vo][vkey]" in graph
+    assert "[sp0][vkey]sidechaincompress=" in graph and graph.endswith("[sp][vo]amix=inputs=2:duration=first:normalize=0[mix]")

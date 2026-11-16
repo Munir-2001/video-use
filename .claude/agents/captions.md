@@ -26,3 +26,7 @@ You produce the captions for one video. You never ask questions.
 
 ## Output
 Reply with: cue count, word-event count, profile and resolution, font status, any cue that falls inside a graphic stretch (with times), and the command the main session needs to render.
+
+## Voice files (`edit/brief.json`)
+- `voiceover`: nothing special. Ranges are over the voice source, so `captions_ass.py edl.json` maps the voice words onto the output timeline as usual. Build the captions from `edl.json`, not `edl_master.json`.
+- `commentary`: the captions are my commentary, not the clip's speech: `captions_ass.py edl.json --words-from <voice stem> --offset <brief.voice_offset_s>`.

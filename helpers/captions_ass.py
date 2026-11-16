@@ -170,6 +170,23 @@ def output_cues(edl: dict, transcripts_dir: Path, target: int, max_words: int) -
     return cues
 
 
+def voice_cues(transcript: dict, offset_s: float, total_s: float | None,
+               target: int = 2, max_words: int = 3) -> list[dict]:
+    """Commentary mode: cues from one transcript laid straight onto the output
+    timeline at `offset_s` (the clip is not re-cut, so clip time == output time)."""
+    cues = []
+    for chunk in chunk_words([w for w in transcript.get("words", []) if w.get("type") == "word"], target, max_words):
+        ws = [{"text": re.sub(r"\s+", " ", w["text"]).strip(), "start": float(w["start"]) + offset_s,
+               "end": max(float(w["end"]) + offset_s, float(w["start"]) + offset_s + 0.05)} for w in chunk]
+        if total_s is not None and ws[0]["start"] >= total_s:
+            break
+        cue_end = max(ws[-1]["end"], ws[0]["start"] + MIN_CUE_S)
+        cues.append({"start": ws[0]["start"], "end": cue_end, "words": ws})
+    for i in range(len(cues) - 1):
+        cues[i]["end"] = min(cues[i]["end"], cues[i + 1]["start"])
+    return cues
+
+
 # -------- ASS writer --------------------------------------------------------
 
 
@@ -282,6 +299,9 @@ def main() -> None:
                     help="default: edl['profile'] if present, else vertical")
     ap.add_argument("--width", type=int, default=None)
     ap.add_argument("--height", type=int, default=None)
+    ap.add_argument("--words-from", default=None, metavar="STEM",
+                    help="commentary mode: take the words from edit/transcripts/<STEM>.json instead of the EDL ranges")
+    ap.add_argument("--offset", type=float, default=0.0, help="with --words-from: seconds the recording starts into the video")
     ap.add_argument("--y-fraction", type=float, default=None,
                     help="override the caption band centre (0-1 of frame height); default from brand/style.json")
     args = ap.parse_args()
@@ -299,7 +319,14 @@ def main() -> None:
     height = args.height or int(prof.get("height", 1920 if profile == "vertical" else 1080))
 
     wpc = style.get("captions", {}).get("words_per_cue", {})
-    cues = output_cues(edl, edit_dir / "transcripts", int(wpc.get("target", 2)), int(wpc.get("max", 3)))
+    if args.words_from:
+        tr = edit_dir / "transcripts" / f"{args.words_from}.json"
+        if not tr.exists():
+            sys.exit(f"transcript not found: {tr}")
+        cues = voice_cues(json.loads(tr.read_text()), args.offset, edl.get("total_duration_s"),
+                          int(wpc.get("target", 2)), int(wpc.get("max", 3)))
+    else:
+        cues = output_cues(edl, edit_dir / "transcripts", int(wpc.get("target", 2)), int(wpc.get("max", 3)))
     text, warnings = build_ass(cues, style, profile, width, height, args.y_fraction)
 
     out = (args.output or (edit_dir / "master.ass")).resolve()

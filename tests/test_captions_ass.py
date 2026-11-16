@@ -128,3 +128,12 @@ def test_word_events_no_motion_is_static():
     ev = ca.word_events(cue, {"an": 5, "x": 1, "y": 2}, "&H0066D1FF", "&H00F7F5F5", 112,
                         {"pop_ms": 0, "rise_px": 0, "fade_in_ms": 0})
     assert "\\t(" not in ev[0][2] and "\\pos(1,2)" in ev[0][2]
+
+
+def test_voice_cues_shift_by_offset_and_stop_at_total():
+    tr = {"words": [w("Hello", 0.0, 0.4), w("world", 0.5, 0.9), w("again", 5.0, 5.4)]}
+
+    cues = ca.voice_cues(tr, offset_s=2.0, total_s=6.0, target=2, max_words=3)
+
+    assert cues[0]["start"] == 2.0 and cues[0]["words"][1]["end"] == 2.9
+    assert len(cues) == 1  # "again" would start at 7.0, past the 6 s video

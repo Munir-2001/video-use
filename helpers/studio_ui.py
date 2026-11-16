@@ -20,7 +20,7 @@ import subprocess
 import threading
 import time
 import webbrowser
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -32,6 +32,10 @@ VIDEOS_DIR = REPO / "videos"
 CARDS_DIR = REPO / "cards"
 MEDIA_ROOTS = ("videos", "cards", "brand", "examples", "static")
 VIDEO_EXTS = {".mp4", ".mov", ".mkv", ".webm", ".m4v"}
+VOICE_EXTS = {".mp3", ".m4a", ".wav", ".aac", ".aiff", ".aif", ".flac", ".ogg"}
+UPLOAD_MODES = ("voiceover", "commentary", "clips")
+MAX_UPLOAD_BYTES = 4 * 1024 ** 3
+SAFE_NAME = re.compile(r"[^A-Za-z0-9._-]+")
 PREVIEW_PRIORITY = ("final.mp4", "preview_mixed.mp4", "preview_subs.mp4", "preview.mp4")
 THUMB_NAME = "thumb.jpg"
 ASS_DIALOGUE = re.compile(r"^Dialogue:\s*\d+,([^,]+),([^,]+),[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,(.*)$")
@@ -164,6 +168,134 @@ def ensure_thumb(video: Path, edit_dir: Path) -> Path | None:
 # -------- scanning ----------------------------------------------------------
 
 
+def safe_slug(text: str) -> str:
+    """Folder slug: lowercase ascii, dashes, max 40 chars."""
+    return re.sub(r"[^a-z0-9]+", "-", (text or "").strip().lower()).strip("-")[:40]
+
+
+def safe_filename(name: str) -> str:
+    base = SAFE_NAME.sub("_", Path(name or "").name).strip("._")
+    return base or "file"
+
+
+def parse_multipart(body: bytes, boundary: str) -> list[dict]:
+    """Minimal multipart/form-data parser (stdlib `cgi` is gone in 3.13).
+    Returns [{name, filename|None, data: bytes}]."""
+    delim = b"--" + boundary.encode()
+    parts: list[dict] = []
+    for chunk in body.split(delim)[1:]:
+        if chunk.startswith(b"--"):
+            break  # closing delimiter
+        if chunk.startswith(b"\r\n"):
+            chunk = chunk[2:]
+        head, sep, data = chunk.partition(b"\r\n\r\n")
+        if not sep:
+            continue
+        if data.endswith(b"\r\n"):
+            data = data[:-2]
+        disposition = ""
+        for line in head.decode("utf-8", "replace").split("\r\n"):
+            key, _, value = line.partition(":")
+            if key.strip().lower() == "content-disposition":
+                disposition = value
+        name = re.search(r'name="([^"]*)"', disposition)
+        fname = re.search(r'filename="([^"]*)"', disposition)
+        parts.append({"name": name.group(1) if name else "", "filename": fname.group(1) if fname else None, "data": data})
+    return parts
+
+
+def video_folder(folder_name: str) -> Path:
+    if not folder_name or "/" in folder_name or ".." in folder_name:
+        raise ValueError("bad folder name")
+    folder = VIDEOS_DIR / folder_name
+    if not folder.is_dir():
+        raise ValueError(f"no such video folder: {folder_name}")
+    return folder
+
+
+def write_brief(folder: Path, mode: str | None = None, footage_add: list[str] = (), voice_add: list[str] = (),
+                voice_offset_s: float | None = None, notes: str | None = None) -> dict:
+    """Merge into edit/brief.json: how the voice files relate to the clips."""
+    edit = folder / "edit"
+    edit.mkdir(exist_ok=True)
+    path = edit / "brief.json"
+    old = read_json(path) if path.exists() else {}
+    if not isinstance(old, dict) or "_error" in old:
+        old = {}
+    footage = list(dict.fromkeys([*old.get("footage", []), *footage_add]))
+    voice = list(dict.fromkeys([*old.get("voice", []), *voice_add]))
+    new_mode = mode or old.get("mode") or ("voiceover" if voice else "clips")
+    if new_mode not in UPLOAD_MODES:
+        raise ValueError(f"mode must be one of {UPLOAD_MODES}")
+    brief = {
+        **old, "mode": new_mode, "footage": footage, "voice": voice,
+        "voice_offset_s": float(voice_offset_s if voice_offset_s is not None else old.get("voice_offset_s", 0.0)),
+        "notes": notes if notes is not None else old.get("notes", ""),
+        "updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    brief.setdefault("created", brief["updated"])
+    path.write_text(json.dumps(brief, indent=2, ensure_ascii=False) + "\n")
+    return brief
+
+
+def ensure_index_line(folder: Path, brief: dict) -> bool:
+    """Add the one-line entry to videos/index.md if the folder has none."""
+    index = VIDEOS_DIR / "index.md"
+    text = index.read_text() if index.exists() else "# Videos\n\n"
+    d, _, slug = folder.name.partition("_")
+    if re.search(rf"^- {re.escape(d)} · {re.escape(slug)} ·", text, re.M):
+        return False
+    line = (f"- {d} · {slug} · raw (uploaded from the studio: {len(brief['footage'])} clip(s), "
+            f"{len(brief['voice'])} voice file(s), mode {brief['mode']})")
+    index.write_text(text.rstrip("\n") + "\n" + line + "\n")
+    return True
+
+
+def unique_dest(dest: Path) -> Path:
+    if not dest.exists():
+        return dest
+    for i in range(2, 100):
+        cand = dest.with_name(f"{dest.stem}_{i}{dest.suffix}")
+        if not cand.exists():
+            return cand
+    raise ValueError(f"too many files named {dest.name}")
+
+
+def save_upload(parts: list[dict], folder_name: str | None = None) -> dict:
+    """Store uploaded clips at the folder top level and voice files in voice/;
+    update brief.json and videos/index.md. New folder: videos/<today>_<slug>."""
+    fields = {p["name"]: p["data"].decode("utf-8", "replace").strip() for p in parts if p["filename"] is None}
+    files = [p for p in parts if p["filename"]]
+    if folder_name:
+        folder = video_folder(folder_name)
+    else:
+        slug = safe_slug(fields.get("slug", ""))
+        if not slug:
+            raise ValueError("a name for the video is required")
+        folder = VIDEOS_DIR / f"{date.today():%Y-%m-%d}_{slug}"
+        folder.mkdir(parents=True, exist_ok=True)
+    footage, voice, skipped = [], [], []
+    for f in files:
+        name = safe_filename(f["filename"])
+        ext = Path(name).suffix.lower()
+        if ext in VIDEO_EXTS:
+            dest = unique_dest(folder / name)
+            dest.write_bytes(f["data"])
+            footage.append(dest.name)
+        elif ext in VOICE_EXTS:
+            (folder / "voice").mkdir(exist_ok=True)
+            dest = unique_dest(folder / "voice" / name)
+            dest.write_bytes(f["data"])
+            voice.append("voice/" + dest.name)
+        else:
+            skipped.append(name)
+    offset = fields.get("voice_offset_s")
+    brief = write_brief(folder, fields.get("mode") or None, footage, voice,
+                        float(offset) if offset else None, fields.get("notes") or None)
+    ensure_index_line(folder, brief)
+    return {"folder": folder.name, "footage": footage, "voice": voice, "skipped": skipped, "brief": brief}
+
+
 def rel(path: Path) -> str:
     return str(path.relative_to(REPO))
 
@@ -172,13 +304,18 @@ def scan_video(folder: Path, index: dict[str, dict]) -> dict:
     edit = folder / "edit"
     clips = sorted(p for p in folder.iterdir() if p.is_file() and p.suffix.lower() in VIDEO_EXTS)
     preview = next((edit / n for n in PREVIEW_PRIORITY if (edit / n).exists()), None)
-    date, _, slug = folder.name.partition("_")
+    folder_date, _, slug = folder.name.partition("_")
     meta = index.get(slug) or index.get(folder.name) or {}
     thumb_src = preview or (clips[0] if clips else None)
     thumb = ensure_thumb(thumb_src, edit) if thumb_src else None
     edl = read_json(edit / "edl.json")
+    vdir = folder / "voice"
+    voice = sorted(p for p in vdir.iterdir() if p.is_file() and p.suffix.lower() in VOICE_EXTS) if vdir.is_dir() else []
+    brief = read_json(edit / "brief.json") if (edit / "brief.json").exists() else None
     return {
-        "folder": folder.name, "date": date, "slug": slug or folder.name,
+        "folder": folder.name, "date": folder_date, "slug": slug or folder.name,
+        "voice": [{"name": v.name, "url": "/media/" + rel(v), **probe(v)} for v in voice],
+        "brief": brief if isinstance(brief, dict) else None,
         "status": meta.get("status", "raw" if clips else "empty"), "note": meta.get("note", ""),
         "clips": [{"name": c.name, "url": "/media/" + rel(c), **probe(c)} for c in clips],
         "preview": "/media/" + rel(preview) if preview else None,
@@ -187,7 +324,7 @@ def scan_video(folder: Path, index: dict[str, dict]) -> dict:
         "duration": (edl or {}).get("total_duration_s") if isinstance(edl, dict) else None,
         "has": {n: (edit / n).exists() for n in ("edl.json", "scenes.json", "sound.json", "sound_report.json",
                                                     "master.ass", "critic.md", "project.md", "feedback.json",
-                                                    "takes_packed.md")},
+                                                    "takes_packed.md", "brief.json", "voice_master.mp4")},
     }
 
 
@@ -303,7 +440,16 @@ class Handler(SimpleHTTPRequestHandler):
     def do_POST(self):
         path = unquote(urlparse(self.path).path)
         length = int(self.headers.get("Content-Length") or 0)
+        if path == "/api/upload" or path.startswith("/api/upload/"):
+            return self.handle_upload(path[len("/api/upload/"):] or None, length)
         body = json.loads(self.rfile.read(length) or b"{}")
+        if path.startswith("/api/brief/"):
+            try:
+                folder = video_folder(path[len("/api/brief/"):])
+                brief = write_brief(folder, body.get("mode"), (), (), body.get("voice_offset_s"), body.get("notes"))
+            except ValueError as exc:
+                return self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+            return self.send_json({"ok": True, "brief": brief})
         if path.startswith("/api/feedback/"):
             try:
                 out = write_feedback(path[len("/api/feedback/"):], body.get("notes", []))
@@ -311,6 +457,21 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
             return self.send_json({"ok": True, "file": rel(out)})
         return self.send_json({"error": "unknown endpoint"}, HTTPStatus.NOT_FOUND)
+
+    def handle_upload(self, folder_name: str | None, length: int):
+        ctype = self.headers.get("Content-Type", "")
+        m = re.search(r"boundary=\"?([^\";]+)", ctype)
+        if not ctype.startswith("multipart/form-data") or not m:
+            return self.send_json({"error": "multipart/form-data expected"}, HTTPStatus.BAD_REQUEST)
+        if length <= 0 or length > MAX_UPLOAD_BYTES:
+            return self.send_json({"error": f"upload must be 1 byte to {MAX_UPLOAD_BYTES >> 30} GB"}, HTTPStatus.BAD_REQUEST)
+        body = self.rfile.read(length)
+        try:
+            result = save_upload(parse_multipart(body, m.group(1)), folder_name)
+        except ValueError as exc:
+            return self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+        self.log_message("upload -> videos/%s: %s", result["folder"], result["footage"] + result["voice"])
+        return self.send_json({"ok": True, **result})
 
     def serve_media(self, relpath: str):
         target = (REPO / relpath).resolve()
@@ -320,6 +481,8 @@ class Handler(SimpleHTTPRequestHandler):
         ctype = self.guess_type(str(target))
         if target.suffix.lower() == ".mov":
             ctype = "video/quicktime"
+        elif target.suffix.lower() == ".m4a":
+            ctype = "audio/mp4"
         rng = self.headers.get("Range")
         start, end = 0, size - 1
         if rng and rng.startswith("bytes="):

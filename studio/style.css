@@ -99,3 +99,14 @@ details summary{cursor:pointer;color:var(--muted)}
 .anim img{width:120px;border-radius:8px;border:1px solid var(--line);background:#000}
 .stat{display:inline-flex;flex-direction:column;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;min-width:110px}
 .stat b{font-size:18px} .stat span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+/* upload / brief forms */
+.upload label{display:block;margin:8px 0;font-size:13px;color:var(--muted)}
+.upload input:not([type=file]):not([type=radio]),.upload select{font:inherit;font-size:13px;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;margin-left:6px;min-width:120px}
+.upload input[name=slug],.upload input[name=notes]{width:min(100%,420px)}
+.upload input[type=file]{font-size:12px;color:var(--text);margin-left:6px}
+.upload .modes{display:grid;gap:6px;margin:8px 0}
+.upload .modes label{display:flex;gap:8px;align-items:baseline;margin:0;color:var(--text)}
+.upload .modes span{color:var(--muted);font-size:12px}
+.upload progress{width:160px;height:8px;accent-color:var(--accent)}
+details.panel summary{cursor:pointer}
+details.panel > form{margin-top:12px}

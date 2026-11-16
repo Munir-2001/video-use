@@ -39,3 +39,6 @@ Write `videos/<folder>/edit/edl.json` in the upstream EDL format:
  "total_duration_s": 0.0}
 ```
 `sources` paths are absolute. `total_duration_s` is the sum of range durations. Then reply with: the beat list (one line each with duration), total runtime vs target, every judgment call you made, and the 2–3 moments the planner should consider for graphics (number, list, comparison, "let me show you").
+
+## Voice-over videos (`edit/brief.json` mode `voiceover`)
+The recording is the timeline, not the clips. `takes_packed.md` then contains the voice transcript(s) (files listed in `brief.voice`, transcripts named by their stem). Cut the **voice**: `sources` are the voice files (`videos/<folder>/voice/<name>`), every range is over a voice source, and the clips never appear in `ranges`; the planner lays them under the voice. Read `brief.notes` first: it says what the voice talks over. Mode `commentary`: the clip is the timeline and keeps its sound; cut the clip as usual (often a single range) and leave the voice to the sound agent. Mode `clips`: nothing changes.

@@ -31,3 +31,6 @@ You design and mix the sound for one video. You never ask questions. You cannot 
 
 ## Output
 Reply with: the effects table (effect, file, contact frame, start after attack offset, event), music file and measured bed level, per-section LUFS, final integrated/true peak, and anything skipped because the palette file was missing.
+
+## Commentary videos (`edit/brief.json` mode `commentary`)
+Add to `sound.json`: `"voice": {"file": "../voice/<name>", "offset_s": <brief.voice_offset_s>, "gain_db": 0}`. `sound_mix.py` delays the recording to the offset and ducks the clip's own sound under it with the sidechain (the clip is the music here). Check in `sound_report.json` that the voice is the loudest element and the clip sits ≈ −12 dB under it while I talk. Mode `voiceover` needs nothing: the voice is already the speech track of `voice_master.mp4`.
