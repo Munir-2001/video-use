@@ -33,3 +33,10 @@ Reply with: cue count, word-event count, profile and resolution, font status, an
 
 ## Per-stretch caption styles
 `captions_ass.py` reads `edit/scenes.json` automatically: a stretch with layout `split_top` puts its cues at the panel's bottom edge (small), and a stretch with `"caption": "big"` (or another preset from `brand/style.json` `captions.presets`) gets bigger 2–3 word cues. Check one frame per styled stretch, not just one frame per video.
+
+## You decide the cues, the helper only draws them
+The automatic 2–3 word grouping is a default, not the edit. After the first build, read `edit/master.ass` (or run `captions_ass.py edl.json --dump-words` for the indexed word list) and judge every cue like an editor: a cue never splits a name or a number from its unit, a punchline gets its own cue, the comment keyword sits with "Comment", a list item is one cue. Where the default is wrong, write `edit/captions_plan.json`:
+```json
+{"cues": [{"i": [0, 1], "preset": "big"}, {"i": [2, 4]}, {"i": [5, 5]}]}
+```
+`i` = first and last word index (inclusive, in order, no overlap); words you leave out get no caption (use that for throat-clears the editor kept). `preset` applies a caption preset from `brand/style.json`. Then rebuild; the helper uses the plan instead of its grouping. Say in your reply how many cues you changed and why.

@@ -41,6 +41,7 @@ Conversation-driven video editing, everything local and free. No paid APIs, ever
 | critic | opus | final QC, roasts, ranks fixes |
 | proofreader | haiku | proposes word-for-word transcript fixes the vocabulary missed |
 Sub-agents never ask questions; they pick the obvious option and say so.
+**Claude edits; helpers only execute.** Every creative decision (cuts, layouts, beats, cue grouping, effects, music placement) is made by an agent and written to a JSON/MD the helper consumes (`edl.json`, `scenes.json`, `captions_plan.json`, `sound.json`, `brief.json`). A helper never chooses; if a helper has to guess, that is a bug: give the agent a knob instead.
 
 ## Standing commands
 - **"write a script for <topic>"** — writer agent → `videos/<date>_<slug>/script.md` (hook, beats mapped to cards, CTA, recording notes). I record from it, drop the clips, then "edit videos/<folder>".

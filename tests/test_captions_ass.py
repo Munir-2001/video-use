@@ -164,3 +164,22 @@ def test_unknown_caption_preset_fails_loudly():
         assert False, "expected ValueError"
     except ValueError:
         pass
+
+
+def test_captions_plan_overrides_automatic_grouping(tmp_path):
+    import json
+    (tmp_path / "t.json").write_text(json.dumps({"words": [w("Comment", 0.0, 0.3), w("backlinks", 0.4, 0.9), w("and", 1.0, 1.2),
+                                                            w("I", 1.3, 1.4), w("send", 1.5, 1.9)]}))
+    edl = {"ranges": [{"source": "t", "start": 0.0, "end": 3.0}]}
+    style = {**STYLE, "captions": {**STYLE["captions"], "presets": {"big": {"size_px": 120, "y_fraction": 0.64}}}}
+    plan = {"cues": [{"i": [0, 1], "preset": "big"}, {"i": [3, 4]}]}
+
+    cues = ca.output_cues(edl, tmp_path, 2, 3, None, style, plan)
+
+    assert [[x["text"] for x in c["words"]] for c in cues] == [["Comment", "backlinks"], ["I", "send"]]  # "and" dropped on purpose
+    assert cues[0]["caption"]["size_px"] == 120 and "caption" not in cues[1]
+    try:
+        ca.output_cues(edl, tmp_path, 2, 3, None, style, {"cues": [{"i": [0, 2]}, {"i": [1, 3]}]})
+        assert False, "overlap should fail"
+    except ValueError:
+        pass

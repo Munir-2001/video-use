@@ -2,6 +2,12 @@
 
 Append-only, newest first. Format: `## date · title` then Why / Trade-off / Alternatives / Status.
 
+## 2026-11-16 · Principle: Claude edits, helpers execute (and the one gap closed: cue grouping)
+**Why:** My rule: the videos are edited by Claude, not by scripts; scripts are tools that agents use. Audit of the helpers: `render.py`, `sound_mix.py`, `voiceover.py build`, `fix_transcript.py`, `transcribe*.py`, `studio_ui.py` are deterministic executors of decisions written by agents (`edl.json` by the editor, `scenes.json` by the planner, `sound.json` by the sound agent, `brief.json` by me). The one helper that was still deciding something editorial was `captions_ass.py`, whose 2–3 word grouping is a rule, not a judgment. Now the captions agent reviews the cues and may write `edit/captions_plan.json` (explicit word-index cues with optional presets); the helper draws exactly that. `--dump-words` prints the indexed word list to plan from. The principle is one line in CLAUDE.md. The two smoke folders have hand-written `edl.json`/`scenes.json` as stand-ins; real videos never do.
+**Trade-off:** One more file the captions agent may write; the automatic grouping stays as the starting point so simple videos cost nothing extra.
+**Alternatives:** Let the agent emit the .ass directly (loses the brand motion and layout code), keep the rule-based grouping as final (contradicts the principle).
+**Status:** done; tested.
+
 ## 2026-11-16 · Openverse for extra sound effects; a writer agent so the script shapes the edit
 **Why:** The bundled palette has no cue for things like a cash register. `helpers/sfx_fetch.py` searches Openverse (free, no key, CC0 / CC BY only, sound_effect category, ≤ 6 s), downloads one match as 48 kHz mp3 into `brand/sfx/extra_<name>.mp3` and appends the attribution to CREDITS.md; the sound agent may fetch at most two per video and copies credits into `sound_report.json`. Music generation (MusicGen) was offered and declined for now: I drop a track myself. Second: the user's workflow starts with a script, not a clip. A **writer** agent (opus) writes `script.md` with the hook, named beats pre-mapped to cards and layouts, the CTA and recording notes, so the recording already contains the beats the planner needs and the pauses the editor cuts on.
 **Trade-off:** Openverse anonymous rate limits are low but enough; CC BY sounds need the credit in the description. The script is a plan, not a contract: the transcript decides the real timings.

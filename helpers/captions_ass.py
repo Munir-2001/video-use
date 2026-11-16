@@ -189,13 +189,35 @@ def stretch_caption(stretch: dict, style: dict) -> dict | None:
     return dict(layout_cap) if layout_cap else None
 
 
+def planned_cues(words: list[dict], plan: dict, style: dict) -> list[dict]:
+    """Cues decided by the captions agent (edit/captions_plan.json):
+    {"cues": [{"i": [first_word_index, last_word_index], "preset": "big" | {...}}, ...]}
+    Indices are into the output-timeline word list (0-based, inclusive, in
+    order, no overlap). Words not covered by any cue get no caption, on purpose."""
+    cues, last = [], -1
+    for n, spec in enumerate(plan.get("cues", [])):
+        i0, i1 = int(spec["i"][0]), int(spec["i"][1])
+        if i0 <= last or i1 < i0 or i1 >= len(words):
+            raise ValueError(f"captions_plan cue {n}: bad index range {spec['i']} (words 0..{len(words) - 1}, must be in order, no overlap)")
+        last = i1
+        caption = stretch_caption({"caption": spec.get("preset")}, style) if spec.get("preset") else None
+        cues += cues_from_words(words[i0:i1 + 1], i1 - i0 + 1, i1 - i0 + 1, caption)
+    return cues
+
+
 def output_cues(edl: dict, transcripts_dir: Path, target: int, max_words: int,
-                scenes: dict | None = None, style: dict | None = None) -> list[dict]:
+                scenes: dict | None = None, style: dict | None = None, plan: dict | None = None) -> list[dict]:
     """Cues on the output timeline: [{start, end, words: [{text, start, end}], caption?}].
     With scenes.json, words are grouped per stretch so a stretch can change the
     words-per-cue, size and band (giant single words over a full face, a small
     line under a split_top panel)."""
     words = output_words(edl, transcripts_dir)
+    if plan and plan.get("cues"):
+        cues = planned_cues(words, plan, style or {})
+        cues.sort(key=lambda c: c["start"])
+        for i in range(len(cues) - 1):
+            cues[i]["end"] = min(cues[i]["end"], cues[i + 1]["start"])
+        return cues
     stretches = sorted((scenes or {}).get("stretches", []), key=lambda s: float(s["start"]))
     overrides = [(float(s["start"]), float(s["end"]), stretch_caption(s, style or {})) for s in stretches]
     if not any(o[2] for o in overrides):
@@ -355,6 +377,9 @@ def main() -> None:
     ap.add_argument("--offset", type=float, default=0.0, help="with --words-from: seconds the recording starts into the video")
     ap.add_argument("--scenes", type=Path, default=None,
                     help="scenes.json with per-stretch caption overrides (default: <edit>/scenes.json if it exists; --scenes none to ignore)")
+    ap.add_argument("--plan", type=Path, default=None,
+                    help="captions_plan.json written by the captions agent (default: <edit>/captions_plan.json if it exists); overrides automatic grouping")
+    ap.add_argument("--dump-words", action="store_true", help="print the output-timeline word list with indices and exit (for writing a plan)")
     ap.add_argument("--y-fraction", type=float, default=None,
                     help="override the caption band centre (0-1 of frame height); default from brand/style.json")
     args = ap.parse_args()
@@ -383,7 +408,16 @@ def main() -> None:
         scenes_path = None if (args.scenes and str(args.scenes) == "none") else (args.scenes or edit_dir / "scenes.json")
         if scenes_path and scenes_path.exists():
             scenes = json.loads(scenes_path.read_text())
-        cues = output_cues(edl, edit_dir / "transcripts", int(wpc.get("target", 2)), int(wpc.get("max", 3)), scenes, style)
+        if args.dump_words:
+            for i, w in enumerate(output_words(edl, edit_dir / "transcripts")):
+                print(f"{i:4d}  {w['start']:7.2f}-{w['end']:7.2f}  {w['text']}")
+            return
+        plan = None
+        plan_path = args.plan or edit_dir / "captions_plan.json"
+        if plan_path.exists():
+            plan = json.loads(plan_path.read_text())
+            print(f"  cue grouping from {plan_path.name} ({len(plan.get('cues', []))} cues decided by the captions agent)")
+        cues = output_cues(edl, edit_dir / "transcripts", int(wpc.get("target", 2)), int(wpc.get("max", 3)), scenes, style, plan)
     text, warnings = build_ass(cues, style, profile, width, height, args.y_fraction)
 
     out = (args.output or (edit_dir / "master.ass")).resolve()
