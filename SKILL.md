@@ -377,6 +377,9 @@ Overlays: the planner's slots become EDL `overlays` entries (`file`, `start_in_o
 ### Persist
 End of session: append to `edit/project.md` (format above), copy the approved `edl.json` to `examples/<date>_<slug>.edl.json` with a line in `examples/index.md`, update `videos/index.md`, commit. Any change to helpers, agents, folders or workflow gets a `DECISIONS.md` entry and a `HOW_IT_WORKS.md` update in the same commit.
 
+### Script first (optional, recommended)
+"write a script for <topic>" runs the **writer** agent before anything is recorded: `videos/<date>_<slug>/script.md` with the hook, the named beats pre-mapped to cards and layouts, the CTA and recording notes. When the folder has a `script.md`, inventory reads it first and the planner treats its beat table as the first draft of `scenes.json` (the transcript decides the real timings).
+
 ### Voice recordings (separate audio)
 A video folder may carry `voice/*.mp3|m4a|wav` next to the clips and `edit/brief.json` (written by the studio upload form or by hand): `{"mode": "voiceover"|"commentary"|"clips", "footage": [...], "voice": [...], "voice_offset_s": 0, "notes": "..."}`. Inventory runs `helpers/voiceover.py transcribe videos/<folder>` after `transcribe_batch.py`, so the voice words are in `takes_packed.md` too.
 

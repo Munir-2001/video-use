@@ -2,6 +2,7 @@
 
 | # | I say / it does | File produced |
 |---|---|---|
+| 0 | **"write a script for <topic>"** — the **writer** turns a topic into `script.md`: a hook, named beats (each one maps to a card and a layout), the CTA, and recording notes (framing, pauses, what screen recording to capture). I read it to camera. | `videos/<date>_<slug>/script.md` |
 | 1 | I drop clips into `videos/2026-11-16_first-reel/` and add a line to `videos/index.md` (status: `raw`). | — |
 | 1b | Or upload from the studio (“New video”): clips land at the folder top level, recordings in `voice/`, and `edit/brief.json` records the mode (voiceover / commentary / clips), the offset and my notes. | `edit/brief.json`, `videos/index.md` line |
 | 2 | **"edit videos/2026-11-16_first-reel"** — inventory: ffprobe each clip, `transcribe_batch.py`, `pack_transcripts.py`, `fix_transcript.py` (vocabulary), **proofreader** (Haiku) → `fix_transcript.py --proposals`. | `edit/transcripts/*.json` (fixed; raw copy in `transcripts/raw/`), `edit/takes_packed.md`, `edit/proofread.json` |

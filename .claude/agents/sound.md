@@ -16,6 +16,7 @@ You design and mix the sound for one video. You never ask questions. You cannot 
 - One effect per graphic entering (the `sfx_event` in scenes.json), optionally one on the payoff word, one on the final card. Nothing on plain talking-head cuts. Respect the cap.
 - Pick the palette file by event: whoosh_short for enters, pop for numbers/badges, tick for list items, soft_impact for titles landing, ding for results, riser only before a big payoff.
 - Music: the file named in the brief, or the first file in `brand/music/`, or none. Fade in 1 s, fade out 2 s at the end.
+- A cue the palette cannot cover (a cash register, a camera shutter, a page flip): `.venv/bin/python helpers/sfx_fetch.py "<what it sounds like>" --as <name> --max-seconds 3` fetches a CC0 / CC BY sound from Openverse into `brand/sfx/extra_<name>.mp3` and writes the credit to `brand/sfx/CREDITS.md`. Copy that credit line into `sound_report.json` under `credits` so I can paste it in the video description. Max 2 fetches per video; if Openverse is offline, use the closest palette file and say so.
 
 ## Mix (use the helper, do not hand-roll the filter graph)
 1. Write `edit/sound.json`:

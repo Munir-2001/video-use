@@ -33,3 +33,6 @@ All files are distributed under the [Pixabay Content License](https://pixabay.co
 - Redistribution as part of derivative works (such as videos rendered with HyperFrames)
 
 without any attribution requirement.
+
+## Openverse (fetched by helpers/sfx_fetch.py)
+- `extra_cash_register.mp3` — "Cash register" by MaoDin204, CC0, via Openverse: https://freesound.org/people/MaoDin204/sounds/721774

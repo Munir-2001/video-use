@@ -2,6 +2,12 @@
 
 Append-only, newest first. Format: `## date · title` then Why / Trade-off / Alternatives / Status.
 
+## 2026-11-16 · Openverse for extra sound effects; a writer agent so the script shapes the edit
+**Why:** The bundled palette has no cue for things like a cash register. `helpers/sfx_fetch.py` searches Openverse (free, no key, CC0 / CC BY only, sound_effect category, ≤ 6 s), downloads one match as 48 kHz mp3 into `brand/sfx/extra_<name>.mp3` and appends the attribution to CREDITS.md; the sound agent may fetch at most two per video and copies credits into `sound_report.json`. Music generation (MusicGen) was offered and declined for now: I drop a track myself. Second: the user's workflow starts with a script, not a clip. A **writer** agent (opus) writes `script.md` with the hook, named beats pre-mapped to cards and layouts, the CTA and recording notes, so the recording already contains the beats the planner needs and the pauses the editor cuts on.
+**Trade-off:** Openverse anonymous rate limits are low but enough; CC BY sounds need the credit in the description. The script is a plan, not a contract: the transcript decides the real timings.
+**Alternatives:** HeyGen catalogue (cloud sign-in, excluded), generating effects (none of the local tools do it), writing scripts in chat without a file (nothing for the planner to read).
+**Status:** done; sfx_fetch verified live on "cash register".
+
 ## 2026-11-16 · Brand assets in place: fonts (Inter, JetBrains Mono, Instrument Serif) and the sfx palette
 **Why:** Captions and PIL cards were falling back to Helvetica and the sound agent had no effects. Fonts downloaded from their official repos (rsms/inter 4.1 static TTFs, JetBrains Mono 2.304, Instrument Serif from google/fonts), all OFL, licences alongside; `brand/style.json` gains a `serif` entry for the one italic accent word in editorial cards. The 19 Pixabay effects bundled with the HyperFrames media-use skill are copied into `brand/sfx/` under the palette names (whoosh_short/long, click, tick, pop, soft_impact, riser, ding) plus `extra_*` for typing, sparkle, chime, glitch, bass hit; Pixabay licence, CREDITS.md kept.
 **Trade-off:** Assets are tracked in git (≈ 2.5 MB) so a fresh clone works; no music yet, because picking a track is my call (drop one into `brand/music/`).

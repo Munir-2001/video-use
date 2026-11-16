@@ -19,4 +19,4 @@ Extras (use sparingly, same rules): `extra_typing.mp3` (typewriter / typed promp
 
 Rules live in `STYLE.md`: max ~8 effects per 30 s, each tied to a visible event, start before the contact frame by the effect's attack time.
 
-Free sources: freesound.org (check each licence; CC0 preferred), or record your own.
+More cues: `helpers/sfx_fetch.py "cash register" --as cash_register` pulls a CC0 / CC BY sound from Openverse (free, no key) into `extra_<name>.mp3` and records the credit in CREDITS.md. Or record your own.

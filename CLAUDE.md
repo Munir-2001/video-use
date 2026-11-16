@@ -31,6 +31,7 @@ Conversation-driven video editing, everything local and free. No paid APIs, ever
 ## Sub-agents (`.claude/agents/`)
 | agent | model | does |
 |---|---|---|
+| writer | opus | writes `videos/<folder>/script.md` before I record: hook, named beats → cards, CTA, recording notes |
 | editor | sonnet | picks takes, writes EDL ranges from takes_packed.md |
 | planner | opus | decides layout per stretch, writes edit/scenes.json |
 | motion | sonnet | builds one animation slot (HyperFrames or PIL+ffmpeg), parallel per slot |
@@ -42,6 +43,7 @@ Conversation-driven video editing, everything local and free. No paid APIs, ever
 Sub-agents never ask questions; they pick the obvious option and say so.
 
 ## Standing commands
+- **"write a script for <topic>"** — writer agent → `videos/<date>_<slug>/script.md` (hook, beats mapped to cards, CTA, recording notes). I record from it, drop the clips, then "edit videos/<folder>".
 - **"edit videos/<folder>"** — inventory → pre-scan → converse → strategy → WAIT for my yes → editor → planner → motion (parallel) + captions + sound → render → critic → fix loop (max 3) → preview.
 - **"apply my notes"** — read `edit/feedback.json` or my message; update EDL/scenes; re-render only changed scenes; critic again.
 - **"process the inbox"** — run the designer agent on `cards/_inbox/`.
