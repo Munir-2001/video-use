@@ -58,3 +58,38 @@ master.srt
 takes_packed.md
 edl.json
 project.md
+
+# --- Studio additions (keep all text, ignore media) ---
+# Upstream ignores edit/, transcripts/, edl.json, project.md, takes_packed.md,
+# master.srt anywhere. Re-include them under videos/ and examples/ so the
+# studio's text artifacts are versioned; media stays out.
+!videos/*/edit/
+!videos/*/edit/transcripts/
+!videos/*/edit/animations/
+!videos/*/edit/verify/
+!videos/*/edit/**/edl.json
+!videos/*/edit/**/project.md
+!videos/*/edit/**/takes_packed.md
+!videos/*/edit/**/master.srt
+!examples/*.json
+videos/**/*.mp4
+videos/**/*.MP4
+videos/**/*.mov
+videos/**/*.MOV
+videos/**/*.mkv
+videos/**/*.wav
+videos/**/*.aiff
+videos/**/*.m4a
+videos/**/*.webm
+videos/**/*.png
+videos/**/*.jpg
+videos/**/clips_graded/
+videos/**/clips_preview/
+videos/**/downloads/
+videos/**/animations/**/node_modules/
+videos/**/animations/**/out/
+brand/music/*
+!brand/music/.gitkeep
+cards/_inbox/*
+!cards/_inbox/links.md
+node_modules/

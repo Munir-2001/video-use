@@ -1,0 +1,48 @@
+# Video studio (fork of browser-use/video-use)
+
+Conversation-driven video editing, everything local and free. No paid APIs, ever.
+
+## Read every session
+- `STYLE.md` — my rules, one per line. Non-negotiable.
+- `SKILL.md` — the editing process, hard rules, EDL format, and the "Studio additions" orchestration section.
+- `brand/style.json` — fonts, colors, handle, caption style, PiP sizes, vocabulary fix-list.
+
+## Read only when needed
+- `HOW_IT_WORKS.md` — one video through the system. Read when asked "where are we?" or when lost.
+- `DECISIONS.md` — why things are the way they are. Read before changing any tool, helper, agent or folder.
+- `cards/` — style/motion/caption/sound cards. Read when planning graphics or matching a style. `cards/_inbox/` is raw drops; never read it except via "process the inbox".
+- `examples/` — approved EDLs. Read only when writing a new EDL.
+- `helpers/` — the scripts. Run with `.venv/bin/python helpers/<name>.py`.
+- `.agents/skills/hyperframes*` — read inside the motion agent only.
+
+## Never
+- Never scan `videos/` or open raw clips unprompted. Inventory only the folder named in the command.
+- Never call a paid API (HeyGen, ElevenLabs, any cloud model). Stop and say so if something needs one.
+- Never edit upstream files except: `helpers/transcribe.py`, `helpers/render.py` (.ass only), `install.md`, `SKILL.md` (studio section), `.env.example`, `.gitignore`.
+
+## Layout
+- `videos/YYYY-MM-DD_slug/` raw clips at top level, `edit/` inside (upstream layout). `videos/index.md` one line per video.
+- `brand/` style.json, `fonts/`, `sfx/` (palette in its README), `music/`.
+- `cards/` max 12 cards; `cards/_inbox/` drops + `links.md`.
+- `examples/` max 10 approved EDLs, one-line note each in `examples/index.md`.
+
+## Sub-agents (`.claude/agents/`)
+| agent | does |
+|---|---|
+| editor | picks takes, writes EDL ranges from takes_packed.md |
+| planner | decides layout per stretch, writes edit/scenes.json |
+| motion | builds one animation slot (HyperFrames or PIL+ffmpeg), parallel per slot |
+| captions | word-synced .ass captions, applied last |
+| sound | sfx placement + music duck + loudnorm, writes edit/sound.json |
+| designer | turns cards/_inbox drops into brand cards |
+| critic | final QC, roasts, ranks fixes |
+Sub-agents never ask questions; they pick the obvious option and say so.
+
+## Standing commands
+- **"edit videos/<folder>"** — inventory → pre-scan → converse → strategy → WAIT for my yes → editor → planner → motion (parallel) + captions + sound → render → critic → fix loop (max 3) → preview.
+- **"apply my notes"** — read `edit/feedback.json` or my message; update EDL/scenes; re-render only changed scenes; critic again.
+- **"process the inbox"** — run the designer agent on `cards/_inbox/`.
+- **"learn from my reviews"** — propose dated STYLE.md lines from repeated notes or "make this a rule"; apply only what I approve.
+- **"where are we?"** — HOW_IT_WORKS.md in 5 lines, last 3 DECISIONS entries, status of every video from `videos/index.md`.
+- Any change to tools, helpers, agents, folders or workflow: DECISIONS.md entry + HOW_IT_WORKS.md update in the same commit.
+- Commit with clear messages. Never push unless told.
