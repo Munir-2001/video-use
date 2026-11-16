@@ -4,9 +4,9 @@ Append-only, newest first. Format: `## date · title` then Why / Trade-off / Alt
 
 ## 2026-11-16 · Agents written; captions as .ass; sound mixed by helper; ffmpeg needs libass
 **Why:** Eight agents in `.claude/agents/` (editor, planner, motion, captions, sound, designer, critic, proofreader). Two new helpers make the mechanical agents deterministic: `helpers/captions_ass.py` (word-synced karaoke .ass, one event per word) and `helpers/sound_mix.py` (attack-offset effects, sidechain duck, two-pass loudnorm, measured report). `helpers/render.py` got one minimal change: an `.ass` subtitles file is burned without `force_style` and with `fontsdir=brand/fonts`.
-**Trade-off:** Homebrew's default `ffmpeg` formula on this Mac is built without libass, so no caption burn-in works (upstream `.srt` included). Fix: `brew install ffmpeg-full` (keg-only; put `/opt/homebrew/opt/ffmpeg-full/bin` first on PATH). Awaiting approval.
+**Trade-off:** Homebrew's default `ffmpeg` formula on this Mac is built without libass, so no caption burn-in works (upstream `.srt` included). Fix: `brew install ffmpeg-full` (keg-only; `/opt/homebrew/opt/ffmpeg-full/bin` first on PATH via `source .envrc.studio`). Installed 2026-11-16; burn-in verified on the test clip.
 **Alternatives:** HyperFrames-rendered caption overlays (no libass needed) — kept as fallback if ffmpeg-full is refused.
-**Status:** agents + helpers done and unit-tested; burn-in blocked on ffmpeg-full.
+**Status:** done; captions burn in with brand placement.
 
 ## 2026-11-16 · Transcript fixer: vocabulary list first, then one cheap Haiku pass
 **Why:** Parakeet mis-hears proper nouns ("Muni Rabasi", "clot code"). Captions must show the right names. A deterministic vocabulary list in `brand/style.json` catches the known ones for free; a Haiku sub-agent catches the rest cheaply.

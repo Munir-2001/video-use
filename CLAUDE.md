@@ -12,7 +12,7 @@ Conversation-driven video editing, everything local and free. No paid APIs, ever
 - `DECISIONS.md` — why things are the way they are. Read before changing any tool, helper, agent or folder.
 - `cards/` — style/motion/caption/sound cards. Read when planning graphics or matching a style. `cards/_inbox/` is raw drops; never read it except via "process the inbox".
 - `examples/` — approved EDLs. Read only when writing a new EDL.
-- `helpers/` — the scripts. Run with `.venv/bin/python helpers/<name>.py`.
+- `helpers/` — the scripts. Run with `.venv/bin/python helpers/<name>.py` after `source .envrc.studio` (libass ffmpeg on PATH, telemetry off).
 - `.agents/skills/hyperframes*` — read inside the motion agent only.
 
 ## Never

@@ -1,0 +1,4 @@
+# Source this before running helpers so they find the libass-enabled ffmpeg:
+#   source .envrc.studio
+export PATH="/opt/homebrew/opt/ffmpeg-full/bin:$PATH"
+export HYPERFRAMES_NO_TELEMETRY=1

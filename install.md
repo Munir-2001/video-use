@@ -52,6 +52,14 @@ command -v uv >/dev/null && uv pip install -r requirements-studio.txt || pip ins
 
 ### 3. Install ffmpeg (+ optional yt-dlp)
 
+`ffmpeg` and `ffprobe` are hard requirements, **built with libass** (caption burn-in). On macOS Homebrew's default `ffmpeg` formula currently lacks libass; install `ffmpeg-full` (keg-only) and put it first on PATH:
+
+```bash
+brew install ffmpeg-full
+source .envrc.studio    # PATH=/opt/homebrew/opt/ffmpeg-full/bin:$PATH (add the line to ~/.zshrc to make it permanent)
+ffmpeg -filters | grep -q subtitles && echo "libass OK"
+```
+
 `ffmpeg` and `ffprobe` are hard requirements. `yt-dlp` is only needed if the user wants to pull sources from URLs. Animation engines such as HyperFrames, Remotion, and Manim are installed lazily the first time a project actually needs them.
 
 ```bash
