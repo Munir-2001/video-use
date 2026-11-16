@@ -108,3 +108,23 @@ def test_brand_default_band_is_under_the_chin_not_the_middle():
     brand = json.loads((Path(__file__).resolve().parent.parent / "brand" / "style.json").read_text())
     v = brand["captions"]["position"]["vertical"]
     assert 0.62 <= v["y_fraction"] <= 0.74 and v["band"][1] <= 0.80
+
+
+def test_word_events_pop_and_rise_tags():
+    cue = {"start": 1.0, "end": 2.0, "words": [w("Hello", 1.0, 1.4), w("world", 1.4, 2.0)]}
+    layout = {"an": 5, "x": 470, "y": 1306}
+
+    ev = ca.word_events(cue, layout, "&H0066D1FF", "&H00F7F5F5", 112,
+                        {"pop_ms": 120, "pop_from": 0.86, "rise_px": 28, "fade_in_ms": 80})
+
+    first, second = ev[0][2], ev[1][2]
+    assert "\\move(470,1334,470,1306,0,120)" in first and "\\fad(80,0)" in first
+    assert "\\fscx86\\fscy86\\t(0,120,\\fscx112\\fscy112)" in first
+    assert "\\pos(470,1306)" in second and "\\move" not in second
+
+
+def test_word_events_no_motion_is_static():
+    cue = {"start": 1.0, "end": 2.0, "words": [w("Hello", 1.0, 1.4)]}
+    ev = ca.word_events(cue, {"an": 5, "x": 1, "y": 2}, "&H0066D1FF", "&H00F7F5F5", 112,
+                        {"pop_ms": 0, "rise_px": 0, "fade_in_ms": 0})
+    assert "\\t(" not in ev[0][2] and "\\pos(1,2)" in ev[0][2]

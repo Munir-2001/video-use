@@ -10,6 +10,7 @@ One rule per line. Each line ends with `(date · origin)`. Origins: `seed` = ini
 - Catchy text is its own layer: a new idea opens with a 2–4 word title, heavy sans, exactly one accent word in yellow. Captions never repeat the title's words while it is on screen. (2026-11-16 · seed)
 - Text beside my face goes in a card in the empty side of the frame, never across the face. (2026-11-16 · seed)
 - Captions are applied last, after every overlay, so nothing hides them. (2026-11-16 · seed)
+- Captions are big (96 px at 1080x1920, 80 px at 1080p) and they move: the spoken word pops in and each cue rises into place. Static subtitles are wrong. (2026-11-16 · rule)
 
 ## Framing and safe areas
 - Vertical: the bottom 20% and the right edge stay clear of captions and graphics (platform UI lives there). (2026-11-16 · seed)

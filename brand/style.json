@@ -41,8 +41,8 @@
       "max": 3
     },
     "font": "display",
-    "size_px_1080w": 64,
-    "size_px_1080x1920": 72,
+    "size_px_1080w": 80,
+    "size_px_1080x1920": 96,
     "highlight": {
       "scale": 1.12,
       "color": "caption_highlight",
@@ -66,7 +66,14 @@
         "note": "bottom band, above the bottom 10 %"
       }
     },
-    "max_width_fraction": 0.8
+    "max_width_fraction": 0.8,
+    "motion": {
+      "pop_ms": 120,
+      "pop_from": 0.86,
+      "rise_px": 28,
+      "fade_in_ms": 80,
+      "note": "spoken word pops from 86 % to the highlight scale; each cue rises into place with a short fade (ASS tags, burned by libass)"
+    }
   },
   "safe_areas": {
     "vertical": {

@@ -185,8 +185,22 @@ def escape_text(text: str) -> str:
     return text.replace("\\", "\\\\").replace("{", "(").replace("}", ")")
 
 
-def word_events(cue: dict, layout: dict, highlight: str, base: str, scale: int) -> list[tuple[float, float, str]]:
-    """One event per word: that word highlighted + scaled, the others base."""
+DEFAULT_MOTION = {"pop_ms": 120, "pop_from": 0.86, "rise_px": 28, "fade_in_ms": 80}
+
+
+def word_events(cue: dict, layout: dict, highlight: str, base: str, scale: int,
+                motion: dict | None = None) -> list[tuple[float, float, str]]:
+    """One event per word: that word highlighted + scaled, the others base.
+
+    Motion (brand/style.json captions.motion): the spoken word pops in from
+    `pop_from` x base to the highlight scale over `pop_ms`; the first event of a
+    cue rises `rise_px` into place with a `fade_in_ms` fade. All ASS tags, so
+    render.py burns them with libass; no extra frames are rendered."""
+    m = {**DEFAULT_MOTION, **(motion or {})}
+    pop_ms = int(m["pop_ms"])
+    pop_from = int(round(float(m["pop_from"]) * 100))
+    rise = int(m["rise_px"])
+    fade_ms = int(m["fade_in_ms"])
     events = []
     words = cue["words"]
     for k, w in enumerate(words):
@@ -198,10 +212,18 @@ def word_events(cue: dict, layout: dict, highlight: str, base: str, scale: int) 
         for j, other in enumerate(words):
             t = escape_text(other["text"])
             if j == k:
-                parts.append(f"{{\\c{highlight}\\fscx{scale}\\fscy{scale}}}{t}{{\\r}}")
+                pop = f"\\fscx{pop_from}\\fscy{pop_from}\\t(0,{pop_ms},\\fscx{scale}\\fscy{scale})" if pop_ms > 0 else f"\\fscx{scale}\\fscy{scale}"
+                parts.append(f"{{\\c{highlight}{pop}}}{t}{{\\r}}")
             else:
                 parts.append(t)
-        text = f"{{\\an{layout['an']}\\pos({layout['x']},{layout['y']})}}" + " ".join(parts)
+        x, y = layout["x"], layout["y"]
+        if k == 0 and (rise > 0 or fade_ms > 0):
+            move_ms = max(1, min(pop_ms, int((end - start) * 1000)))
+            place = f"\\move({x},{y + rise},{x},{y},0,{move_ms})" if rise > 0 else f"\\pos({x},{y})"
+            fade = f"\\fad({fade_ms},0)" if fade_ms > 0 else ""
+        else:
+            place, fade = f"\\pos({x},{y})", ""
+        text = f"{{\\an{layout['an']}{place}{fade}}}" + " ".join(parts)
         events.append((start, end, text))
     return events
 
@@ -224,7 +246,7 @@ def build_ass(cues: list[dict], style: dict, profile: str, width: int, height: i
         "ScriptType: v4.00+",
         f"PlayResX: {width}",
         f"PlayResY: {height}",
-        "WrapStyle: 2",
+        "WrapStyle: 0",  # smart wrap: a long cue becomes two balanced lines instead of overflowing
         "ScaledBorderAndShadow: yes",
         "YCbCr Matrix: TV.709",
         "",
@@ -242,7 +264,8 @@ def build_ass(cues: list[dict], style: dict, profile: str, width: int, height: i
     ]
     lines = list(header)
     for cue in cues:
-        for start, end, text in word_events(cue, layout, ass_colour(hl_hex), ass_colour(base_hex), scale):
+        for start, end, text in word_events(cue, layout, ass_colour(hl_hex), ass_colour(base_hex), scale,
+                                            caps.get("motion")):
             lines.append(f"Dialogue: 0,{ass_time(start)},{ass_time(end)},Cap,,0,0,0,,{text}")
     return "\n".join(lines) + "\n", warnings
 

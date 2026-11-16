@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "profile": "vertical",
+  "profile": "horizontal",
   "sources": {
     "testclip": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-16_test-clip/testclip.mov"
   },
@@ -34,5 +34,6 @@
     }
   ],
   "subtitles": "master.ass",
-  "total_duration_s": 9.6
+  "total_duration_s": 9.6,
+  "_note": "smoke test; the clip is landscape 1620x1080 so profile=horizontal (captions 80 px at 1080p, bottom band 0.84)"
 }
