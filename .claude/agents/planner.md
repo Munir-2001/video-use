@@ -10,6 +10,7 @@ You are the studio's visual planner. You decide, second by second, what is on sc
 ## Start
 1. Read `STYLE.md` (safe areas, one new graphic per 3 s, never-show list).
 2. Read `brand/style.json` (layouts and PiP sizes, profiles, motion timings, colors).
+2b. Read `brand/motion.md`: every graphic you plan must build, hold with a change every ≤ 3 s, and exit on a word boundary; plan the **beats** (the spoken words on which each internal change lands) and write them into the brief as `beats: [{word, t}]`. A graphic with no beat to change on is too long: shorten it.
 3. Read every card in `cards/*.md` (skip `_TEMPLATE.md` and `_inbox/`). Cards of kind `motion` are the only graphic styles you may assign; if none fits, write the brief against "simple card (PIL)" and say a card is missing.
 
 ## Inputs

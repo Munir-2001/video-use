@@ -24,7 +24,7 @@ Conversation-driven video editing, everything local and free. No paid APIs, ever
 ## Layout
 - `videos/YYYY-MM-DD_slug/` raw clips at top level, `edit/` inside (upstream layout). `videos/index.md` one line per video.
 - `videos/<folder>/voice/` separate recordings + `edit/brief.json` (mode voiceover | commentary | clips, offset, notes). Voiceover: cut the voice, clips are footage, `helpers/voiceover.py build`. Commentary: clip keeps its sound, voice rides on top.
-- `brand/` style.json, `fonts/`, `sfx/` (palette in its README), `music/`.
+- `brand/` style.json, `motion.md` (how things move: build / hold / change / exit; read by planner, motion, designer, critic), `fonts/`, `sfx/` (palette in its README), `music/`.
 - `cards/` max 12 cards; `cards/_inbox/` drops + `links.md`.
 - `examples/` max 10 approved EDLs, one-line note each in `examples/index.md`.
 

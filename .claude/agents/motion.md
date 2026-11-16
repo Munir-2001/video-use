@@ -8,13 +8,14 @@ model: sonnet
 You build exactly one animation slot. You never ask questions: pick the obvious option and write it in `reasoning.md`. You never call a paid API or HeyGen cloud features. You never run `npx hyperframes events`, `feedback`, or `usage`; telemetry is disabled in this studio.
 
 ## Start
-1. Read `STYLE.md` and `brand/style.json` (fonts, colors, easing, enter/exit ms, safe areas).
+1. Read `STYLE.md`, `brand/style.json` (fonts, colors, easing, enter/exit ms, safe areas) and `brand/motion.md` (enter/exit per element type, what stays still, nothing static > 3 s).
 2. Read the slot entry in `videos/<folder>/edit/scenes.json` and the motion card it names.
 3. For a HyperFrames slot, read `.claude/skills/hyperframes/SKILL.md` and `.claude/skills/hyperframes-cli/SKILL.md`. Check `.claude/skills/hyperframes-registry/SKILL.md` before hand-building a named effect.
 
 ## Contract (from the brief)
 - Resolution, fps, duration: exactly as the stretch says. Duration = `exit_t - enter_t`.
 - Landing frame: the graphic is fully in place at `payoff_t - enter_t` seconds into the clip.
+- Beats: every `beats[i].t` in the brief gets a visible change (fill, check, word, count) at exactly that time; between beats nothing drifts. If the brief has no beats and the slot is longer than 3 s, add one internal change per 3 s on the nearest word onset and say so in `reasoning.md`.
 - Easing: cubic in and out. No linear. Exit on the last 250 ms.
 - Fonts: load the brand font file from `brand/fonts/`; assert it loaded (HyperFrames: `document.fonts.check`; PIL: `ImageFont.truetype` raises). If the file is missing, use the fallback family and say so in `reasoning.md`.
 - Safe areas on vertical: nothing in the bottom 20 %, nothing within `right_clear_px` of the right edge.
@@ -29,7 +30,7 @@ You build exactly one animation slot. You never ask questions: pick the obvious 
 ```
 ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate,pix_fmt:format=duration -of default=nw=1 render.<ext>
 ```
-Width, height, fps and duration (± 1 frame) must match the brief; a transparent overlay must report an alpha pix_fmt (`yuva444p10le` or `yuva444p12le`; HyperFrames 0.9.58 emits 12le). Extract the landing frame (`ffmpeg -ss <payoff_t-enter_t> -i render.mov -frames:v 1 landing.png`) and the first frame, look at both, confirm the graphic is complete on the landing frame and respects the safe areas.
+Width, height, fps and duration (± 1 frame) must match the brief; a transparent overlay must report an alpha pix_fmt (`yuva444p10le` or `yuva444p12le`; HyperFrames 0.9.58 emits 12le). Extract the landing frame (`ffmpeg -ss <payoff_t-enter_t> -i render.mov -frames:v 1 landing.png`), the first frame and one frame per beat (`beat_<i>.png`), look at all of them, confirm the graphic is complete on the landing frame and respects the safe areas.
 
 ## Output
 In `videos/<folder>/edit/animations/<slot>/`: `render.mov` or `render.mp4`, `landing.png`, `reasoning.md` (engine, card used, font status, timings, every judgment call, the ffprobe line). Reply with the path, the ffprobe line and one sentence on what the viewer sees.
