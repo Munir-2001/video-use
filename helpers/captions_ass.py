@@ -7,7 +7,7 @@ OUTPUT timeline (SKILL.md Hard Rule 5):
     out = word.start - segment_start + segment_offset
 
 Placement comes from brand/style.json: vertical profiles put the cue in the
-middle band (STYLE.md), horizontal near the bottom; margins keep the right
+lower band under the chin (STYLE.md, ≈ 68 % down), horizontal near the bottom; margins keep the right
 edge clear. Fonts are named by family; libass loads them from brand/fonts/
 (render.py passes fontsdir) or the system. A missing brand font file is
 reported loudly and the fallback family is used.
@@ -76,9 +76,16 @@ def font_for_captions(style: dict) -> tuple[str, list[str]]:
     return family, warnings
 
 
-def layout_for(style: dict, profile: str, width: int, height: int) -> dict:
+def layout_for(style: dict, profile: str, width: int, height: int,
+               y_fraction: float | None = None) -> dict:
+    """Caption anchor for a profile. `y_fraction` overrides the brand default
+    (a clip framed low needs the band moved); must be strictly between 0 and 1."""
     caps = style.get("captions", {})
-    pos = caps.get("position", {}).get(profile, {"anchor": "middle", "y_fraction": 0.5})
+    pos = dict(caps.get("position", {}).get(profile, {"anchor": "middle", "y_fraction": 0.68}))
+    if y_fraction is not None:
+        if not 0.0 < y_fraction < 1.0:
+            raise ValueError(f"y_fraction must be between 0 and 1, got {y_fraction}")
+        pos["y_fraction"] = y_fraction
     safe = style.get("safe_areas", {}).get(profile, {})
     max_w = float(caps.get("max_width_fraction", 0.8))
     side = int(round(width * (1 - max_w) / 2))
@@ -87,7 +94,7 @@ def layout_for(style: dict, profile: str, width: int, height: int) -> dict:
     return {
         "an": ANCHOR_TO_AN.get(pos.get("anchor", "middle"), 5),
         "x": width // 2 - (right_clear // 2 if profile == "vertical" else 0),
-        "y": int(round(height * float(pos.get("y_fraction", 0.5)))),
+        "y": int(round(height * float(pos.get("y_fraction", 0.68)))),
         "margin_l": side,
         "margin_r": max(side, right_clear),
         "font_size": int(caps.get(size_key, 64)),
@@ -199,10 +206,11 @@ def word_events(cue: dict, layout: dict, highlight: str, base: str, scale: int) 
     return events
 
 
-def build_ass(cues: list[dict], style: dict, profile: str, width: int, height: int) -> tuple[str, list[str]]:
+def build_ass(cues: list[dict], style: dict, profile: str, width: int, height: int,
+              y_fraction: float | None = None) -> tuple[str, list[str]]:
     caps = style.get("captions", {})
     hl = caps.get("highlight", {})
-    layout = layout_for(style, profile, width, height)
+    layout = layout_for(style, profile, width, height, y_fraction)
     family, warnings = font_for_captions(style)
     base_hex = resolve_colour(style, hl.get("base_color", "caption_base"))
     hl_hex = resolve_colour(style, hl.get("color", "caption_highlight"))
@@ -251,6 +259,8 @@ def main() -> None:
                     help="default: edl['profile'] if present, else vertical")
     ap.add_argument("--width", type=int, default=None)
     ap.add_argument("--height", type=int, default=None)
+    ap.add_argument("--y-fraction", type=float, default=None,
+                    help="override the caption band centre (0-1 of frame height); default from brand/style.json")
     args = ap.parse_args()
 
     edl_path = args.edl.resolve()
@@ -267,7 +277,7 @@ def main() -> None:
 
     wpc = style.get("captions", {}).get("words_per_cue", {})
     cues = output_cues(edl, edit_dir / "transcripts", int(wpc.get("target", 2)), int(wpc.get("max", 3)))
-    text, warnings = build_ass(cues, style, profile, width, height)
+    text, warnings = build_ass(cues, style, profile, width, height, args.y_fraction)
 
     out = (args.output or (edit_dir / "master.ass")).resolve()
     out.write_text(text, encoding="utf-8")

@@ -6,7 +6,9 @@ One rule per line. Each line ends with `(date · origin)`. Origins: `seed` = ini
 - Sentence case, never ALL CAPS. (2026-11-16 · seed)
 - 2–3 words per cue. (2026-11-16 · seed)
 - Word-synced highlight: the word being spoken is brighter and slightly larger than the rest of the cue. (2026-11-16 · seed)
-- Vertical (9:16): captions sit in the middle band, never the bottom. (2026-11-16 · seed)
+- Vertical (9:16): captions sit in the lower band, centre ≈ 68 % down, just under the chin: never over my face, never in the bottom 20 %. (2026-11-16 · rule)
+- Catchy text is its own layer: a new idea opens with a 2–4 word title, heavy sans, exactly one accent word in yellow. Captions never repeat the title's words while it is on screen. (2026-11-16 · seed)
+- Text beside my face goes in a card in the empty side of the frame, never across the face. (2026-11-16 · seed)
 - Captions are applied last, after every overlay, so nothing hides them. (2026-11-16 · seed)
 
 ## Framing and safe areas

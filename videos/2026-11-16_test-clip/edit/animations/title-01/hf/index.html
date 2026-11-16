@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1280" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      /* Transparent overlay: kinetic title with one accent word (cards/kinetic-title-accent-word.md).
+         Brand: brand/style.json. Inter is bundled with HyperFrames (400/700/900), so no font file needed. */
+      :root {
+        --ink: #F5F5F7;
+        --muted: #A0A3AD;
+        --accent: #FFD166;
+        --scrim: rgba(11, 11, 15, 0.4);
+        --font-display: "Inter", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1280px; overflow: hidden; background: transparent; }
+      #root { position: absolute; inset: 0; font-family: var(--font-display); }
+      /* Title block centred at y = 0.15 of the frame (top third); nothing in the caption band (0.64-0.72). */
+      #title-block {
+        position: absolute; left: 0; right: 0; top: 112px;
+        display: flex; flex-direction: column; align-items: center; gap: 18px;
+      }
+      #kicker {
+        font-weight: 700; font-size: 30px; letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--muted); background: var(--scrim); padding: 10px 22px; border-radius: 12px;
+      }
+      #headline {
+        display: flex; gap: 36px; align-items: baseline;
+        background: var(--scrim); padding: 18px 44px; border-radius: 24px;
+      }
+      #headline span {
+        display: inline-block; font-weight: 900; font-size: 128px; letter-spacing: -0.03em; line-height: 1;
+        color: var(--ink); transform-origin: 50% 80%;
+      }
+      #headline span.accent { color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="3.7" data-width="1920" data-height="1280">
+      <div id="title-block" class="clip" data-start="0" data-duration="3.7" data-track-index="0" data-track-kind="graphics">
+        <div id="kicker">video studio · smoke test</div>
+        <div id="headline">
+          <span id="w1">first</span><span id="w2" class="accent">real</span><span id="w3">render</span>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Onsets are relative to the overlay start (0.3 s in the output).
+      // Words land on "This"(0.07) "a"(0.39) "video"(0.55) of the clip => 0.0, 0.25, 0.5 here; fully landed before "Munir" (0.81).
+      const ENTER = 0.35, EXIT = 0.25, DUR = 3.7;
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#kicker", { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: ENTER, ease: "power3.out" }, 0);
+      [["#w1", 0.0], ["#w2", 0.25], ["#w3", 0.5]].forEach(([id, at]) => {
+        tl.fromTo(id, { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: ENTER, ease: "power3.out" }, at);
+      });
+      tl.to(["#kicker", "#headline"], { opacity: 0, duration: EXIT, ease: "power3.in" }, DUR - EXIT);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

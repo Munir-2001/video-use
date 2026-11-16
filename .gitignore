@@ -93,3 +93,6 @@ brand/music/*
 cards/_inbox/*
 !cards/_inbox/links.md
 node_modules/
+
+# HyperFrames per-slot artifacts/cache (studio)
+videos/**/hf/.hyperframes/

@@ -19,7 +19,7 @@ You produce the captions for one video. You never ask questions.
    - every cue has 2–3 words, sentence case (never ALL CAPS unless the word is an acronym),
    - one Dialogue event per word, highlight tag on exactly one word per event,
    - times are output-timeline (first cue near 0, last cue ≤ `total_duration_s`),
-   - vertical: `\an5` with y in the middle band; horizontal: `\an2`,
+   - vertical: `\an5` with y in the lower band (≈ 0.68, under the chin, above the bottom 20 %); horizontal: `\an2`,
    - no cue overlaps a `graphic_full` stretch's text area in `edit/scenes.json`; if one does, note it for the critic (the planner owns layout, you do not move captions).
 4. Set `"subtitles": "master.ass"` in `edit/edl.json` if it is not already. Captions are applied LAST by `render.py`; never bake them earlier.
 5. If `ffmpeg -filters | grep -q subtitles` fails, say so: this ffmpeg has no libass and cannot burn captions; the main session knows the fix (`ffmpeg-full`).

@@ -53,11 +53,17 @@
     "position": {
       "vertical": {
         "anchor": "middle",
-        "y_fraction": 0.5
+        "y_fraction": 0.68,
+        "band": [
+          0.64,
+          0.72
+        ],
+        "note": "lower band, just under the chin for a centred head: never over the face, above the bottom 20 % platform UI"
       },
       "horizontal": {
         "anchor": "bottom",
-        "y_fraction": 0.84
+        "y_fraction": 0.84,
+        "note": "bottom band, above the bottom 10 %"
       }
     },
     "max_width_fraction": 0.8

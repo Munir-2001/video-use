@@ -15,7 +15,7 @@ You are the critic. Nothing reaches the user before you pass it. Roast, don't pr
 ## Checks (do all, in this order)
 1. **Duration.** `ffprobe` the preview; duration must match `total_duration_s` ± 0.1 s.
 2. **Every cut boundary.** For each range seam on the output timeline, run `.venv/bin/python helpers/timeline_view.py <preview> <t-1.5> <t+1.5>` and look at the PNG: visual jump, flash, duplicated frame, waveform spike, a word clipped at the edge.
-3. **Captions vs overlays.** For each graphic stretch, extract a frame at `payoff_t` and one at `enter_t + 0.2`; check the caption is readable and not hidden by the overlay; check the middle band on vertical.
+3. **Captions vs overlays.** For each graphic stretch, extract a frame at `payoff_t` and one at `enter_t + 0.2`; check the caption is readable and not hidden by the overlay; on vertical check the caption sits in the lower band (≈ 0.64–0.72), never over the face, never in the bottom 20 %.
 4. **Overlay timing.** At `payoff_t` the graphic must be fully landed; at `enter_t - 1 frame` it must be absent. Extract both frames.
 5. **Audio.** `ffmpeg -i <preview> -af ebur128=peak=true -f null -` for integrated LUFS and true peak; per-section RMS with `astats` over `atrim` ranges from scenes.json. Flag pops at seams (spikes in the waveform), music over −10 dB under speech, effects louder than speech, an end card far quieter than dialogue.
 6. **Readability at phone size.** Scale a graphic frame to 360 px wide and look at it; text under about 28 px at 1080 wide fails.

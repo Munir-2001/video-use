@@ -8,7 +8,7 @@
 | 4 | Strategy in 4–8 sentences. **It waits. I say "yes" (or change it).** | — |
 | 5 | **editor** picks takes and cut ranges from `takes_packed.md`. | `edit/edl.json` |
 | 6 | **planner** decides what is on screen per stretch and which motion card each graphic uses. | `edit/scenes.json` |
-| 7 | **motion** ×N in parallel (one per slot) + **captions** + **sound** run together. | `edit/animations/slot_<id>/render.*` + `reasoning.md`, `edit/master.ass`, `edit/sound.json` + mixed audio |
+| 7 | **motion** ×N in parallel (one per slot) + **captions** + **sound** run together. | `edit/animations/slot_<id>/render.*` + `reasoning.md`, `edit/master.ass` (lower band on vertical, under the chin), `edit/sound.json` + mixed audio |
 | 8 | `render.py --preview --no-loudnorm` composites: segments → overlays → captions last. Then `sound_mix.py --mux` adds the mix. | `edit/preview.mp4`, `edit/mix.wav`, `edit/sound_report.json`, `edit/preview_mixed.mp4` |
 | 9 | **critic** checks every cut, caption occlusion, overlay timing, levels, readability, STYLE.md. Verdict + ranked fixes. Fix loop, max 3 passes. | `edit/critic.md` |
 | 10 | I see the preview, EDL, scenes.json and verdict, in chat or in the dashboard (**"open the studio"**). I give notes in chat or pin them to timecodes in the dashboard. | `edit/feedback.json` (from the dashboard) |

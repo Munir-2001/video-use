@@ -89,3 +89,22 @@ def test_build_ass_keeps_sentence_case_and_warns_on_missing_font():
     assert "Hello" in text and "HELLO" not in text
     assert warnings and "font file missing" in warnings[0]
     assert text.count("Dialogue:") == 2
+
+
+def test_layout_y_fraction_override_and_validation():
+    style = STYLE
+    assert ca.layout_for(style, "vertical", 1080, 1920)["y"] == 960
+    assert ca.layout_for(style, "vertical", 1080, 1920, y_fraction=0.68)["y"] == 1306
+    try:
+        ca.layout_for(style, "vertical", 1080, 1920, y_fraction=1.2)
+        assert False, "expected ValueError"
+    except ValueError:
+        pass
+
+
+def test_brand_default_band_is_under_the_chin_not_the_middle():
+    import json
+    from pathlib import Path
+    brand = json.loads((Path(__file__).resolve().parent.parent / "brand" / "style.json").read_text())
+    v = brand["captions"]["position"]["vertical"]
+    assert 0.62 <= v["y_fraction"] <= 0.74 and v["band"][1] <= 0.80

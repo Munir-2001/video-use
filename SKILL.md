@@ -349,7 +349,7 @@ Everything above is upstream. This section is how **my** studio runs it. Rules h
 `helpers/transcribe.py` runs Parakeet (parakeet-mlx) on-device. Clean text, no fillers, speaker always `S0`. After `pack_transcripts.py`, always run `helpers/fix_transcript.py --edit-dir <edit>` (vocabulary from `brand/style.json`), then spawn the **proofreader** agent (Haiku) once per source; apply its `edit/proofread.json` with `fix_transcript.py --proposals`. Re-pack after fixing.
 
 ### Captions are `.ass`, built by a helper
-`helpers/captions_ass.py <edl.json>` writes `edit/master.ass`: one Dialogue event per word, current word highlighted and scaled, 2–3 words per cue, sentence case, middle band on vertical. `render.py` burns `.ass` as-is (no force_style; brand fonts via `fontsdir`). Hard Rule 1 still holds: captions last. Burning in needs an ffmpeg with libass (`ffmpeg-full`).
+`helpers/captions_ass.py <edl.json>` writes `edit/master.ass`: one Dialogue event per word, current word highlighted and scaled, 2–3 words per cue, sentence case, lower band (≈ 68 % down, under the chin) on vertical; `--y-fraction` overrides per video. `render.py` burns `.ass` as-is (no force_style; brand fonts via `fontsdir`). Hard Rule 1 still holds: captions last. Burning in needs an ffmpeg with libass (`ffmpeg-full`).
 
 ### Sound is mixed by a helper after render
 Render with `--no-loudnorm`, then the **sound** agent writes `edit/sound.json` and runs `helpers/sound_mix.py --edit-dir <edit> --mux <out>`: effects start before their contact frame by the measured attack, music is sidechain-ducked under speech, two-pass loudnorm to −14 LUFS / −1 dBTP, `sound_report.json` carries the measured levels.
