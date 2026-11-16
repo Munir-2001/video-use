@@ -2,6 +2,12 @@
 
 Append-only, newest first. Format: `## date · title` then Why / Trade-off / Alternatives / Status.
 
+## 2026-11-16 · Model routing: Sonnet executes, Opus/Fable plans
+**Why:** My rule: the editing work runs on Sonnet; planning and judgment run on the bigger models. `editor`, `motion`, `captions`, `sound` → `model: sonnet`. `planner`, `designer`, `critic` → `model: opus`. `proofreader` → `haiku`. The main session (Fable) does inventory, conversation, strategy and orchestration.
+**Trade-off:** Take selection on Sonnet is cheaper and fast; if its EDLs need too many critic fixes, move `editor` to opus.
+**Alternatives:** Everything on the main model (slow, costly); everything on Sonnet (critic too soft).
+**Status:** done.
+
 ## 2026-11-16 · Agents written; captions as .ass; sound mixed by helper; ffmpeg needs libass
 **Why:** Eight agents in `.claude/agents/` (editor, planner, motion, captions, sound, designer, critic, proofreader). Two new helpers make the mechanical agents deterministic: `helpers/captions_ass.py` (word-synced karaoke .ass, one event per word) and `helpers/sound_mix.py` (attack-offset effects, sidechain duck, two-pass loudnorm, measured report). `helpers/render.py` got one minimal change: an `.ass` subtitles file is burned without `force_style` and with `fontsdir=brand/fonts`.
 **Trade-off:** Homebrew's default `ffmpeg` formula on this Mac is built without libass, so no caption burn-in works (upstream `.srt` included). Fix: `brew install ffmpeg-full` (keg-only; `/opt/homebrew/opt/ffmpeg-full/bin` first on PATH via `source .envrc.studio`). Installed 2026-11-16; burn-in verified on the test clip.

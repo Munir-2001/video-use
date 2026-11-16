@@ -27,16 +27,16 @@ Conversation-driven video editing, everything local and free. No paid APIs, ever
 - `examples/` max 10 approved EDLs, one-line note each in `examples/index.md`.
 
 ## Sub-agents (`.claude/agents/`)
-| agent | does |
-|---|---|
-| editor | picks takes, writes EDL ranges from takes_packed.md |
-| planner | decides layout per stretch, writes edit/scenes.json |
-| motion | builds one animation slot (HyperFrames or PIL+ffmpeg), parallel per slot |
-| captions | word-synced .ass captions, applied last |
-| sound | sfx placement + music duck + loudnorm, writes edit/sound.json |
-| designer | turns cards/_inbox drops into brand cards |
-| critic | final QC, roasts, ranks fixes |
-| proofreader | (haiku) proposes word-for-word transcript fixes the vocabulary missed |
+| agent | model | does |
+|---|---|---|
+| editor | sonnet | picks takes, writes EDL ranges from takes_packed.md |
+| planner | opus | decides layout per stretch, writes edit/scenes.json |
+| motion | sonnet | builds one animation slot (HyperFrames or PIL+ffmpeg), parallel per slot |
+| captions | sonnet | word-synced .ass captions, applied last |
+| sound | sonnet | sfx placement + music duck + loudnorm, writes edit/sound.json |
+| designer | opus | turns cards/_inbox drops into brand cards |
+| critic | opus | final QC, roasts, ranks fixes |
+| proofreader | haiku | proposes word-for-word transcript fixes the vocabulary missed |
 Sub-agents never ask questions; they pick the obvious option and say so.
 
 ## Standing commands
