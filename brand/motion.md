@@ -32,19 +32,20 @@ Marked **(seen)** = read directly off the frame sequence (timecodes on the playe
 | icon formation → grid (seen) | tiles build the number's digits in batches over ~1 s; on the cue word all tiles tween to a 5x10 grid, 250 ms ease-out | hard cut |
 | chapter header over a grid (seen) | kicker swaps hard, title fades 125 ms, count pill pops 125 ms starting 170 ms after the title; grid dims to 25 % except the chapter's tiles (2 px accent outline), instant | hard cut on the next chapter |
 | item card over a grid (seen) | scale 0.8→1 + fade 170 ms on the item's name; next item: old card up 60 px + fade while the new rises into the same spot, 250 ms | hard cut on a chapter change |
-| giant one-word caption + CTA pill (seen) | words swap hard per word (0.125–0.5 s each); pill slides up 20 px + fade 125 ms once; mono tagline hard-appears ~1.5 s later | hard cut with the shot |
+| big caption words + CTA pill (seen, adapted) | reference swaps one word hard per 0.125–0.5 s; brand keeps 2–3 words per cue at 120 px with the word pop and cue rise; pill slides up 20 px + fade 125 ms once; mono tagline hard-appears ~1.5 s later | hard cut with the shot |
 | chat composer (seen) | frame hard-cuts in empty; attachment body then header fade 125 ms apart; prompt types with my words at ~24 cps | hard cut (to the reel's first frame for a loop) |
+| live screen window with zoom beats | window slides up 350 ms with the recording already playing inside; on each named thing the inner view pushes in 350 ms cubic (scale ≈ 2.2) and a 3 px accent ring draws 150 ms later; holds ≥ 1.5 s; next beat 250 ms direct | eases back to 1.0 then slides out, or hard cut (my request 2026-11-16) |
 | editorial title / end card | hard cut onto the card; line 2 lands on its word 350 ms; numeral counts 300 ms; checklist rows tick one per beat (assumed from stills; measure from a screen recording) | hard cut |
 
 Transitions between shots are **hard cuts** (STYLE.md). Fades are for elements inside a shot, never between shots.
 
 ## 4. What stays still
-- My face: no zooms, no punch-ins faked in post. Changing how big I am is a hard-cut reframe (split_top crop ↔ face_full), never an animated zoom. (seen 2026-11-16: ref-backlinks-reel.mp4, the face never scales within a shot)
+- My face: no zooms, no punch-ins faked in post. Zooms happen **inside** a screen window (zoom beats), never on the frame. Changing how big I am is a hard-cut reframe (split_top crop ↔ face_full), never an animated zoom. (seen 2026-11-16: ref-backlinks-reel.mp4, the face never scales within a shot)
 - Backgrounds: flat colour or dark panel. Dot grids and rails are static; only their fills move.
 - Captions move on their own track (word pop + cue rise, see brand/style.json `captions.motion`), never slide with a graphic.
 
 ## 4b. Split-top layout (seen 2026-11-16: ref-backlinks-reel.mp4)
-On 9:16 the top half (y 0–0.50; the reference's edge measured at 240/480 px) is a flat panel with a faint static dot grid that holds every graphic; my footage fills the bottom half, cropped, never zoomed. Graphics stay inside the panel and never cross the edge. Captions sit on the panel's bottom edge (centre y ≈ 0.465), 2–3 words, above my face. Shots switch between split_top and face_full with hard cuts on word boundaries; the CTA/payoff goes face_full with giant one-word captions. Reference panel is light (#F5F5F7-like) with orange; brand default is #15161C with #FFD166, light variant allowed. `brand/style.json` has the `split_top` layout (panel 0.50, captions 0.465) and the `giant` caption preset; the planner names them per stretch.
+On 9:16 the top half (y 0–0.50; the reference's edge measured at 240/480 px) is a flat panel with a faint static dot grid that holds every graphic; my footage fills the bottom half, cropped, never zoomed. Graphics stay inside the panel and never cross the edge. Captions sit on the panel's bottom edge (centre y ≈ 0.465), 2–3 words, above my face. Shots switch between split_top and face_full with hard cuts on word boundaries; the CTA/payoff goes face_full with big 2–3 word captions (preset `big`). Brand default: paper panel #F3EEE4 with ink #141418 text and the flame accent #F4502A (decided 2026-11-16); dark #15161C only for full-frame cards. `brand/style.json` has the `split_top` layout (panel 0.50, captions 0.465) and the `big` caption preset; the planner names them per stretch.
 
 ## 5. Engagement rhythm for an explainer (30–60 s vertical)
 1. **Hook (0–3 s)**: title lands on my first strong word; face full.

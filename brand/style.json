@@ -27,12 +27,17 @@
     "surface": "#15161C",
     "text": "#F5F5F7",
     "text_muted": "#A0A3AD",
-    "accent": "#FFD166",
-    "accent_2": "#4CC9F0",
+    "accent": "#F4502A",
+    "accent_2": "#1F5BFF",
     "danger": "#EF476F",
     "caption_base": "#F5F5F7",
-    "caption_highlight": "#FFD166",
-    "caption_outline": "#000000"
+    "caption_highlight": "#F4502A",
+    "caption_outline": "#000000",
+    "paper": "#F3EEE4",
+    "ink": "#141418",
+    "paper_muted": "#6E6A64",
+    "paper_line": "#DCD6CA",
+    "_palette": "Paper & Flame (decided 2026-11-16): warm off-white paper panels with ink text, flame-orange accent, cobalt second accent; near-black only for full-frame cards and the footage edge. One accent everywhere so the reels are recognisable."
   },
   "captions": {
     "case": "sentence",
@@ -75,25 +80,25 @@
       "note": "spoken word pops from 86 % to the highlight scale; each cue rises into place with a short fade (ASS tags, burned by libass)"
     },
     "presets": {
-      "giant": {
-        "description": "one huge word per cue over a full-frame face (hook / CTA moments)",
-        "words_per_cue": {
-          "target": 1,
-          "max": 1
-        },
-        "size_px": 150,
-        "y_fraction": 0.64,
-        "cta_pill_y": 0.715,
-        "tagline_y": 0.76
-      },
       "panel": {
         "description": "small line at the bottom edge of a split_top panel",
         "words_per_cue": {
           "target": 2,
           "max": 3
         },
-        "size_px": 56,
+        "size_px": 64,
         "y_fraction": 0.465
+      },
+      "big": {
+        "description": "hook / CTA: 2-3 words per cue, bigger, lower on the chest; CTA pill under it",
+        "words_per_cue": {
+          "target": 2,
+          "max": 3
+        },
+        "size_px": 120,
+        "y_fraction": 0.64,
+        "cta_pill_y": 0.715,
+        "tagline_y": 0.76
       }
     }
   },
@@ -138,12 +143,15 @@
       "description": "Graphic panel in the top 50 % of a 9:16 frame (measured on the reference reel), speaker fills the bottom; captions sit at the panel's bottom edge, small.",
       "panel": {
         "top_fraction": 0.5,
-        "color": "surface",
-        "dot_grid": true
+        "color": "paper",
+        "dot_grid": true,
+        "text": "ink",
+        "dots": "ink",
+        "dots_opacity": 0.06
       },
       "caption": {
         "y_fraction": 0.465,
-        "size_px": 56,
+        "size_px": 64,
         "words_per_cue": {
           "target": 2,
           "max": 3

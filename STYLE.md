@@ -11,7 +11,7 @@ One rule per line. Each line ends with `(date · origin)`. Origins: `seed` = ini
 - Text beside my face goes in a card in the empty side of the frame, never across the face. (2026-11-16 · seed)
 - Captions are applied last, after every overlay, so nothing hides them. (2026-11-16 · seed)
 - Captions are big (96 px at 1080x1920, 80 px at 1080p) and they move: the spoken word pops in and each cue rises into place. Static subtitles are wrong. (2026-11-16 · rule)
-- Two layout exceptions to the size and band lines above, from the reel reference I liked: in a `split_top` stretch the captions are a small line (56 px) at the panel's bottom edge (y ≈ 0.465); a hook or call-to-action stretch may use the `giant` preset, one word per cue at ~150 px, y 0.64, with the CTA pill under it. Everything else follows the lines above. (2026-11-16 · review)
+- Two layout exceptions to the size and band lines above: in a `split_top` stretch the captions are a smaller line (64 px) at the panel's bottom edge (y ≈ 0.465); a hook or call-to-action stretch may use the `big` preset, still 2–3 words per cue, at 120 px, y 0.64, with the CTA pill under it. One word per cue is never used. (2026-11-16 · rule)
 
 ## Framing and safe areas
 - Vertical: the bottom 20% and the right edge stay clear of captions and graphics (platform UI lives there). (2026-11-16 · seed)
@@ -28,6 +28,9 @@ One rule per line. Each line ends with `(date · origin)`. Origins: `seed` = ini
 - At most ~8 sound effects per 30 s, each tied to a visible event on screen. (2026-11-16 · seed)
 - Final mix: −14 LUFS integrated, true peak ≤ −1 dBTP. (2026-11-16 · seed)
 - No audio pops at cuts: 30 ms fades at every boundary. (2026-11-16 · seed)
+
+## Palette
+- One palette, always: paper #F3EEE4 panels with ink #141418 text, flame #F4502A as the only accent (cobalt #1F5BFF for a second emphasis), near-black #0B0B0F only for full-frame cards. Never another accent colour. (2026-11-16 · rule)
 
 ## Never show
 - Cigarettes. (2026-11-16 · seed)

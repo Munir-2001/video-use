@@ -32,4 +32,4 @@ Reply with: cue count, word-event count, profile and resolution, font status, an
 - `commentary`: the captions are my commentary, not the clip's speech: `captions_ass.py edl.json --words-from <voice stem> --offset <brief.voice_offset_s>`.
 
 ## Per-stretch caption styles
-`captions_ass.py` reads `edit/scenes.json` automatically: a stretch with layout `split_top` puts its cues at the panel's bottom edge (small), and a stretch with `"caption": "giant"` (or another preset from `brand/style.json` `captions.presets`) gets one huge word per cue. Check one frame per styled stretch, not just one frame per video.
+`captions_ass.py` reads `edit/scenes.json` automatically: a stretch with layout `split_top` puts its cues at the panel's bottom edge (small), and a stretch with `"caption": "big"` (or another preset from `brand/style.json` `captions.presets`) gets bigger 2–3 word cues. Check one frame per styled stretch, not just one frame per video.
