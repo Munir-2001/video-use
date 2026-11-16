@@ -2,9 +2,24 @@
   "handle": "@yourhandle",
   "name": "Munir Abbasi",
   "fonts": {
-    "display": {"family": "Inter", "weight": 800, "file": "brand/fonts/Inter-ExtraBold.ttf", "fallback": "Helvetica Neue"},
-    "body": {"family": "Inter", "weight": 600, "file": "brand/fonts/Inter-SemiBold.ttf", "fallback": "Helvetica Neue"},
-    "mono": {"family": "JetBrains Mono", "weight": 500, "file": "brand/fonts/JetBrainsMono-Medium.ttf", "fallback": "Menlo"},
+    "display": {
+      "family": "Inter",
+      "weight": 800,
+      "file": "brand/fonts/Inter-ExtraBold.ttf",
+      "fallback": "Helvetica Neue"
+    },
+    "body": {
+      "family": "Inter",
+      "weight": 600,
+      "file": "brand/fonts/Inter-SemiBold.ttf",
+      "fallback": "Helvetica Neue"
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "weight": 500,
+      "file": "brand/fonts/JetBrainsMono-Medium.ttf",
+      "fallback": "Menlo"
+    },
     "_note": "Drop .ttf files into brand/fonts/. Agents assert the font loaded; a missing file falls back and is reported, never silent."
   },
   "colors": {
@@ -21,38 +36,81 @@
   },
   "captions": {
     "case": "sentence",
-    "words_per_cue": {"target": 2, "max": 3},
+    "words_per_cue": {
+      "target": 2,
+      "max": 3
+    },
     "font": "display",
     "size_px_1080w": 64,
     "size_px_1080x1920": 72,
-    "highlight": {"scale": 1.12, "color": "caption_highlight", "base_color": "caption_base"},
+    "highlight": {
+      "scale": 1.12,
+      "color": "caption_highlight",
+      "base_color": "caption_base"
+    },
     "outline_px": 4,
     "shadow_px": 2,
     "position": {
-      "vertical": {"anchor": "middle", "y_fraction": 0.50},
-      "horizontal": {"anchor": "bottom", "y_fraction": 0.84}
+      "vertical": {
+        "anchor": "middle",
+        "y_fraction": 0.5
+      },
+      "horizontal": {
+        "anchor": "bottom",
+        "y_fraction": 0.84
+      }
     },
-    "max_width_fraction": 0.80
+    "max_width_fraction": 0.8
   },
   "safe_areas": {
-    "vertical": {"bottom_clear_fraction": 0.20, "right_clear_px": 140, "top_clear_fraction": 0.08},
-    "horizontal": {"bottom_clear_fraction": 0.10}
+    "vertical": {
+      "bottom_clear_fraction": 0.2,
+      "right_clear_px": 140,
+      "top_clear_fraction": 0.08
+    },
+    "horizontal": {
+      "bottom_clear_fraction": 0.1
+    }
   },
   "layouts": {
-    "face_full": {"description": "Speaker fills frame."},
+    "face_full": {
+      "description": "Speaker fills frame."
+    },
     "face_corner": {
       "description": "Speaker in a rounded PiP, graphic behind.",
-      "pip": {"width_fraction": 0.36, "corner": "bottom_left", "margin_px": 48, "radius_px": 28, "border_px": 3, "border_color": "surface"}
+      "pip": {
+        "width_fraction": 0.36,
+        "corner": "bottom_left",
+        "margin_px": 48,
+        "radius_px": 28,
+        "border_px": 3,
+        "border_color": "surface"
+      }
     },
-    "graphic_full": {"description": "Full-frame graphic; speaker audio only."},
+    "graphic_full": {
+      "description": "Full-frame graphic; speaker audio only."
+    },
     "screen": {
       "description": "Screen recording with speaker PiP.",
-      "pip": {"width_fraction": 0.28, "corner": "bottom_right_above_safe", "margin_px": 48, "radius_px": 28}
+      "pip": {
+        "width_fraction": 0.28,
+        "corner": "bottom_right_above_safe",
+        "margin_px": 48,
+        "radius_px": 28
+      }
     }
   },
   "profiles": {
-    "vertical": {"width": 1080, "height": 1920, "fps": 30},
-    "horizontal": {"width": 1920, "height": 1080, "fps": 30}
+    "vertical": {
+      "width": 1080,
+      "height": 1920,
+      "fps": 30
+    },
+    "horizontal": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 30
+    }
   },
   "motion": {
     "easing": "cubic",
@@ -71,14 +129,42 @@
   "vocabulary": {
     "_note": "Applied word-for-word after transcription (case-insensitive match on the misheard phrase). Add names, products, clients. Keep phrases short.",
     "fixes": [
-      {"heard": "Muni Rabasi", "say": "Munir Abbasi"},
-      {"heard": "Munir Abasi", "say": "Munir Abbasi"},
-      {"heard": "clot code", "say": "Claude Code"},
-      {"heard": "cloud code", "say": "Claude Code"},
-      {"heard": "clawed code", "say": "Claude Code"},
-      {"heard": "clod", "say": "Claude"},
-      {"heard": "hyper frames", "say": "HyperFrames"}
+      {
+        "heard": "Muni Rabasi",
+        "say": "Munir Abbasi"
+      },
+      {
+        "heard": "Munir Abasi",
+        "say": "Munir Abbasi"
+      },
+      {
+        "heard": "clot code",
+        "say": "Claude Code"
+      },
+      {
+        "heard": "cloud code",
+        "say": "Claude Code"
+      },
+      {
+        "heard": "clawed code",
+        "say": "Claude Code"
+      },
+      {
+        "heard": "clod",
+        "say": "Claude"
+      },
+      {
+        "heard": "hyperframes",
+        "say": "HyperFrames"
+      }
     ],
-    "always_capitalize": ["Claude", "Claude Code", "HyperFrames", "Parakeet", "Innova", "Alomana"]
+    "always_capitalize": [
+      "Claude",
+      "Claude Code",
+      "HyperFrames",
+      "Parakeet",
+      "Innova",
+      "Alomana"
+    ]
   }
 }

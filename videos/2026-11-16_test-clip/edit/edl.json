@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "profile": "vertical",
+  "sources": {"testclip": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-16_test-clip/testclip.mov"},
+  "ranges": [
+    {"source": "testclip", "start": 0.25, "end": 7.05, "beat": "HOOK", "quote": "This is a video of me...", "reason": "smoke test"},
+    {"source": "testclip", "start": 18.60, "end": 21.40, "beat": "POINT", "quote": "there versus there", "reason": "smoke test"}
+  ],
+  "grade": "none",
+  "overlays": [],
+  "subtitles": "master.ass",
+  "total_duration_s": 9.6
+}

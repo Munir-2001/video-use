@@ -12,6 +12,10 @@ Optionally builds a master SRT from the per-source transcripts + EDL
 output-timeline offsets, applies the proven force_style (2-word
 UPPERCASE chunks, Helvetica 18 Bold, MarginV=35).
 
+Studio addition: an `.ass` subtitles file (word-synced karaoke captions from
+helpers/captions_ass.py) is burned in as-is, with its own styles, fonts from
+brand/fonts/ and no force_style.
+
 Usage:
     python helpers/render.py <edl.json> -o final.mp4
     python helpers/render.py <edl.json> -o preview.mp4 --preview
@@ -55,6 +59,29 @@ SUB_FORCE_STYLE = (
     "BorderStyle=1,Outline=2,Shadow=0,"
     "Alignment=2,MarginV=90"
 )
+
+# Studio addition: brand fonts for .ass captions (libass fontsdir).
+BRAND_FONTS_DIR = Path(__file__).resolve().parent.parent / "brand" / "fonts"
+
+
+def _escape_filter_path(path: Path) -> str:
+    return str(path.resolve()).replace(":", r"\:").replace("'", r"\'")
+
+
+def subtitles_filter(subtitles_path: Path) -> str:
+    """The `subtitles=` filter for a captions file.
+
+    .srt gets the proven force_style. .ass carries its own styles (fonts, size,
+    per-word karaoke colours, placement), so force_style would clobber them;
+    it gets the brand fonts directory instead so libass can find custom faces.
+    """
+    subs_abs = _escape_filter_path(subtitles_path)
+    if subtitles_path.suffix.lower() == ".ass":
+        parts = [f"subtitles='{subs_abs}'"]
+        if BRAND_FONTS_DIR.is_dir():
+            parts.append(f"fontsdir='{_escape_filter_path(BRAND_FONTS_DIR)}'")
+        return ":".join(parts)
+    return f"subtitles='{subs_abs}':force_style='{SUB_FORCE_STYLE}'"
 
 # -------- Helpers ------------------------------------------------------------
 
@@ -674,10 +701,7 @@ def build_final_composite(
 
     # Subtitles LAST — Rule 1
     if has_subs:
-        subs_abs = str(subtitles_path.resolve()).replace(":", r"\:").replace("'", r"\'")
-        filter_parts.append(
-            f"{current}subtitles='{subs_abs}':force_style='{SUB_FORCE_STYLE}'[outv]"
-        )
+        filter_parts.append(f"{current}{subtitles_filter(subtitles_path)}[outv]")
         out_label = "[outv]"
     else:
         # Rename the last overlay output to [outv] for consistency

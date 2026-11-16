@@ -340,3 +340,39 @@ Things that consistently fail regardless of style:
 - **Editing before confirming the strategy.** Never.
 - **Re-transcribing cached sources.** Immutable outputs of immutable inputs.
 - **Assuming what kind of video it is.** Look first, ask second, edit last.
+
+## Studio additions (this fork only)
+
+Everything above is upstream. This section is how **my** studio runs it. Rules here win over the generic process when they conflict. Read `CLAUDE.md`, `STYLE.md` and `brand/style.json` first.
+
+### Transcription is local
+`helpers/transcribe.py` runs Parakeet (parakeet-mlx) on-device. Clean text, no fillers, speaker always `S0`. After `pack_transcripts.py`, always run `helpers/fix_transcript.py --edit-dir <edit>` (vocabulary from `brand/style.json`), then spawn the **proofreader** agent (Haiku) once per source; apply its `edit/proofread.json` with `fix_transcript.py --proposals`. Re-pack after fixing.
+
+### Captions are `.ass`, built by a helper
+`helpers/captions_ass.py <edl.json>` writes `edit/master.ass`: one Dialogue event per word, current word highlighted and scaled, 2–3 words per cue, sentence case, middle band on vertical. `render.py` burns `.ass` as-is (no force_style; brand fonts via `fontsdir`). Hard Rule 1 still holds: captions last. Burning in needs an ffmpeg with libass (`ffmpeg-full`).
+
+### Sound is mixed by a helper after render
+Render with `--no-loudnorm`, then the **sound** agent writes `edit/sound.json` and runs `helpers/sound_mix.py --edit-dir <edit> --mux <out>`: effects start before their contact frame by the measured attack, music is sidechain-ducked under speech, two-pass loudnorm to −14 LUFS / −1 dBTP, `sound_report.json` carries the measured levels.
+
+### Orchestration (the main session runs this; agents never ask questions)
+```
+"edit videos/<folder>"
+ 1. inventory      ffprobe → transcribe_batch → pack → fix_transcript → proofreader → fix --proposals → pack
+ 2. pre-scan       slips, repeats, must-avoid lines → list
+ 3. converse       describe, 2–4 questions shaped by the footage
+ 4. strategy       4–8 sentences → WAIT for my "yes"
+ 5. editor         → edit/edl.json
+ 6. planner        → edit/scenes.json (layouts, slots, payoff words)
+ 7. in parallel    motion ×N (one Agent call per slot) + captions + (sound design only: sound.json draft)
+ 8. render         render.py <edl> -o edit/preview.mp4 --preview --no-loudnorm   (overlays from scenes → EDL "overlays", subtitles master.ass)
+                   sound_mix.py --mux edit/preview_mixed.mp4   (sound agent runs it)
+ 9. critic         → edit/critic.md, verdict
+10. fix loop       apply the critic's top fixes through the owning agent; re-render only what changed; critic again; max 3 passes
+11. preview        show me: preview_mixed.mp4 path, EDL beats, scenes table, critic verdict
+```
+Overlays: the planner's slots become EDL `overlays` entries (`file`, `start_in_output` = `enter_t`, `duration` = `exit_t − enter_t`) after the motion agents finish; transparent overlays are ProRes 4444 `.mov`.
+
+"apply my notes": my message or `edit/feedback.json` → change EDL/scenes → re-run only the agents whose inputs changed → render → critic → preview.
+
+### Persist
+End of session: append to `edit/project.md` (format above), copy the approved `edl.json` to `examples/<date>_<slug>.edl.json` with a line in `examples/index.md`, update `videos/index.md`, commit. Any change to helpers, agents, folders or workflow gets a `DECISIONS.md` entry and a `HOW_IT_WORKS.md` update in the same commit.

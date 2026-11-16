@@ -1,0 +1,41 @@
+[Script Info]
+; Word-synced captions built by helpers/captions_ass.py (video studio)
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+YCbCr Matrix: TV.709
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Helvetica Neue,72,&H00F7F5F5,&H0066D1FF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,4,2,5,108,140,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.07,0:00:00.23,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}This{\r} is a
+Dialogue: 0,0:00:00.23,0:00:00.39,Cap,,0,0,0,,{\an5\pos(470,960)}This {\c&H0066D1FF\fscx112\fscy112}is{\r} a
+Dialogue: 0,0:00:00.39,0:00:00.55,Cap,,0,0,0,,{\an5\pos(470,960)}This is {\c&H0066D1FF\fscx112\fscy112}a{\r}
+Dialogue: 0,0:00:00.55,0:00:00.71,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}video{\r} of me,
+Dialogue: 0,0:00:00.71,0:00:00.83,Cap,,0,0,0,,{\an5\pos(470,960)}video {\c&H0066D1FF\fscx112\fscy112}of{\r} me,
+Dialogue: 0,0:00:00.79,0:00:00.95,Cap,,0,0,0,,{\an5\pos(470,960)}video of {\c&H0066D1FF\fscx112\fscy112}me,{\r}
+Dialogue: 0,0:00:01.11,0:00:01.51,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}Munir{\r} Abbasi,
+Dialogue: 0,0:00:01.51,0:00:01.99,Cap,,0,0,0,,{\an5\pos(470,960)}Munir {\c&H0066D1FF\fscx112\fscy112}Abbasi,{\r}
+Dialogue: 0,0:00:02.15,0:00:02.39,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}trying{\r} to
+Dialogue: 0,0:00:02.39,0:00:02.55,Cap,,0,0,0,,{\an5\pos(470,960)}trying {\c&H0066D1FF\fscx112\fscy112}to{\r}
+Dialogue: 0,0:00:02.55,0:00:02.87,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}test{\r} out
+Dialogue: 0,0:00:02.87,0:00:03.03,Cap,,0,0,0,,{\an5\pos(470,960)}test {\c&H0066D1FF\fscx112\fscy112}out{\r}
+Dialogue: 0,0:00:03.03,0:00:03.35,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}my{\r} local
+Dialogue: 0,0:00:03.35,0:00:03.91,Cap,,0,0,0,,{\an5\pos(470,960)}my {\c&H0066D1FF\fscx112\fscy112}local{\r}
+Dialogue: 0,0:00:03.91,0:00:04.47,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}setup{\r}
+Dialogue: 0,0:00:04.79,0:00:05.11,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}for{\r} video
+Dialogue: 0,0:00:05.11,0:00:05.43,Cap,,0,0,0,,{\an5\pos(470,960)}for {\c&H0066D1FF\fscx112\fscy112}video{\r}
+Dialogue: 0,0:00:05.67,0:00:06.31,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}transcription{\r} using
+Dialogue: 0,0:00:06.31,0:00:06.63,Cap,,0,0,0,,{\an5\pos(470,960)}transcription {\c&H0066D1FF\fscx112\fscy112}using{\r}
+Dialogue: 0,0:00:06.63,0:00:06.92,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}Claude{\r}
+Dialogue: 0,0:00:06.92,0:00:07.40,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}there{\r} versus
+Dialogue: 0,0:00:07.40,0:00:07.96,Cap,,0,0,0,,{\an5\pos(470,960)}there {\c&H0066D1FF\fscx112\fscy112}versus{\r}
+Dialogue: 0,0:00:07.96,0:00:08.44,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}there{\r} or
+Dialogue: 0,0:00:08.44,0:00:08.76,Cap,,0,0,0,,{\an5\pos(470,960)}there {\c&H0066D1FF\fscx112\fscy112}or{\r}
+Dialogue: 0,0:00:08.76,0:00:09.00,Cap,,0,0,0,,{\an5\pos(470,960)}{\c&H0066D1FF\fscx112\fscy112}any{\r} differences.
+Dialogue: 0,0:00:09.00,0:00:09.56,Cap,,0,0,0,,{\an5\pos(470,960)}any {\c&H0066D1FF\fscx112\fscy112}differences.{\r}

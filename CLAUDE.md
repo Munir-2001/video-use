@@ -36,6 +36,7 @@ Conversation-driven video editing, everything local and free. No paid APIs, ever
 | sound | sfx placement + music duck + loudnorm, writes edit/sound.json |
 | designer | turns cards/_inbox drops into brand cards |
 | critic | final QC, roasts, ranks fixes |
+| proofreader | (haiku) proposes word-for-word transcript fixes the vocabulary missed |
 Sub-agents never ask questions; they pick the obvious option and say so.
 
 ## Standing commands

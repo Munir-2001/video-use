@@ -1,0 +1,29 @@
+{
+  "source": "testclip.json",
+  "changes": [
+    {
+      "index": 12,
+      "old": "Muni",
+      "new": "Munir",
+      "by": "vocabulary"
+    },
+    {
+      "index": 14,
+      "old": "Rabasi,",
+      "new": "Abbasi,",
+      "by": "vocabulary"
+    },
+    {
+      "index": 38,
+      "old": "clot",
+      "new": "Claude",
+      "by": "vocabulary"
+    },
+    {
+      "index": 40,
+      "old": "code.",
+      "new": "Code.",
+      "by": "vocabulary"
+    }
+  ]
+}

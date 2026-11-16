@@ -1,7 +1,7 @@
 {
   "model": "mlx-community/parakeet-tdt-0.6b-v3",
   "language_code": "auto",
-  "text": "This is a video of me, Muni Rabasi, trying to test out my local setup for video transcription using clot code. We need to ensure and understand if this is something that actually works and if the time and effort I'm putting into this will be worth it. We're trying to understand there versus there or any differences. Like for example, if I say there is something I want to tell you, and the other thing that I say is that there are some people. Can we differentiate?",
+  "text": "This is a video of me, Munir Abbasi, trying to test out my local setup for video transcription using Claude Code. We need to ensure and understand if this is something that actually works and if the time and effort I'm putting into this will be worth it. We're trying to understand there versus there or any differences. Like for example, if I say there is something I want to tell you, and the other thing that I say is that there are some people. Can we differentiate?",
   "words": [
     {
       "type": "word",
@@ -89,7 +89,7 @@
     },
     {
       "type": "word",
-      "text": "Muni",
+      "text": "Munir",
       "start": 1.36,
       "end": 1.68,
       "speaker_id": "S0"
@@ -103,7 +103,7 @@
     },
     {
       "type": "word",
-      "text": "Rabasi,",
+      "text": "Abbasi,",
       "start": 1.76,
       "end": 2.24,
       "speaker_id": "S0"
@@ -271,7 +271,7 @@
     },
     {
       "type": "word",
-      "text": "clot",
+      "text": "Claude",
       "start": 6.88,
       "end": 7.36,
       "speaker_id": "S0"
@@ -285,7 +285,7 @@
     },
     {
       "type": "word",
-      "text": "code.",
+      "text": "Code.",
       "start": 7.52,
       "end": 7.92,
       "speaker_id": "S0"
