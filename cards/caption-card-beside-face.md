@@ -1,0 +1,8 @@
+# Caption card beside the face
+
+- **kind:** caption
+- **from:** ref-26 of the 2026-11-16 drop (cards/_inbox/ref-26.png)
+- **what:** Instead of a bare caption line, the spoken words stack inside a white rounded card placed in the empty space beside the face. The current word is bold and dark; the next word appears below in a lighter grey as it is spoken. Two to four words per card, then the card clears and refills. It keeps the eye near the face and gives the captions a physical "object" without covering anything.
+- **use when:** A clean, quiet talking-head section with clear negative space on one side of my face; moments where I want captions to feel like a note, not a subtitle.
+- **avoid when:** Any other card or chip is already beside the face; I move around a lot (the card would keep covering me); the sentence is a fast list.
+- **prompt:** Vertical 1080x1920 over my footage, layout face_full. Card: 460 px wide, auto height, #F5F5F7, 24 px radius, 28 px padding, shadow 0 12 32 rgba(0,0,0,.45), anchored at x 48 on the side with more free space, vertically inside the middle band y 0.42–0.58 (the card is the caption, so the normal caption line is suppressed while it is on); never over eyes or mouth, never in the bottom 20 %, ≥140 px clear on the right. Words: Inter ExtraBold 56 px, sentence case, 2–3 words per cue; the word being spoken in #0B0B0F at scale 1.12, the rest in #A0A3AD at scale 1.0; words stack one per line and appear on their onset, no typewriter. Card enters with the first word (fade + 60 px slide 350 ms) and clears on a sentence boundary with a pad of 30–200 ms (exit 250 ms). Dark variant if my background is bright: #15161C card, base word #F5F5F7, highlight #FFD166. No SFX.
