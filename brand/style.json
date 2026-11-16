@@ -20,7 +20,15 @@
       "file": "brand/fonts/JetBrainsMono-Medium.ttf",
       "fallback": "Menlo"
     },
-    "_note": "Drop .ttf files into brand/fonts/. Agents assert the font loaded; a missing file falls back and is reported, never silent."
+    "_note": "Files are in brand/fonts/ (Inter ExtraBold/Bold/SemiBold, JetBrains Mono Medium, Instrument Serif Italic/Regular, all OFL). Agents assert the font loaded; a missing file falls back and is reported, never silent.",
+    "serif": {
+      "family": "Instrument Serif",
+      "weight": 400,
+      "style": "italic",
+      "file": "brand/fonts/InstrumentSerif-Italic.ttf",
+      "fallback": "Georgia",
+      "use": "the one italic accent word in editorial titles and end cards (kinetic-title-accent-word), never for captions"
+    }
   },
   "colors": {
     "background": "#0B0B0F",

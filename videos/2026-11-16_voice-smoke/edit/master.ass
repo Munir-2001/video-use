@@ -9,7 +9,7 @@ YCbCr Matrix: TV.709
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,Helvetica Neue,96,&H00F7F5F5,&H002A50F4,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,4,2,5,108,140,0,1
+Style: Cap,Inter,96,&H00F7F5F5,&H002A50F4,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,4,2,5,108,140,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
