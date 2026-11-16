@@ -11,7 +11,7 @@
 | 7 | **motion** ×N in parallel (one per slot) + **captions** + **sound** run together. | `edit/animations/slot_<id>/render.*` + `reasoning.md`, `edit/master.ass`, `edit/sound.json` + mixed audio |
 | 8 | `render.py --preview --no-loudnorm` composites: segments → overlays → captions last. Then `sound_mix.py --mux` adds the mix. | `edit/preview.mp4`, `edit/mix.wav`, `edit/sound_report.json`, `edit/preview_mixed.mp4` |
 | 9 | **critic** checks every cut, caption occlusion, overlay timing, levels, readability, STYLE.md. Verdict + ranked fixes. Fix loop, max 3 passes. | `edit/critic.md` |
-| 10 | I see the preview, EDL, scenes.json and verdict. I give notes. | — |
+| 10 | I see the preview, EDL, scenes.json and verdict, in chat or in the dashboard (**"open the studio"**). I give notes in chat or pin them to timecodes in the dashboard. | `edit/feedback.json` (from the dashboard) |
 | 11 | **"apply my notes"** — notes to `edit/feedback.json`, EDL/scenes updated, only changed scenes re-rendered, critic again. | `edit/feedback.json`, new `edit/preview.mp4` |
 | 12 | I say "final". Full-res render, loudnorm pass. | `edit/final.mp4` |
 | 13 | Persist: session appended to `edit/project.md`, approved EDL copied to `examples/`, `videos/index.md` status → `done`, commit. | `edit/project.md`, `examples/<slug>.edl.json` |

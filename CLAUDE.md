@@ -12,6 +12,7 @@ Conversation-driven video editing, everything local and free. No paid APIs, ever
 - `DECISIONS.md` — why things are the way they are. Read before changing any tool, helper, agent or folder.
 - `cards/` — style/motion/caption/sound cards. Read when planning graphics or matching a style. `cards/_inbox/` is raw drops; never read it except via "process the inbox".
 - `examples/` — approved EDLs. Read only when writing a new EDL.
+- `studio/` — the local dashboard (HTML/JS/CSS) served by `helpers/studio_ui.py`. Read only when changing the UI.
 - `helpers/` — the scripts. Run with `.venv/bin/python helpers/<name>.py` after `source .envrc.studio` (libass ffmpeg on PATH, telemetry off).
 - `.agents/skills/hyperframes*` — read inside the motion agent only.
 
@@ -45,5 +46,6 @@ Sub-agents never ask questions; they pick the obvious option and say so.
 - **"process the inbox"** — run the designer agent on `cards/_inbox/`.
 - **"learn from my reviews"** — propose dated STYLE.md lines from repeated notes or "make this a rule"; apply only what I approve.
 - **"where are we?"** — HOW_IT_WORKS.md in 5 lines, last 3 DECISIONS entries, status of every video from `videos/index.md`.
+- **"open the studio"** — `.venv/bin/python helpers/studio_ui.py` → http://127.0.0.1:8765 (library, per-video timeline, cards, rules, decisions; notes saved to `edit/feedback.json`).
 - Any change to tools, helpers, agents, folders or workflow: DECISIONS.md entry + HOW_IT_WORKS.md update in the same commit.
 - Commit with clear messages. Never push unless told.

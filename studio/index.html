@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video Studio</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#/">▶ <span>Video Studio</span></a>
+  <nav>
+    <a href="#/" data-nav="library">Library</a>
+    <a href="#/cards" data-nav="cards">Cards</a>
+    <a href="#/rules" data-nav="rules">Rules</a>
+    <a href="#/decisions" data-nav="decisions">Decisions</a>
+    <a href="#/how" data-nav="how">How it works</a>
+  </nav>
+  <div class="top-right"><span id="clock" class="muted"></span><button id="refresh" class="ghost" title="Rescan the repo">↻</button></div>
+</header>
+<main id="app"><div class="loading">Loading…</div></main>
+<footer class="foot muted">Local only · reads this repo · notes save to <code>videos/&lt;folder&gt;/edit/feedback.json</code></footer>
+<script src="/app.js"></script>
+</body>
+</html>

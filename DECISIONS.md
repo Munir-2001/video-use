@@ -2,6 +2,12 @@
 
 Append-only, newest first. Format: `## date · title` then Why / Trade-off / Alternatives / Status.
 
+## 2026-11-16 · Studio dashboard: local, stdlib server, vanilla JS, no Framer Motion
+**Why:** I want to see every video, its cut, scenes, captions, sound and critic verdict in one place, and leave timecoded notes. `helpers/studio_ui.py` scans the repo and serves `studio/` on 127.0.0.1:8765 with a JSON API and Range-capable media; notes save to `videos/<folder>/edit/feedback.json`, which "apply my notes" reads.
+**Trade-off:** No React/Framer Motion. Framer Motion is a React UI-animation library; it would add Node tooling and a build step to a read-mostly dashboard, and it cannot render video deterministically (that is HyperFrames' job). Micro-animations are CSS. If the UI grows (editing EDLs in place), revisit with Vite + React.
+**Alternatives:** Next.js app (heavy), Streamlit (Python, but ugly timelines), static HTML export (no notes).
+**Status:** done; tested in Chrome on the test clip.
+
 ## 2026-11-16 · Model routing: Sonnet executes, Opus/Fable plans
 **Why:** My rule: the editing work runs on Sonnet; planning and judgment run on the bigger models. `editor`, `motion`, `captions`, `sound` → `model: sonnet`. `planner`, `designer`, `critic` → `model: opus`. `proofreader` → `haiku`. The main session (Fable) does inventory, conversation, strategy and orchestration.
 **Trade-off:** Take selection on Sonnet is cheaper and fast; if its EDLs need too many critic fixes, move `editor` to opus.
