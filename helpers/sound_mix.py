@@ -33,7 +33,7 @@ import wave
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-TARGET_I, TARGET_TP, TARGET_LRA = -14.0, -1.0, 11.0
+TARGET_I, TARGET_TP, TARGET_LRA = -14.0, -1.5, 11.0  # TP has 0.5 dB headroom: the AAC mux overshoots the wav by ~0.1 dB
 DUCK = "threshold=0.03:ratio=8:attack=25:release=350:makeup=1"
 SAMPLE_RATE = 48000
 
@@ -134,7 +134,7 @@ def speech_filter(speech: dict) -> str:
     if speech.get("highpass_hz"):
         parts.append(f"highpass=f={int(speech['highpass_hz'])}")
     if speech.get("compress", False):
-        parts.append("acompressor=threshold=-24dB:ratio=3:attack=10:release=150:makeup=0")
+        parts.append("acompressor=threshold=-24dB:ratio=3:attack=10:release=150:makeup=1")
     if speech.get("gain_db"):
         parts.append(f"volume={float(speech['gain_db'])}dB")
     if speech.get("limit", True):

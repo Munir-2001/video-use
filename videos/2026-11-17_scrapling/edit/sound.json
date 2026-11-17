@@ -1,90 +1,95 @@
 {
- "video": "preview_speechprep.mp4",
- "output": "mix.wav",
- "music": null,
- "effects": [
-  {
-   "effect": "soft_impact",
-   "file": "brand/sfx/soft_impact.mp3",
-   "contact_s": 2.74,
-   "event": "title lands ('scraper' pops)",
-   "gain_db": -18
-  },
-  {
-   "effect": "whoosh_short",
-   "file": "brand/sfx/whoosh_short.mp3",
-   "contact_s": 3.78,
-   "event": "window A (README) enters",
-   "gain_db": -10
-  },
-  {
-   "effect": "whoosh_short",
-   "file": "brand/sfx/whoosh_short.mp3",
-   "contact_s": 21.54,
-   "event": "window B (config) enters",
-   "gain_db": -10
-  },
-  {
-   "effect": "whoosh_short",
-   "file": "brand/sfx/whoosh_short.mp3",
-   "contact_s": 24.54,
-   "event": "window C (terminal) enters",
-   "gain_db": -10
-  },
-  {
-   "effect": "tick",
-   "file": "brand/sfx/tick.mp3",
-   "contact_s": 31.86,
-   "event": "table row 1",
-   "gain_db": -8
-  },
-  {
-   "effect": "tick",
-   "file": "brand/sfx/tick.mp3",
-   "contact_s": 32.58,
-   "event": "table row 2",
-   "gain_db": -8
-  },
-  {
-   "effect": "tick",
-   "file": "brand/sfx/tick.mp3",
-   "contact_s": 33.3,
-   "event": "table row 3",
-   "gain_db": -8
-  },
-  {
-   "effect": "pop",
-   "file": "brand/sfx/pop.mp3",
-   "contact_s": 34.1,
-   "event": "CTA pill lands",
-   "gain_db": -6
+  "video": "preview.mp4",
+  "output": "mix.wav",
+  "music": null,
+  "effects": [
+    {
+      "effect": "soft_impact",
+      "file": "brand/sfx/soft_impact.mp3",
+      "contact_s": 2.74,
+      "event": "title lands ('scraper' pops)",
+      "gain_db": -22
+    },
+    {
+      "effect": "whoosh_short",
+      "file": "brand/sfx/whoosh_short.mp3",
+      "contact_s": 3.78,
+      "event": "window A (README) enters",
+      "gain_db": -18
+    },
+    {
+      "effect": "whoosh_short",
+      "file": "brand/sfx/whoosh_short.mp3",
+      "contact_s": 21.54,
+      "event": "window B (config) enters",
+      "gain_db": -18
+    },
+    {
+      "effect": "whoosh_short",
+      "file": "brand/sfx/whoosh_short.mp3",
+      "contact_s": 24.54,
+      "event": "window C (terminal) enters",
+      "gain_db": -18
+    },
+    {
+      "effect": "tick",
+      "file": "brand/sfx/tick.mp3",
+      "contact_s": 31.86,
+      "event": "table row 1",
+      "gain_db": -10
+    },
+    {
+      "effect": "tick",
+      "file": "brand/sfx/tick.mp3",
+      "contact_s": 32.58,
+      "event": "table row 2",
+      "gain_db": -10
+    },
+    {
+      "effect": "tick",
+      "file": "brand/sfx/tick.mp3",
+      "contact_s": 33.3,
+      "event": "table row 3",
+      "gain_db": -10
+    },
+    {
+      "effect": "pop",
+      "file": "brand/sfx/pop.mp3",
+      "contact_s": 34.1,
+      "event": "CTA pill lands",
+      "gain_db": -14
+    }
+  ],
+  "sections": [
+    {
+      "name": "hook",
+      "start": 0,
+      "end": 3.5
+    },
+    {
+      "name": "readme",
+      "start": 3.5,
+      "end": 21.5
+    },
+    {
+      "name": "config",
+      "start": 21.5,
+      "end": 24.5
+    },
+    {
+      "name": "terminal",
+      "start": 24.5,
+      "end": 34.1
+    },
+    {
+      "name": "cta",
+      "start": 34.1,
+      "end": 37.0
+    }
+  ],
+  "speech": {
+    "highpass_hz": 70,
+    "gain_db": 17,
+    "compress": true
   }
- ],
- "sections": [
-  {
-   "name": "hook",
-   "start": 0,
-   "end": 3.5
-  },
-  {
-   "name": "readme",
-   "start": 3.5,
-   "end": 21.5
-  },
-  {
-   "name": "config",
-   "start": 21.5,
-   "end": 24.5
-  },
-  {
-   "name": "terminal",
-   "start": 24.5,
-   "end": 34.1
-  },
-  {
-   "name": "cta",
-   "start": 34.1,
-   "end": 37.0
-  }
- ]
 }

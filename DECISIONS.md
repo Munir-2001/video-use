@@ -6,7 +6,7 @@ Append-only, newest first. Format: `## date · title` then Why / Trade-off / Alt
 **Why:** First real reel: the laptop mic recorded at −37 LUFS, so every effect out-shouted the speech and the sound agent had to pre-process a copy of the video by hand. Now `sound.json` may carry `"speech": {highpass_hz, gain_db, compress, limit}` and the helper applies it when extracting the speech track; the agent decides the numbers from the measured raw level. Principle kept: the agent decides, the helper executes.
 **Trade-off:** Compression is a fixed gentle curve; a badly clipped recording still needs re-recording.
 **Alternatives:** Normalising speech automatically (hides a bad recording from the agent's report), leaving it to loudnorm at the end (too late: effects are balanced against speech before mastering).
-**Status:** done; tested; to be used in round 2 of 2026-11-17_scrapling.
+**Status:** done; used in round 2 of 2026-11-17_scrapling. Two fixes from that run: the compressor's `makeup=0` was rejected by ffmpeg 9 (now 1), and the loudnorm true-peak target is −1.5 dBTP so the AAC mux (which overshoots the wav by ~0.1 dB) stays under STYLE.md's −1 dBTP.
 
 ## 2026-11-17 · Reframe tool: laptop 16:9 recordings become 9:16 reels by cropping, never stretching
 **Why:** I may record on the laptop instead of the phone. `helpers/reframe.py` crops the tallest 9:16 column at an x the main session chooses by looking at a frame (where the face is), scales to the profile with lanczos, copies the audio, and reports the upscale factor; it works the other way too (vertical → horizontal band). Runs at inventory before transcription so every later step sees a native-aspect clip.

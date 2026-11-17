@@ -1,11 +1,11 @@
 {
-  "video": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-17_scrapling/edit/preview_speechprep.mp4",
+  "video": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-17_scrapling/edit/preview.mp4",
   "output": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-17_scrapling/edit/mix.wav",
-  "duration_s": 37.051,
+  "duration_s": 37.033,
   "speech_track": {
-    "integrated_lufs": -21.5,
-    "lra_lu": 1.9,
-    "true_peak_dbtp": -4.1
+    "integrated_lufs": -19.8,
+    "lra_lu": 2.7,
+    "true_peak_dbtp": -2.9
   },
   "music": null,
   "voice": null,
@@ -15,7 +15,7 @@
       "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/soft_impact.mp3",
       "contact_s": 2.74,
       "event": "title lands ('scraper' pops)",
-      "gain_db": -18,
+      "gain_db": -22,
       "attack_s": 0.0231,
       "start_s": 2.7169
     },
@@ -24,7 +24,7 @@
       "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/whoosh_short.mp3",
       "contact_s": 3.78,
       "event": "window A (README) enters",
-      "gain_db": -10,
+      "gain_db": -18,
       "attack_s": 0.1371,
       "start_s": 3.6429
     },
@@ -33,7 +33,7 @@
       "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/whoosh_short.mp3",
       "contact_s": 21.54,
       "event": "window B (config) enters",
-      "gain_db": -10,
+      "gain_db": -18,
       "attack_s": 0.1371,
       "start_s": 21.4029
     },
@@ -42,7 +42,7 @@
       "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/whoosh_short.mp3",
       "contact_s": 24.54,
       "event": "window C (terminal) enters",
-      "gain_db": -10,
+      "gain_db": -18,
       "attack_s": 0.1371,
       "start_s": 24.4029
     },
@@ -51,7 +51,7 @@
       "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/tick.mp3",
       "contact_s": 31.86,
       "event": "table row 1",
-      "gain_db": -8,
+      "gain_db": -10,
       "attack_s": 0.0511,
       "start_s": 31.8089
     },
@@ -60,7 +60,7 @@
       "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/tick.mp3",
       "contact_s": 32.58,
       "event": "table row 2",
-      "gain_db": -8,
+      "gain_db": -10,
       "attack_s": 0.0511,
       "start_s": 32.5289
     },
@@ -69,7 +69,7 @@
       "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/tick.mp3",
       "contact_s": 33.3,
       "event": "table row 3",
-      "gain_db": -8,
+      "gain_db": -10,
       "attack_s": 0.0511,
       "start_s": 33.2489
     },
@@ -78,62 +78,62 @@
       "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/pop.mp3",
       "contact_s": 34.1,
       "event": "CTA pill lands",
-      "gain_db": -6,
+      "gain_db": -14,
       "attack_s": 0.1174,
       "start_s": 33.9826
     }
   ],
   "skipped": [],
   "premix_measured": {
-    "integrated_lufs": -21.3,
-    "true_peak_dbtp": -3.1,
-    "lra_lu": 2.2
+    "integrated_lufs": -19.81,
+    "true_peak_dbtp": -2.09,
+    "lra_lu": 2.8
   },
   "final": {
-    "integrated_lufs": -14.1,
-    "lra_lu": 2.8,
-    "true_peak_dbtp": -1.0
+    "integrated_lufs": -14.3,
+    "lra_lu": 2.7,
+    "true_peak_dbtp": -1.5
   },
   "sections": [
     {
       "name": "hook",
       "start": 0,
       "end": 3.5,
-      "integrated_lufs": -13.2,
-      "lra_lu": 0.8,
-      "true_peak_dbtp": -1.0
+      "integrated_lufs": -13.4,
+      "lra_lu": 0.5,
+      "true_peak_dbtp": -1.5
     },
     {
       "name": "readme",
       "start": 3.5,
       "end": 21.5,
-      "integrated_lufs": -14.4,
-      "lra_lu": 2.0,
-      "true_peak_dbtp": -1.0
+      "integrated_lufs": -14.7,
+      "lra_lu": 1.9,
+      "true_peak_dbtp": -1.5
     },
     {
       "name": "config",
       "start": 21.5,
       "end": 24.5,
-      "integrated_lufs": -14.2,
+      "integrated_lufs": -14.0,
       "lra_lu": 20.0,
-      "true_peak_dbtp": -1.0
+      "true_peak_dbtp": -1.5
     },
     {
       "name": "terminal",
       "start": 24.5,
       "end": 34.1,
-      "integrated_lufs": -13.7,
-      "lra_lu": 2.4,
-      "true_peak_dbtp": -1.0
+      "integrated_lufs": -13.5,
+      "lra_lu": 2.7,
+      "true_peak_dbtp": -1.5
     },
     {
       "name": "cta",
       "start": 34.1,
       "end": 37.0,
-      "integrated_lufs": -13.8,
+      "integrated_lufs": -14.7,
       "lra_lu": 0.0,
-      "true_peak_dbtp": -1.0
+      "true_peak_dbtp": -1.5
     }
   ]
 }
