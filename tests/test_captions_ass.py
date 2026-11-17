@@ -214,3 +214,11 @@ def test_cue_preset_can_change_colour_outline_and_shadow():
 
     assert "\\fs64\\c&H00181414\\bord0\\shad0}" in text          # ink, no outline, no shadow on the panel
     assert "{\\c&H002A50F4" in text and "{\\c&H00181414\\fscx100" in text  # flame highlight, ink restore
+
+
+def test_soft_shadow_fields_emit_blur_and_shadow_alpha():
+    cue = {"start": 1.0, "end": 1.6, "words": [w("Comment", 1.0, 1.3)], "caption": {"shadow_px": 2, "shadow_blur": 3, "shadow_alpha": 0.55}}
+
+    text, _ = ca.build_ass([cue], STYLE, "vertical", 1080, 1920)
+
+    assert "\\shad2\\blur3\\4a&H73&}" in text

@@ -1,219 +1,227 @@
 {
- "cues": [
-  {
-   "i": [
-    9,
-    11
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    12,
-    13
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    14,
-    15
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    16,
-    18
-   ],
-   "preset": "paper_full"
-  },
-  {
-   "i": [
-    19,
-    21
-   ],
-   "preset": "paper_full"
-  },
-  {
-   "i": [
-    22,
-    23
-   ],
-   "preset": "paper_full"
-  },
-  {
-   "i": [
-    24,
-    25
-   ],
-   "preset": "paper_full"
-  },
-  {
-   "i": [
-    26,
-    28
-   ],
-   "preset": "paper_full"
-  },
-  {
-   "i": [
-    29,
-    31
-   ],
-   "preset": "paper_full"
-  },
-  {
-   "i": [
-    32,
-    34
-   ],
-   "preset": "paper_full"
-  },
-  {
-   "i": [
-    35,
-    37
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    38,
-    40
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    41,
-    43
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    44,
-    45
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    46,
-    48
-   ],
-   "preset": "paper_full"
-  },
-  {
-   "i": [
-    49,
-    51
-   ],
-   "preset": "paper_full"
-  },
-  {
-   "i": [
-    52,
-    54
-   ],
-   "preset": "paper_full"
-  },
-  {
-   "i": [
-    55,
-    56
-   ],
-   "preset": "paper_full"
-  },
-  {
-   "i": [
-    57,
-    58
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    59,
-    60
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    61,
-    63
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    64,
-    65
-   ],
-   "preset": {
-    "y_fraction": 0.24,
-    "size_px": 100,
-    "words_per_cue": {
-     "target": 2,
-     "max": 3
+  "cues": [
+    {
+      "i": [
+        9,
+        11
+      ],
+      "preset": "panel"
     },
-    "outline_px": 2,
-    "shadow_px": 4,
-    "outline_color": "ink"
-   }
-  },
-  {
-   "i": [
-    66,
-    67
-   ],
-   "preset": {
-    "y_fraction": 0.24,
-    "size_px": 100,
-    "words_per_cue": {
-     "target": 2,
-     "max": 3
+    {
+      "i": [
+        12,
+        13
+      ],
+      "preset": "panel"
     },
-    "outline_px": 2,
-    "shadow_px": 4,
-    "outline_color": "ink"
-   }
-  },
-  {
-   "i": [
-    68,
-    70
-   ],
-   "preset": {
-    "y_fraction": 0.24,
-    "size_px": 100,
-    "words_per_cue": {
-     "target": 2,
-     "max": 3
+    {
+      "i": [
+        14,
+        15
+      ],
+      "preset": "panel"
     },
-    "outline_px": 2,
-    "shadow_px": 4,
-    "outline_color": "ink"
-   }
-  },
-  {
-   "i": [
-    71,
-    72
-   ],
-   "preset": {
-    "y_fraction": 0.24,
-    "size_px": 100,
-    "words_per_cue": {
-     "target": 2,
-     "max": 3
+    {
+      "i": [
+        16,
+        18
+      ],
+      "preset": "paper_full"
     },
-    "outline_px": 2,
-    "shadow_px": 4,
-    "outline_color": "ink"
-   }
-  }
- ]
+    {
+      "i": [
+        19,
+        21
+      ],
+      "preset": "paper_full"
+    },
+    {
+      "i": [
+        22,
+        23
+      ],
+      "preset": "paper_full"
+    },
+    {
+      "i": [
+        24,
+        25
+      ],
+      "preset": "paper_full"
+    },
+    {
+      "i": [
+        26,
+        28
+      ],
+      "preset": "paper_full"
+    },
+    {
+      "i": [
+        29,
+        31
+      ],
+      "preset": "paper_full"
+    },
+    {
+      "i": [
+        32,
+        34
+      ],
+      "preset": "paper_full"
+    },
+    {
+      "i": [
+        35,
+        37
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        38,
+        40
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        41,
+        43
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        44,
+        45
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        46,
+        48
+      ],
+      "preset": "paper_full"
+    },
+    {
+      "i": [
+        49,
+        51
+      ],
+      "preset": "paper_full"
+    },
+    {
+      "i": [
+        52,
+        54
+      ],
+      "preset": "paper_full"
+    },
+    {
+      "i": [
+        55,
+        56
+      ],
+      "preset": "paper_full"
+    },
+    {
+      "i": [
+        57,
+        58
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        59,
+        60
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        61,
+        63
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        64,
+        65
+      ],
+      "preset": {
+        "y_fraction": 0.24,
+        "size_px": 100,
+        "words_per_cue": {
+          "target": 2,
+          "max": 3
+        },
+        "outline_px": 2,
+        "shadow_px": 2,
+        "shadow_blur": 3,
+        "shadow_alpha": 0.55,
+        "outline_color": "ink"
+      }
+    },
+    {
+      "i": [
+        66,
+        67
+      ],
+      "preset": {
+        "y_fraction": 0.24,
+        "size_px": 100,
+        "words_per_cue": {
+          "target": 2,
+          "max": 3
+        },
+        "outline_px": 2,
+        "shadow_px": 2,
+        "shadow_blur": 3,
+        "shadow_alpha": 0.55,
+        "outline_color": "ink"
+      }
+    },
+    {
+      "i": [
+        68,
+        70
+      ],
+      "preset": {
+        "y_fraction": 0.24,
+        "size_px": 100,
+        "words_per_cue": {
+          "target": 2,
+          "max": 3
+        },
+        "outline_px": 2,
+        "shadow_px": 2,
+        "shadow_blur": 3,
+        "shadow_alpha": 0.55,
+        "outline_color": "ink"
+      }
+    },
+    {
+      "i": [
+        71,
+        72
+      ],
+      "preset": {
+        "y_fraction": 0.24,
+        "size_px": 100,
+        "words_per_cue": {
+          "target": 2,
+          "max": 3
+        },
+        "outline_px": 2,
+        "shadow_px": 2,
+        "shadow_blur": 3,
+        "shadow_alpha": 0.55,
+        "outline_color": "ink"
+      }
+    }
+  ]
 }

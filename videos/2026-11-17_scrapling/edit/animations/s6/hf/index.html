@@ -12,11 +12,12 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:#F3EEE4; }
 .abs { position:absolute; }
 #bg { left:0; top:0; width:1080px; height:1920px; background-color:var(--paper);
   background-image:radial-gradient(circle at 14px 14px, rgba(20,20,24,.06) 0 1.5px, rgba(20,20,24,0) 1.7px); background-size:28px 28px; }
-#wrap { position:absolute; left:48px; top:230px; width:892px; height:1000px; transform-origin:50% 50%; }
+#slide { position:absolute; left:0; top:0; width:1080px; height:1920px; }
+#wrap { position:absolute; left:48px; top:230px; width:892px; height:260px; transform-origin:446px 500px; }
 .win { position:absolute; inset:0; background:#fff; border:1px solid var(--line); border-radius:24px; overflow:hidden; box-shadow:0 18px 40px rgba(20,20,24,.16); }
 .chrome { position:absolute; left:0; top:0; width:892px; height:48px; border-bottom:1px solid var(--line); background:#fff; }
 .chrome i { position:absolute; top:19px; width:10px; height:10px; border-radius:5px; background:var(--line); }
-.chrome span { position:absolute; left:96px; top:0; font:500 28px/48px "JetBrains Mono"; color:var(--muted); white-space:pre; }
+.chrome span.lb { position:absolute; left:96px; top:0; font:500 28px/48px "JetBrains Mono"; color:var(--muted); white-space:pre; }
 .cont { position:absolute; left:0; top:48px; width:892px; height:952px; overflow:hidden; }
 #zoom { left:0; top:0; width:892px; height:952px; transform-origin:0 0; }
 .rule { position:absolute; left:24px; width:844px; height:1px; background:var(--line); opacity:.5; }
@@ -38,14 +39,53 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:#F3EEE4; }
 #ring { position:absolute; border:3px solid var(--flame); border-radius:14px; opacity:0; }
 #ptr { left:0; top:0; width:26px; height:36px; opacity:0; }
 #ptrIn { position:absolute; left:-2px; top:-2px; width:26px; height:36px; filter:drop-shadow(0 3px 4px rgba(20,20,24,.28)); }
+#out { position:absolute; left:0; top:0; width:1080px; height:1920px; }
+#oBw { position:absolute; left:48px; top:192px; width:892px; height:640px; transform-origin:100% 50%; }
+#oB .cont { height:592px; }
+#oB .ln { position:absolute; left:0; width:892px; height:64px; white-space:pre; font:500 32px/64px "JetBrains Mono"; }
+#oB .ln b { position:absolute; left:24px; font:500 28px/64px "JetBrains Mono"; color:var(--muted); opacity:0; }
+#oB .ln u { position:absolute; left:72px; text-decoration:none; color:var(--ink); }
+#oB .ln i { font-style:normal; } #oB .p, #oB .ph { color:var(--muted); }
+#obBand { position:absolute; left:0; top:152px; width:892px; height:64px; background:rgba(244,80,42,.12); }
+#obBand .bar { position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--flame); }
+#obRing { position:absolute; border:3px solid var(--flame); border-radius:14px; }
+#otab { position:absolute; left:626px; top:6px; width:224px; height:36px; border-radius:12px; background:var(--paper); border:2px solid var(--flame); }
+#otab em { position:absolute; left:12px; top:9px; width:14px; height:14px; border-radius:7px; background:var(--flame); }
+#otab .tx { position:absolute; left:36px; top:0; font:600 28px/32px "Inter"; color:var(--ink); white-space:pre; }
+#optr { position:absolute; left:0; top:0; width:30px; height:40px; z-index:50; filter:drop-shadow(0 3px 4px rgba(20,20,24,.28)); }
 </style>
 </head>
 <body>
 <div id="root" data-composition-id="main" data-start="0" data-duration="6.36" data-width="1080" data-height="1920">
   <div id="bg" class="abs clip" data-start="0" data-duration="6.36" data-track-index="0"></div>
+  <div id="out" class="clip" data-start="0" data-duration="6.36" data-track-index="2">
+   <div id="oB"><div id="oBw">
+    <div class="win">
+      <div class="chrome"><i style="left:20px"></i><i style="left:42px"></i><i style="left:64px"></i><span class="lb">.claude.json  (mcpServers only)</span>
+        <div id="otab"><em></em><div class="tx">Claude Code</div></div>
+      </div>
+      <div class="cont">
+        <div id="obZoom" class="abs" style="left:0;top:0;width:892px;height:592px;transform-origin:0 0">
+          <div id="obBand"><div class="bar"></div></div>
+          <div class="ln" style="top:24px"><b>1</b><u class="p">{</u></div>
+          <div class="ln" style="top:88px"><b>2</b><u>  <i>"mcpServers"</i><i class="p">: {</i></u></div>
+          <div class="ln" style="top:152px"><b>3</b><u>    <i>"scrapling"</i><i class="p">: {</i></u></div>
+          <div class="ln" style="top:216px"><b>4</b><u>      <i>"command"</i><i class="p">: </i><i class="ph">"…"</i><i class="p">,</i></u></div>
+          <div class="ln" style="top:280px"><b>5</b><u>      <i>"args"</i><i class="p">: [</i><i class="ph">"…"</i><i class="p">]</i></u></div>
+          <div class="ln" style="top:344px"><b>6</b><u class="p">    }</u></div>
+          <div class="ln" style="top:408px"><b>7</b><u class="p">  }</u></div>
+          <div class="ln" style="top:472px"><b>8</b><u class="p">}</u></div>
+        </div>
+        <div id="obRing"></div>
+      </div>
+    </div></div>
+    <div id="optr"><svg id="optrIn" style="position:absolute;left:-1px;top:-1px" width="30" height="40" viewBox="0 0 24 34"><path d="M3 2v24l6-5.5 4.5 10 4-1.8-4.4-9.8h8.4z" fill="#141418" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg></div>
+   </div>
+  </div>
+  <div id="slide">
   <div id="wrap" class="clip" data-start="0" data-duration="6.36" data-track-index="1">
     <div class="win">
-      <div class="chrome"><i style="left:20px"></i><i style="left:42px"></i><i style="left:64px"></i><span>claude  ·  demo-folder</span></div>
+      <div class="chrome"><i style="left:20px"></i><i style="left:42px"></i><i style="left:64px"></i><span class="lb">claude  ·  demo-folder</span></div>
       <div class="cont">
         <div id="zoom" class="abs">
           <div class="rule" style="top:500px"></div><div class="rule" style="top:572px"></div><div class="rule" style="top:644px"></div><div class="rule" style="top:716px"></div><div class="rule" style="top:788px"></div><div class="rule" style="top:860px"></div>
@@ -61,6 +101,7 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:#F3EEE4; }
         <div id="ring"></div>
       </div>
     </div>
+  </div>
   </div>
 
 <script>
@@ -80,6 +121,20 @@ function addChars(host, text, keep) {
 }
 function typeChars(spans, t0, cps) { spans.forEach((s, i) => tl.set(s, { display: "inline" }, t0 + i / cps)); }
 
+// ---- hand-over from s5's last frame (config window B, end state) ----
+{
+  const W = 892, H = 592, k = 1.3, bx = 40, by = 144, bw = 600, bh = 208, cx0 = bx + bw / 2, cy0 = by + bh / 2;
+  gsap.set("#obZoom", { scale: k, x: W / 2 - k * cx0, y: H / 2 - k * cy0 });
+  const r = $("#obRing"); r.style.width = bw * k + "px"; r.style.height = bh * k + "px";
+  r.style.left = (W / 2 - bw * k / 2) + "px"; r.style.top = (H / 2 - bh * k / 2) + "px";
+  gsap.set("#oBw", { y: -8, scale: 1.02 });
+  gsap.set("#optr", { x: 860, y: 236 });
+  tl.to("#out", { x: -1080, duration: 0.30, ease: IN }, 0);
+  tl.fromTo("#slide", { x: 1080 }, { x: 0, duration: 0.30, ease: OUT }, 0);
+}
+// ---- window grows with its content (height; drift origin is a fixed point so nothing jumps)
+tl.to("#wrap", { height: 600, duration: 0.30, ease: OUT }, c(27.18) - 0.30);
+tl.to("#wrap", { height: 1000, duration: 0.30, ease: OUT }, c(27.74 - EARLY));
 // ---- drift: whole window, sine in-out over the full hold ----
 tl.fromTo("#wrap", { y: 0, scale: 1 }, { y: -8, scale: 1.02, duration: 6.36, ease: "sine.inOut" }, 0);
 

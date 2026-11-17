@@ -374,6 +374,10 @@ def build_ass(cues: list[dict], style: dict, profile: str, width: int, height: i
         if ov.get("outline_color"):
             oc = ass_colour(resolve_colour(style, ov["outline_color"]))
             extra += f"\\3c{oc}\\4c{oc}"
+        if ov.get("shadow_blur"):          # soft shadow: blur the edges, translucent shadow colour
+            extra += f"\\blur{float(ov['shadow_blur']):g}"
+        if ov.get("shadow_alpha") is not None:
+            extra += f"\\4a&H{int(round((1 - float(ov['shadow_alpha'])) * 255)):02X}&"
         for start, end, text in word_events(cue, cue_layout, cue_hl, cue_base, scale,
                                             caps.get("motion"), extra):
             lines.append(f"Dialogue: 0,{ass_time(start)},{ass_time(end)},Cap,,0,0,0,,{text}")

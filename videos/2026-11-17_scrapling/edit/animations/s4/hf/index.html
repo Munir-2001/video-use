@@ -33,32 +33,56 @@
       }
       .circ { width: 48px; height: 48px; border-radius: 50%; background: #F4502A; }
       .brick { position: absolute; width: 50px; height: 56px; background: #DCD6CA; border: 1px solid #141418; }
-      #pointer { position: absolute; left: 0; top: 0; width: 36px; height: 36px; filter: drop-shadow(0 3px 5px rgba(20,20,24,0.3)); }
+      #pointer { position: absolute; left: 0; top: 0; width: 26px; height: 36px; }
+
+      /* card 01: copied from s3 */
+      #aWrap1 { position:absolute; left:48px; top:230px; width:892px; height:1000px; }
+      .drift1 { position:absolute; inset:0; transform-origin:50% 50%; }
+      .win1 { position:absolute; inset:0; background:#fff; border:1px solid #DCD6CA; border-radius:24px; overflow:hidden; box-shadow:0 18px 40px rgba(20,20,24,.16); }
+      .chrome1 { position:absolute; left:0; top:0; width:892px; height:48px; border-bottom:1px solid #DCD6CA; background:#fff; }
+      .chrome1 i { position:absolute; top:19px; width:10px; height:10px; border-radius:5px; background:#DCD6CA; }
+      .chrome1 span { position:absolute; left:96px; top:0; font:500 28px/48px "JetBrains Mono"; color:#6E6A64; white-space:pre; }
+      .cont1 { position:absolute; left:0; top:48px; width:892px; height:952px; overflow:hidden; }
+      #kick1 { position:absolute; left:48px; top:22px; font:500 30px/36px "JetBrains Mono"; color:#F4502A; white-space:pre; }
+      .tl1 { position:absolute; left:48px; white-space:nowrap; font:800 88px/96px "Inter"; letter-spacing:-1px; }
+      #mini1 { position:absolute; left:48px; top:282px; width:796px; height:420px; border:1px solid #DCD6CA; border-radius:16px; background:#FBF9F4; overflow:hidden; }
+      #mHead1 { position:absolute; left:0; top:0; width:796px; height:56px; background:#F3EEE4; border-bottom:1px solid #DCD6CA; }
+      #mHead1 b { position:absolute; top:21px; height:14px; border-radius:7px; background:#DCD6CA; }
+      .blk1 { position:absolute; left:16px; width:762px; height:100px; background:#fff; border:1px solid #DCD6CA; border-radius:12px; }
+      .blk1 .th { position:absolute; left:16px; top:17px; width:64px; height:64px; border-radius:10px; background:#DCD6CA; }
+      .blk1 .g1, .blk1 .g2 { position:absolute; left:96px; height:10px; border-radius:5px; background:#DCD6CA; }
+      .blk1 .g1 { top:62px; width:360px; } .blk1 .g2 { top:80px; width:230px; }
+      .blk1 .nm { position:absolute; left:96px; top:10px; font:800 36px/44px "Inter"; white-space:nowrap; }
+      #boxS1 { position:absolute; border:3px solid #F4502A; border-radius:10px; }
+      #chip1 { position:absolute; left:48px; top:762px; width:372px; height:70px; border-radius:12px; background:#F3EEE4; border:1px solid #DCD6CA; }
+      #chip1 div { position:absolute; left:20px; top:0; font:500 30px/68px "JetBrains Mono"; color:#1F5BFF; white-space:pre; }
+      #check1 { position:absolute; left:444px; top:773px; width:48px; height:48px; border-radius:24px; background:#F4502A; }
+      #check1 svg { position:absolute; left:11px; top:12px; }
+      #ptr1 { position:absolute; left:0; top:0; width:26px; height:36px; }
+      #ptr1 svg { position:absolute; left:-2px; top:-2px; overflow:visible; filter:drop-shadow(0 3px 4px rgba(20,20,24,.30)); }
     </style>
   </head>
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-duration="5.16" data-width="1080" data-height="1920">
 
-      <!-- CARD 01: final state of s3 -->
-      <div class="slide" id="slide1"><div class="drift" id="drift1"><div class="card">
-        <div class="abs chrome"><div class="dot" style="left:24px"></div><div class="dot" style="left:42px"></div><div class="dot" style="left:60px"></div><div class="label" style="left:90px">feature 01</div></div>
-        <div class="abs kicker">01</div>
-        <div class="abs title" style="top:120px">Adaptive</div>
-        <div class="abs title flame" style="top:216px">selectors</div>
-        <!-- mini page, reshuffled: Acme Co on top -->
-        <div class="abs" style="left:48px;top:350px;width:796px;height:400px;border:1px solid #DCD6CA;border-radius:14px;background:#FBF9F4;overflow:hidden">
-          <div class="abs" style="left:0;top:0;width:796px;height:48px;background:#EDE8DD;border-bottom:1px solid #DCD6CA"></div>
-          <div class="abs" style="left:18px;top:14px;width:20px;height:20px;border-radius:50%;background:#DCD6CA"></div>
-          <div class="abs" style="left:56px;top:16px;width:300px;height:16px;border-radius:8px;background:#DCD6CA"></div>
+      <!-- CARD 01: s3 last frame, copied -->
+      <div id="slide1"><div id="aWrap1"><div class="drift1" id="drift1"><div class="win1">
+        <div class="chrome1"><i style="left:20px"></i><i style="left:42px"></i><i style="left:64px"></i><span>feature 01</span></div>
+        <div class="cont1">
+          <div id="kick1">01</div>
+          <div class="tl1" style="top:58px">Adaptive</div>
+          <div class="tl1" style="top:154px;color:#F4502A">selectors</div>
+          <div id="mini1">
+            <div id="mHead1"><b style="left:20px;width:96px"></b><b style="left:560px;width:60px"></b><b style="left:636px;width:60px"></b><b style="left:712px;width:60px"></b></div>
+            <div class="blk1" style="top:72px"><div class="th"></div><div class="g1"></div><div class="g2"></div></div>
+            <div class="blk1" style="top:184px"><div class="th"></div><div class="g1"></div><div class="g2"></div></div>
+            <div class="blk1" style="top:296px"><div class="th"></div><div class="nm" id="acme1">Acme Co</div><div class="g1"></div><div class="g2"></div></div>
+            <div id="boxS1"></div>
+          </div>
+          <div id="chip1"><div>article.item &gt; h3</div></div>
+          <div id="check1"><svg width="26" height="24" viewBox="0 0 26 24" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12.5l7 7L23 4"/></svg></div>
         </div>
-        <div class="abs" style="left:64px;top:416px;width:764px;height:84px;border:3px solid #F4502A;border-radius:12px;background:#FFFFFF">
-          <div class="abs" style="left:22px;top:22px;font:800 34px/40px 'Inter',sans-serif;white-space:pre">Acme Co</div>
-        </div>
-        <div class="abs" style="left:64px;top:512px;width:764px;height:84px;border-radius:12px;background:#EDE8DD"><div class="abs" style="left:22px;top:30px;width:240px;height:22px;border-radius:11px;background:#DCD6CA"></div></div>
-        <div class="abs" style="left:64px;top:608px;width:764px;height:84px;border-radius:12px;background:#EDE8DD"><div class="abs" style="left:22px;top:30px;width:180px;height:22px;border-radius:11px;background:#DCD6CA"></div></div>
-        <div class="abs chip" style="left:48px;top:810px;width:380px">article.item &gt; h3</div>
-        <div class="abs circ" style="left:452px;top:821px"><svg width="48" height="48" viewBox="0 0 48 48"><path d="M13 25 L21 33 L36 16" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </div></div></div>
+      </div></div></div></div>
 
       <!-- CARD 02 -->
       <div class="slide" id="slide2"><div class="drift" id="drift2"><div class="card">
@@ -91,12 +115,14 @@
         </div>
       </div></div></div>
 
-      <div id="pointer"><div id="psway"><svg width="36" height="36" viewBox="0 0 36 36"><path d="M5 3 L5 28 L11.5 22.5 L16 32 L21 29.8 L16.6 20.6 L25 20 Z" fill="#141418" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+      <div id="pointer"><div id="psway"><svg width="30" height="40" viewBox="0 0 26 36" style="position:absolute;left:-2px;top:-2px;overflow:visible;filter:drop-shadow(0 3px 4px rgba(20,20,24,.30))"><path d="M2 2 L2 29 L9 22.5 L13.5 33.5 L19 31 L14.5 20.5 L24 20 Z" fill="#141418" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
     </div>
 
     <script>
       if (!document.fonts.check('800 88px Inter') || !document.fonts.check('500 30px "JetBrains Mono"')) console.warn('FONT NOT LOADED');
       const tl = gsap.timeline({ paused: true });
+      { const m = document.getElementById("mini1").getBoundingClientRect(), a = document.getElementById("acme1").getBoundingClientRect(), bx = document.getElementById("boxS1").style;
+        bx.left = (a.left - m.left - 13) + "px"; bx.top = (a.top - m.top + 3) + "px"; bx.width = (a.width + 24) + "px"; bx.height = (a.height - 8) + "px"; }
       const E_OUT = "power3.out", E_IN = "power3.in", E_IO = "power3.inOut";
 
       // type helper: chars as spans, revealed evenly over [t0, t0+dur]
@@ -121,7 +147,7 @@
       gsap.set("#chip2", { opacity: 0, scale: 0.8 });
 
       // ---- drift (continuous) ----
-      tl.fromTo("#drift1", { y: -8, scale: 1.02 }, { y: -9, scale: 1.0225, duration: 1.06, ease: "none" }, 0);
+      tl.fromTo("#drift1", { y: -8, scale: 1.02, transformOrigin: "50% 50%" }, { y: -9, scale: 1.0225, duration: 1.06, ease: "none" }, 0);
       tl.fromTo("#drift2", { y: 0, scale: 1 }, { y: -8, scale: 1.02, duration: 5.16 - 0.76, ease: "sine.inOut" }, 0.76);
 
       // ---- swap: card 01 out left, card 02 in from right (starts 120 ms before "stealth" at 0.88) ----
@@ -152,11 +178,11 @@
       tl.to("#chk", { opacity: 1, duration: 0.12, ease: E_OUT }, 3.88);
 
       // ---- pointer: absolute px, arrives 200 ms before each word ----
-      gsap.set("#pointer", { x: 546, y: 1112 });
-      tl.to("#pointer", { x: 492, y: 424, duration: 0.30, ease: E_IO }, 0.38);   // by 0.68 beside "Stealth"
-      tl.to("#pointer", { x: 214, y: 884, duration: 0.30, ease: E_IO }, 1.02);   // by 1.32 beside fetcher
-      tl.to("#pointer", { x: 616, y: 950, duration: 0.30, ease: E_IO }, 2.78);   // by 3.08 beside wall
-      tl.to("#pointer", { x: 676, y: 1150, duration: 0.30, ease: E_IO }, 3.50);  // by 3.80 beside chip
+      gsap.set("#pointer", { x: 344.2, y: 1126.9 });
+      tl.to("#pointer", { x: 497, y: 427, duration: 0.30, ease: E_IO }, 0.38);   // by 0.68 beside "Stealth"
+      tl.to("#pointer", { x: 219, y: 887, duration: 0.30, ease: E_IO }, 1.02);   // by 1.32 beside fetcher
+      tl.to("#pointer", { x: 621, y: 953, duration: 0.30, ease: E_IO }, 2.78);   // by 3.08 beside wall
+      tl.to("#pointer", { x: 681, y: 1153, duration: 0.30, ease: E_IO }, 3.50);  // by 3.80 beside chip
       tl.fromTo("#psway", { y: -1 }, { y: 1, duration: 0.9, ease: "sine.inOut", repeat: 5, yoyo: true }, 0);
 
       window.__timelines = window.__timelines || {};

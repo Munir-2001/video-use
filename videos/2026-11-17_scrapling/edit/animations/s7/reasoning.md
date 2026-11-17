@@ -9,3 +9,9 @@ Judgment calls: the table rules take 250 ms, so the 1.40 landing frame (the tabl
 Checks: `hyperframes check` 0 errors (warnings: safe-zone left-edge, closing line held < 2 s, sub-composition structure; accepted).
 Frames (gray backdrop composited for alpha): first, landing (1.40), f_31.86 (2.12), f_33.30 (3.56), last (4.20).
 ffprobe: codec_name=prores width=1080 height=1920 pix_fmt=yuva444p12le r_frame_rate=30/1 duration=4.266667 (128 frames; 4.24 s is 127.2 frames)
+
+## Round 2 (seam fix, coordinator request)
+- Frame 0 now rebuilds s6's end state, top-aligned inside the 892x640 window (content offsets identical to s6): flame-outlined prompt box "> Scrape this directory", flame send arrow, cobalt url chip, tool-call line with a flame dot (done; the spinner and check are removed), full selector line, faint terminal rules, pointer tip at content (610,388). Window starts at s6's drift end (y -8, scale 1.02) and the drift eases back to rest (y 0, scale 1.00) over the clip, so the seam is continuous. The bottom is cropped (window is 640 tall instead of 952).
+- "table" 31.14: from 1.28 the whole content pushes up 200 px (300 ms power3.inOut, prompt scrolls out under the chrome), terminal rules fade, the empty ruled table draws below the selector line (250 ms). Columns fill on name/site/email as before (starts 2.00/2.72/3.44). Pointer hops at 1.20/1.92/2.64/3.36 now travel along a lane under the selector line (tip y 218 in window coords) above the table.
+- First frame compared with s6/last.png: same lines, same sizes, same x; offsets differ only by the window top (192 vs 230 in the frame) as the layout requires.
+- ffprobe: codec_name=prores width=1080 height=1920 pix_fmt=yuva444p12le r_frame_rate=30/1 duration=4.266667. check: 0 errors.

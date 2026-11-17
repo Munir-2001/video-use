@@ -1,168 +1,112 @@
-# critic: 2026-11-17_scrapling, round 3 audit against the 2026-11-17 review rules
+# critic: 2026-11-17_scrapling, round 4 (the 8-stretch re-plan)
 
-File: edit/preview_mixed.mp4 (37.03 s, 30 fps, rendered 02:02 with the round-3 −120 ms leads).
-Rules checked: STYLE.md (lines dated 2026-11-17 · review), brand/motion.md §3 / §4c / §5, ROADMAP.md review list, brand/style.json caption presets.
+File: edit/preview_mixed.mp4 (37.03 s, 1110 frames, 30 fps).
+Checked against STYLE.md (all lines, including the 2026-11-17 review lines), brand/motion.md, ROADMAP.md and brand/style.json.
 
-VERDICT: FAIL
+VERDICT: FIX FIRST
 
-The reel was built before these rules and breaks four of them outright:
-- **Scenery:** one layout for 34.1 s.
-- **Face:** on screen 100 % of the time.
-- **Windows:** never move while they hold, are swapped by hard cuts, and no mouse cursor appears.
-- **Captions:** every cue still has the 4 px black outline.
+The re-plan works:
+- **Scenery and face:** 8 stretches; the face drops out for 17.9 s.
+- **Sync:** every named word gets its mark on the onset frame.
+- **Motion:** windows drift continuously and swap by slide, and a pointer moves between targets.
+- **Captions:** ink with no outline on paper.
 
-The sync rule mostly passes after the round-3 leads, with 6 misses. None of this is a render bug. It is a re-plan: planner first, then motion, then captions.
+Five things still show on screen:
+- Two continuity jumps at the seams you asked about (13.46 and 29.74; 7.10 is clean).
+- A hard drop shadow on the CTA captions.
+- The tagline shows "steps" before it is said.
+- Two new windows 1.6 s apart at 21.78 / 23.38.
 
 ## TOP 5 FIXES (do these first)
 
-1. **[00.00–34.10] Scenery is frozen and the face never leaves (planner).**
-   - Evidence: split_top holds from 0.00 to 34.10 (34.1 s), then face_full for 2.9 s. That is one layout change in 37 s. The face is visible in 1110 of 1110 frames. The hook is not face_full and no informational stretch drops the face.
-   - Violates: "The scenery changes every 5–8 s. My face is for the personal lines (hook, an opinion, the CTA), a couple of seconds each; the informational parts drop my video and show the animation alone (graphic_full, up to ~8 s, a change every ≤ 3 s)."
-   - Fix: re-plan scenes.json to the layout timeline below. 8 stretches, the longest 6.4 s, hard cuts in speech gaps. The panel slot has to be split into per-stretch slots (graphic_full 1080x1920 and split_top 1080x960).
+1. **[13.47 → 13.50] Card 01 jumps at the s3 → s4 seam (motion, s4 slot).**
+   - Evidence: on the last s3 frame (13.467) the DOM mock shows three rows with "Acme Co" in a small flame tag in row 3, the chip `article.item > h3` + check, and the title at y ≈ 609 (360-px scale). On the first s4 frame (13.500) it is a different drawing: "Acme Co" in a full-width flame box in row 1, rows 2–3 grey bars, a different header bar, and the title 3 px lower.
+   - Fix: build s4's opening card 01 from s3's final state (same DOM rows, same Acme Co tag in row 3, same title y), then slide it out as card 02 slides in. Best: render s3's last frame as s4's first frame (one shared component, or s4 reads s3's end state).
 
-2. **[03.78–34.10] Windows sit dead still and swap by hard cut; there is no mouse cursor (motion).**
-   - Evidence: frame diffing of animations/panel/render.mov (panel area, threshold 20 px changed) finds 9 completely still spans of 1 s or more:
+2. **[29.73 → 29.77] The session window jumps and its state goes backwards at the s6 → s7 seam (motion, s7 slot).**
+   - Evidence: on the last s6 frame (29.733) the window is tall, the prompt "> Scrape this directory" + url chip sit in a flame box at the top, the tool call has a flame dot (done), and the selector is below. On the first s7 frame (29.767) the prompt has vanished, everything jumps up about 60 px, and the tool call shows a loading spinner. The task looks like it restarted.
+   - Changing the window size at a layout cut is fine (hard cut, face appears). Losing the prompt and going from "done" back to "loading" is not.
+   - Fix: s7 opens with the same three lines (prompt + chip, tool call with the flame dot, css line) at the panel window's scale, or scrolls them up 250 ms after the cut. No spinner: the call already finished in s6.
 
-     | Still span (s) | Length (s) |
-     |---|---|
-     | 0.03–1.57 | 1.57 |
-     | 7.87–10.20 | 2.37 |
-     | 10.47–12.70 | 2.27 |
-     | 12.83–14.20 | 1.40 |
-     | 14.47–16.60 | 2.17 |
-     | 17.50–20.03 | 2.57 |
-     | 20.30–21.53 | 1.27 |
-     | 22.83–23.90 | 1.10 |
-     | 28.83–31.00 | 2.20 |
+3. **[33.98–36.82] CTA captions have a hard 4 px drop shadow (captions agent / captions_ass.py).**
+   - Evidence: master.ass face cues use `\bord2\shad4\3c&H181414&\4c&H181414&` with no `\blur`. At 36.50, "setup **steps.**" shows a crisp ink offset copy 4 px down-right of every letter, which reads as a sticker or 3D effect.
+   - Violates: "over my face white with a 2 px edge and a soft shadow, never a heavy black outline".
+   - Fix: `\bord2\shad2\blur3\4a&H90&` (or a second shadow layer with `\blur6\bord0`, 40 % ink, 0 offset). Match style.json `big` (it says 1.5 px; STYLE says 2 px, so pick 2).
 
-     That is 16.9 s of 34.1 s with zero motion. No window drifts.
-   - At 21.54 and 24.54 the old window hard-cuts out and the new one rises into an empty panel; nothing slides across.
-   - The only "cursor" is window C's text caret blinking at 1 Hz (25.30, 25.80, 26.30, 26.80); no pointer ever moves between targets.
-   - Violates: "Windows never sit still: they drift while holding, slide when one replaces another, and the cursor moves between targets." Also the motion.md §3 rows "window hold: drift translateY −8 px + scale 1.00→1.02 over the hold, cursor moves 60–120 px between beats" and "slides out left while the next window slides in".
-   - Fix:
-     - Give every window hold a continuous drift (−8 px, 1.00→1.02, sine ease, never stopping).
-     - Swap B→A and C→B as a 250–350 ms slide (old out left, new in from the right).
-     - Draw a pointer in every window that travels 60–120 px to each named target 200 ms before its beat and parks next to it, not on it.
+4. **[35.70 / 36.18] The tagline shows "steps" before it is said (motion, s8 slot).**
+   - Evidence: at 35.70 ("setup") the paper pill appears already reading "setup steps,". "steps" is said at 36.18, 0.48 s later. At 36.18 "sent to you" types in.
+   - Violates: "Every named thing gets a visible mark on its own spoken word … nothing on screen changes on a word I did not say." The word lands early.
+   - Fix: "setup" on 35.70, "steps," on 36.18, then "sent to you" types after "steps." ends (36.82) or on the same 36.18 beat.
+   - It is also a second new element 1.6 s after the pill (34.10), which breaks "Never more than one new graphic element per 3 seconds." Make the tagline a second line that grows inside the pill's paper extension instead of a separate pill, or get the user's yes on ROADMAP #11.
 
-3. **[03.46–36.82] Caption look is the old heavy outline everywhere (captions agent + `helpers/captions_ass.py`).**
-   - Evidence: master.ass is unchanged since round 2 (01:52). Style `Cap` is PrimaryColour white, Outline 4, Shadow 2, OutlineColour black, used for all 64 cues: the 56 panel cues on paper (3.46–33.86) and the 8 CTA cues over the wall and face (34.10–36.82).
-   - Violates: "Caption look: on the paper panel plain ink, no outline, no shadow; over my face white with a 2 px edge and a soft shadow, never a heavy black outline."
-   - Fix:
-     - Re-run captions with the presets now in brand/style.json: panel = ink #141418, highlight flame, `\bord0\shad0`; face = white, 2 px edge, soft shadow.
-     - Resolve the preset mismatch first: style.json `big` says `outline_px 1.5`, `outline_color ink`, but STYLE.md says 2 px.
-     - There is no preset for graphic_full stretches. Add one: ink on paper, no outline, 96 px, band y 0.64–0.72.
-
-4. **[08.50, 14.98, 16.74, 22.50, 34.58, 36.18, 00.00] Sync misses: named things with no mark, and text that appears before the word (planner beats + motion).**
-   - Evidence: the change log, matched to transcript word times (output timeline). See the sync table under ALL PROBLEMS.
-   - No mark on its own word:
-     - "selectors" 8.50: the row label "Adaptive selectors" filled on "adaptive" 7.78.
-     - "fetchers" 14.98: filled on "stealth".
-     - "Claude Code" 22.50: the push lands on the `"scrapling"` entry, and nothing on screen says Claude Code.
-     - "Scrape" 34.58: the pill showing "Scrape" already landed on "Comment" 34.10.
-     - "steps" 36.18: the tagline "setup steps…" already landed on "send" 35.30.
-   - Text before the spoken word:
-     - The "Cloudflare" chip appears on "walls" 16.74, 0.72 s before "Cloudflare" (17.46).
-     - "Claude" is on frame 0, 1.22 s before it is said. This was my own round-2 suggestion and it is wrong under the new rule; the planner should drop it.
-     - The tagline shows "setup steps" 0.40 s before "setup" (35.70).
-   - Violates: "Every named thing gets a visible mark on its own spoken word (box, flash, band, fill); nothing on screen changes on a word I did not say."
-   - Fix:
-     - Split the row fills: label first word on "adaptive" / "stealth", second word (or a band/flash on it) on "selectors" / "fetchers".
-     - Chip pops blank on "walls" and its text types on "Cloudflare".
-     - Add a "Claude Code" mark on 22.50 (a flame label tab "→ Claude Code" on the config window, or the window's title bar swapping to "Claude Code · mcp").
-     - In the CTA: the pill pops empty on "Comment" with only the bubble glyph, its text "Scrape" lands on 34.58, and the tagline lands on "setup" 35.70. That also answers the open 1.2 s pill/tagline question: it becomes a fill of one element.
-     - Hook: frame 0 = kicker only, or the hook goes face_full (fix 1).
-
-5. **[script / recording] The spoken script still breaks the new script rules; this cannot be fixed in the edit (writer, then the user re-records).**
-   - Evidence:
-     - "First, adaptive selectors." (7.22), "Second, stealth fetchers." (13.54) and "Third, it ships an MCP server." are list fragments.
-     - "The site changes your scrapers. Keep working." (9.54–13.38) is a broken sentence; the script meant "your scraper keeps working". Captions must print it word for word, so the viewer reads the broken grammar too.
-     - There is no `videos/2026-11-17_scrapling/assets/`, so every window is a drawn mockup, not a real screen.
-   - Violates: "Scripts are complete, natural spoken sentences; no telegraphic fragments, no dropped words; every named thing sits inside a sentence." Also "Every script ends with the list of assets … to capture into videos/<folder>/assets/ before I record."
-   - Fix: the writer rewrites the script in full sentences with an assets list (ROADMAP #1, #2). The user records the take and captures the README, `.claude.json` mcpServers block and Claude Code session screenshots into `assets/`. There is no edit-side fix: captions must stay word for word, so this take should not become the reference reel.
+5. **[21.78 / 23.38] Two new windows 1.6 s apart, and the second hard-cuts in (planner + motion, s5/s6).**
+   - Evidence: the config window slides in on "Plug" at 21.78. At 23.38 the layout cuts to graphic_full and the session window is simply there at 23.400 (same position on every frame 23.40–23.63, no slide).
+   - Violates: "Never more than one new graphic element per 3 seconds." Also "slide when one replaces another". The whoosh at 23.38 accompanies nothing that moves (STYLE: "each tied to a visible event").
+   - Fix, one of:
+     - (a) The session window slides in from the right over the config window at 23.38 (window replaces window; the layout change can stay a hard cut underneath).
+     - (b) Move the s5/s6 boundary so config gets ≥ 3 s. The only silence after 21.78 that keeps the sentence intact is 23.30–23.46, so (a) is the practical fix.
+   - Either way, keep the whoosh only if something slides.
 
 ## ALL PROBLEMS (ranked, with timecodes)
 
-1. [00.00–34.10] One layout for 34.1 s; face on screen 100 %; hook not face_full; no graphic_full stretch. Scenery rule broken. (planner)
-2. [03.78–34.10] No window drift: 16.9 s of motionless holds. (motion)
-3. [21.54, 24.54] Window replacements are hard cut out + rise in, not slides. [03.46–03.78] The hook title fades and window A rises separately with an empty panel between (3.73–3.80). (motion)
-4. [03.78–34.10] No pointer cursor at all. Window C has only a text caret. (motion)
-5. [03.46–33.86] 56 panel cues are white with a 4 px black outline and 2 px shadow on paper, against "plain ink, no outline, no shadow". (captions)
-6. [34.10–36.82] 8 CTA cues have a 4 px black outline over the wall and face, against "white with a 2 px edge and a soft shadow, never a heavy black outline". (captions)
-7. [08.50] "selectors" has no mark. [14.98] "fetchers" has no mark. (planner, motion)
-8. [22.50] "Claude Code" has no mark of its own; the zoom marks `"scrapling"`. (planner)
-9. [16.74] The "Cloudflare" chip text shows 0.72 s before the word. (motion)
-10. [00.00] "Claude" is on screen 1.22 s before it is said. (motion/planner)
-11. [34.10 / 34.58] The pill shows "Scrape" on "Comment"; nothing lands on "Scrape". [35.30 / 35.70 / 36.18] The tagline shows "setup steps" on "send"; nothing lands on "steps". (motion)
-12. [21.54, 24.54] Windows B and C enter in silences (21.54–21.78, 24.50–24.82), not on a word. Minor: the content does land on "Plug" / "scrape". (motion)
-13. [07.22, 13.54, 18.74, 09.54–13.38] Script fragments and a broken sentence (STYLE line 49). Needs a re-record. (writer, user)
-14. [whole reel] No `assets/` folder, so drawn mockups stand in for real screens (STYLE line 50, ROADMAP #2). (writer, user)
-15. [rules] brand/style.json `captions.presets.big` = 1.5 px ink outline against the STYLE line's "2 px edge". There is no caption preset for graphic_full. The `layouts.graphic_full` entry has only a description: no panel colour, no dot grid, no caption band. The planner cannot plan graphic_full stretches consistently until this is filled in. (designer/user)
-16. [rules] "Hard cuts only. No crossfades, no dissolves, no wipes" against "slide when one replaces another". motion.md §3 treats slides as element moves inside a shot, which is how I read it. Worth one clarifying clause in STYLE.md so a later critic does not flag window slides as wipes.
-17. [34.10 / 35.30] Pill and tagline are two new elements 1.2 s apart. Still open (ROADMAP #11). Fix 4's empty-pill-then-fill design removes it.
-18. [34.10–36.82] CTA captions are 100 px against the 120 px in STYLE line 15. Still open (ROADMAP #11).
-19. [whole reel] No music (ROADMAP #9, open). The face is soft from the 1.78x upscale (ROADMAP #10, the user's call). Not counted against the verdict.
+1. [13.47→13.50] Card 01 continuity jump, s3→s4. (motion)
+2. [29.73→29.77] Session continuity jump: prompt disappears, the tool call goes from done back to loading. (motion)
+3. [33.98–36.82] CTA caption shadow is hard, not soft. (captions)
+4. [35.70] Tagline shows "steps" 0.48 s early; tagline is a second new element 1.6 s after the pill. (motion; ROADMAP #11 still open)
+5. [21.78 / 23.38] Two new windows 1.6 s apart. The session window hard-cuts in with a whoosh but no motion. (planner, motion, sound)
+6. [7.10–29.74, graphic_full] paper_full captions are 72 px. STYLE says "Captions are big (96 px at 1080x1920 …)" and the exception line covers only split_top (64 px) and hook/CTA. Either set 96 px or add a dated exception for paper_full. (captions or user)
+7. [23.40–27.30] The session window in s6 is about 85 % empty white for 4 s: the prompt sits at the top of a 1150 px tall window and nothing else is there until the tool call. In a graphic_full stretch the animation is the whole show. Fix (motion): size the window to its content (grow downward as lines arrive) or start it at a shorter height with the selector area and table placeholders visible.
+8. [7.10–18.62, 23.38–29.74] All graphic_full cards occupy y 0.04–0.64 only. The band y 0.76–1.00 is empty paper, and the cards are the same 920 px width as in split_top, so "full frame" is not used. Nitpick (motion): scale the card about 1.15x or centre it at y ≈ 0.38.
+9. [18.62–20.06] Card 03 is an empty white window with only "03" for 1.4 s on "Third, it ships an". Within the ≤ 3 s change rule, but the weakest frame in the reel. Pop a dashed placeholder row on "Third," or move the card's title onto "ships". (motion, nitpick)
+10. [stretch lengths] s1 3.42, s2 3.68, s5 4.76, s7 4.24, s8 3.02 s are under the 5 s floor of "The scenery changes every 5–8 s". s1 and s8 are the personal "couple of seconds" lines, so they are fine. s2, s5 and s7 are the bridges from my own round-3 table, and each is one sentence. Accept, or merge s1+s2 if the user wants the 5 s floor strict.
+11. [34.40–35.30] A motion-blurred hand swings across the left third next to the caption and pill (footage). It covers nothing. Nitpick.
+12. [script] Spoken fragments ("First, adaptive selectors.", "The site changes your scrapers. Keep working.", "Second, stealth fetchers.") still break STYLE line 49. There is no assets/ folder, so the windows are drawn mockups (line 50). Needs a re-record. Not fixable in the edit. (writer, user; ROADMAP #1, #2)
+13. [rules] style.json `big` preset outline 1.5 px against STYLE 2 px. There is no `paper_full` size in STYLE.md. ROADMAP #11 (pill/tagline spacing, CTA 100 px) is still unanswered. (user)
+14. [whole reel] No music (ROADMAP #9, open). The face is soft (ROADMAP #10, the user's call). Not counted.
 
-Sync table (named thing → mark on its own word?). Times are word onsets on the output timeline; "change" is the detected start of the panel change.
-
-| word | onset | change | verdict |
-|---|---|---|---|
-| Claude (hook) | 1.22 | on frame 0 | early, text before word |
-| Code (hook) | 1.70 | 1.60 | ok |
-| lead / scraper | 2.34 / 2.74 | 2.23 / 2.63 | ok |
-| Scrapling | 4.26 | 4.17 | ok |
-| GitHub | 6.34 | 6.27–6.77 (repo line types) | ok |
-| adaptive | 7.78 | 7.67 | ok |
-| selectors | 8.50 | none | MISS |
-| (changes) | 10.34 | 10.23 chip swap | ok |
-| working | 12.82 | 12.73 check | ok |
-| stealth | 14.34 | 14.23 | ok |
-| fetchers | 14.98 | none | MISS |
-| (walls) | 16.74 | 16.63, chip with "Cloudflare" text | early text |
-| Cloudflare | 17.46 | 17.37 lock → check | ok |
-| MCP | 20.18 | 20.07 | ok |
-| (Plug) | 21.78 | 21.57–22.00 window B in + lines | ok-ish (enters in a silence) |
-| Claude Code | 22.50 | 22.40, push on "scrapling" | wrong thing marked |
-| (ask) | 24.02 | 23.93 placeholder blink | ok |
-| scrape / this / directory | 24.82 / 25.46 / 25.70 | typed, 25.37 / 25.60 | ok |
-| (picks) | 27.30 | 27.20 tool call | ok |
-| CSS | 27.86 | 27.77 selector types | ok |
-| selectors | 28.50 | 28.40 zoom | ok |
-| table | 31.14 | 31.03 header + ease back | ok |
-| name / site / email | 31.86 / 32.58 / 33.30 | 31.77 / 32.47 / 33.20 | ok |
-| Scrape (CTA) | 34.58 | none (pill already says it at 34.10) | MISS + early text |
-| steps | 36.18 | none (tagline already says it at 35.30) | MISS + early text |
-
-Score: 19 named things, 13 marked on their word, 6 misses or early text.
-
-## Proposed layout timeline (planner starting point)
-
-All cuts are hard cuts, placed inside the transcript's silences (word times = source − 0.30).
-
-| # | start | end | dur | layout | words | why |
-|---|---|---|---|---|---|---|
-| 1 | 0.00 | 3.42 | 3.4 | face_full | "One tool turns Claude Code into a lead scraper." | Hook is a personal line. Title words land on their onsets above the head (STYLE line 16: face is low, captions y ≈ 0.24). Cut in the 3.38–3.46 gap. |
-| 2 | 3.42 | 7.10 | 3.7 | split_top | "It's called Scrapling. Open source on GitHub." | Name the thing beside me. README window slides in, title on "Scrapling", pill on "Open", repo on "GitHub". Cut in the 6.98–7.22 gap. |
-| 3 | 7.10 | 13.46 | 6.4 | graphic_full | "First, adaptive selectors. The site changes your scrapers. Keep working." | Informational. Feature card 01 full frame: "Adaptive" on adaptive, "selectors" on selectors, DOM chip swap on "changes", check on "working". Drift throughout. Cut in the 13.38–13.54 gap. |
-| 4 | 13.46 | 18.62 | 5.2 | graphic_full | "Second, stealth fetchers. They get past walls like Cloudflare." | Informational. Card 02 slides in over card 01 (window swap by slide): "stealth" / "fetchers" marks, a wall graphic on "walls", Cloudflare chip text on "Cloudflare". Cut in the 18.50–18.74 gap. |
-| 5 | 18.62 | 23.38 | 4.8 | split_top | "Third, it ships an MCP server. Plug it into Claude Code." | Bridge back to me. Card 03 on "MCP", config window slides in on "Plug", a "Claude Code" mark on 22.50. Cut in the 23.30–23.46 gap. |
-| 6 | 23.38 | 29.74 | 6.4 | graphic_full | "Then I ask, scrape this directory. It picks the CSS selectors." | Informational demo. Claude Code session full frame: prompt types with speech, tool call on "picks", selector on "CSS", push + ring on "selectors". Pointer moves prompt → tool call → selector. Cut in the 29.54–29.94 gap. |
-| 7 | 29.74 | 33.98 | 4.2 | split_top | "Back comes a table, name, site, email," | Result reveal with my face reacting. Table builds on "table", rows on name/site/email. Cut in the 33.86–34.10 gap. |
-| 8 | 33.98 | 37.03 | 3.0 | face_full | "Comment "Scrape" and I'll send you the setup steps." | CTA is a personal line. Pill pops empty on "Comment", "Scrape" fills on 34.58, tagline on "setup" 35.70 (one element, two fills). |
-
-Result:
-- Layout changes every 3.0–6.4 s (7 changes against 1 now).
-- The face is on screen 21.9 s of 37.0 (59 %) against 100 %: full 6.4 s, split 12.7 s.
-- The face is off for 18.0 s in three graphic_full stretches of ≤ 6.4 s.
-- Stretches 2 and 8 are under 5 s by necessity (one sentence each). If the user wants a strict 5 s minimum, merge 1+2 (face_full 0–7.10, with the README card beside the face from 3.42).
+Verified (clean):
+- **Sync:** sampled frames at onset −0.40/−0.27/−0.13/0.
+  - Each named word's mark first appears on the frame between −0.13 and its onset, or on the onset frame itself: Claude, Code, scraper, Scrapling (typed from 4.13), GitHub, adaptive, selectors (typed + Acme Co tag), changes, working, stealth, fetchers, walls (wall grid), Cloudflare, MCP, server (plug icon), Plug (config slides in), Claude Code (title-bar tag + ring), scrape / this / directory (typed with speech), picks, CSS, selectors (zoom + ring), table, name, site, email (columns), Scrape (pill fills on 34.58).
+  - Nothing is pre-shown except the tagline (problem 4).
+  - "Claude" is no longer on frame 0.
+- **Window motion:** no slot has a still span ≥ 0.5 s except the CTA (34.65–35.25, face shot). Median 200–400 px change per frame from drift. Windows swap by slide at 7.10–7.5 (README → card 01), about 14.2 (card 01 → 02) and 21.78 (card 03 → config). The pointer moves 60–120 px between targets and parks beside them.
+- **Captions:** panel cues are ink #141418, `\bord0\shad0`, 64 px at y 0.465; paper_full cues are ink, no outline, at y 0.72; hook has no captions (the title carries the words); CTA is white at y 0.24 (STYLE line 16). No caption covers the face. 64 events, no overlaps.
+- **Seams:** 3.42 (hook → split; panel empty for 1 frame before the README slides in on 3.46, fine), 7.10 (README continuous, clean), 18.62 (hard cut card 02 → split card 03, clean), 33.98 (table → CTA, clean). No flashes, no duplicated frames, no waveform spikes.
+- **Never-show** (frames every 0.5 s): clean. Drawn mockups, `.example` data, "…" config placeholders, one face, no private screens.
+- **Readability at 360 px:** card titles, labels, prompt, tool call, selector and table cells all read. Only the window title-bar labels ("feature 01", "claude · demo-folder") are under 28 px, and they are decoration.
 
 ## MEASURED
-- Duration: 37.033 s (format) against 37.0. Video 37.000 s, 1110 frames, 30/1.
-- Loudness (ebur128 on the mp4): integrated −14.3 LUFS, LRA 2.8 LU, true peak −1.4 dBTP.
-- Per section RMS / peak (dBFS): hook −16.2 / −1.4 · readme −17.7 / −1.4 · config −17.8 / −1.5 · terminal −17.2 / −1.4 · cta −18.3 / −1.5.
-- Ticks (now −6 dB in sound.json): peak −5.0, max 50 ms RMS −23.6 against speech −7.2 to −8.8. About 15–16 dB under the voice, audible. Whooshes, pop and impact unchanged from round 2 (≥ 7, 11–14.6 and 13.5 dB under).
-- Layouts: 2 (split_top 34.1 s, face_full 2.9 s). Longest layout hold 34.1 s (rule 5–8 s). Face on screen 100 % (rule: personal lines only).
-- Window motion: 9 completely still spans ≥ 1 s, 16.9 s total, longest 2.57 s (17.50–20.07). Drift 0 px. Pointer cursor: none. Window swaps: 2 hard cut + rise, 0 slides.
-- Sync: 19 named things, 13 marked on their own word (−120 ms leads verified, changes start 90–110 ms before onset), 4 with no mark, 4 cases of text before its word (Claude 0.00, Cloudflare 16.74, Scrape 34.10, setup steps 35.30).
-- Captions: 64 cues, all style `Cap` with a 4 px black outline and 2 px shadow (56 on paper, 8 over the wall and face). 0 cues match the new look.
-- Graphics per 3 s: at most 2 (pill + tagline). SFX per 30 s: at most 6 (8 total).
-- Never-show: clean (unchanged footage and mockups).
+- **Duration:** 37.033 s (format) against total_duration_s 37.0. Video 1110 frames at 30/1.
+- **Loudness (ebur128 on the mp4):** integrated −14.3 LUFS, LRA 2.8 LU, true peak −1.4 dBTP. Passes.
+- **Per stretch, RMS / peak (dBFS):**
+
+  | Stretch | Time (s) | RMS | Peak |
+  |---|---|---|---|
+  | s1 | 0–3.42 | −16.1 | −1.4 |
+  | s2 | 3.42–7.10 | −17.1 | −1.4 |
+  | s3 | 7.10–13.46 | −18.2 | −1.5 |
+  | s4 | 13.46–18.62 | −18.1 | −1.5 |
+  | s5 | 18.62–23.38 | −17.0 | −1.5 |
+  | s6 | 23.38–29.74 | −18.4 | −1.5 |
+  | s7 | 29.74–33.98 | −16.0 | −1.4 |
+  | s8 | 33.98–37.0 | −18.5 | −1.5 |
+
+  The graphic_full stretches run about 1–2 dB quieter (fewer effects, softer lines), which is fine.
+- **Effects vs voice:** effect level is the residual after subtracting a rebuilt speech chain (correlation 0.956), measured as the loudest 50 ms RMS. The impact and the 3.46 whoosh sit inside speech, so their figures are upper bounds.
+
+  | Effect | Time (s) | Effect (dBFS) | Voice nearby | Under the voice by |
+  |---|---|---|---|---|
+  | soft_impact | 2.74 | ≤ −18.0 | −10.3 | ≥ 7.7 dB |
+  | whoosh | 3.46 | ≤ −16.3 | −10.4 | ≥ 5.9 dB |
+  | whoosh | 21.78 | −21.1 | −9.9 | 11 dB |
+  | whoosh | 23.38 | −21.2 | −9.6 | 11.6 dB, nothing moves (problem 5) |
+  | ticks | 31.86 / 32.58 / 33.30 | −23.5 (peak −5) | −7.2 to −8.8 | about 15 dB |
+  | pop | 34.10 | −22.3 | −8.8 | 13.5 dB |
+
+  Speech gaps sit at −46 to −60 dBFS.
+- **Layouts:** 8 stretches, 7 layout changes. Holds 3.42 / 3.68 / 6.36 / 5.16 / 4.76 / 6.36 / 4.24 / 3.02 s (longest 6.36). Face on screen 19.1 s (52 %): face_full 6.4 s, split_top 12.7 s. Face off 17.9 s in three graphic_full stretches of ≤ 6.36 s, each changing at least every 2.3 s.
+- **Sync:** 19 named things plus 5 supporting words. All marked on their own word (−120 ms lead, mark complete on the onset frame). 1 early: tagline "steps" (35.70 vs 36.18).
+- **Window motion:** still spans ≥ 0.5 s in the window slots: 0. Slides: 3 window swaps. Hard-cut window entries: 1 (23.38). Continuity jumps: 2 (13.48, 29.75). Pointer: present in s2–s7.
+- **Graphics per 3 s:** at most 2. Config 21.78 + session 23.38; pill 34.10 + tagline 35.70.
+- **SFX per 30 s:** at most 6 (8 total). One whoosh (23.38) has no visible motion.
+- **Captions:** 64 events, 0 overlaps. Sizes 64 / 72 / 100 px for panel / paper_full / CTA.

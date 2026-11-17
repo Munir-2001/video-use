@@ -28,7 +28,7 @@
         display: flex; align-items: center; color: #141418; opacity: 0;
         font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 34px; line-height: 44px; white-space: nowrap;
       }
-      #t2 { display: inline-block; overflow: hidden; width: 0; opacity: 0; white-space: pre; }
+      #t2, #t3 { display: inline-block; overflow: hidden; width: 0; opacity: 0; white-space: pre; }
     </style>
   </head>
   <body>
@@ -43,14 +43,15 @@
           <span id="ptext"><span class="in">Comment "<b>Scrape</b>"</span></span>
         </div>
       </div>
-      <div class="row" id="tagrow"><div id="tag"><span id="t1">setup steps,</span><span id="t2"> sent to you</span></div></div>
+      <div class="row" id="tagrow"><div id="tag"><span id="t1">setup</span><span id="t2"> steps,</span><span id="t3"> sent to you</span></div></div>
       </div>
     </div>
     <script>
       const ok = document.fonts.check('600 34px "Inter"') && document.fonts.check('500 34px "JetBrains Mono"');
       console.log("fonts loaded:", ok);
       const w1 = document.querySelector("#ptext .in").offsetWidth;
-      const w2 = (() => { const e = document.querySelector("#t2"); e.style.width = "auto"; const w = e.offsetWidth; e.style.width = "0px"; return w; })();
+      const wid = (id) => { const e = document.querySelector(id); e.style.width = "auto"; const w = e.offsetWidth; e.style.width = "0px"; return w; };
+      const w2 = wid("#t2"), w3 = wid("#t3");
       const tl = gsap.timeline({ paused: true });
       gsap.set("#pill", { opacity: 0 });
       gsap.set("#ptext", { width: 0 });
@@ -59,9 +60,10 @@
       tl.to("#ptext", { width: w1, opacity: 1, duration: 0.17, ease: "power3.out" }, 0.48);
       tl.to("#g1", { opacity: 0, scale: 0.7, duration: 0.25, ease: "power3.in", transformOrigin: "50% 50%" }, 1.20);
       tl.fromTo("#g2", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power3.out", transformOrigin: "50% 50%" }, 1.20);
-      tl.fromTo("#tag", { y: 12, scale: 0.8, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.17, ease: "power3.out" }, 1.60);
-      tl.to("#t2", { width: w2, opacity: 1, duration: 0.17, ease: "power3.out" }, 2.08);
-      tl.to("#drift", { y: -4, duration: 0.94, ease: "sine.inOut" }, 2.08);
+      tl.fromTo("#tag", { y: 12, scale: 0.8, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.17, ease: "power3.out" }, 1.72);
+      tl.to("#t2", { width: w2, opacity: 1, duration: 0.3, ease: "power3.out" }, 2.20);
+      tl.to("#t3", { width: w3, opacity: 1, duration: 0.3, ease: "power3.out" }, 2.45);
+      tl.to("#drift", { y: -4, duration: 0.82, ease: "sine.inOut" }, 2.20);
       window.__timelines = window.__timelines || {};
       window.__timelines["main"] = tl;
       tl.seek(0);

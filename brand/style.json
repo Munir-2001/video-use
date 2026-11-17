@@ -112,8 +112,10 @@
         "cta_pill_y": 0.715,
         "tagline_y": 0.76,
         "outline_px": 2,
-        "shadow_px": 4,
-        "outline_color": "ink"
+        "shadow_px": 2,
+        "outline_color": "ink",
+        "shadow_blur": 3,
+        "shadow_alpha": 0.55
       },
       "paper_full": {
         "description": "graphic_full stretches: ink captions on the full-frame paper, lower band above the platform UI",
@@ -121,7 +123,7 @@
           "target": 2,
           "max": 3
         },
-        "size_px": 72,
+        "size_px": 96,
         "y_fraction": 0.72,
         "color": "ink",
         "highlight": "accent",
@@ -129,7 +131,7 @@
         "shadow_px": 0
       }
     },
-    "_look": "Over my face: white, 2 px edge, 3 px soft shadow (never a heavy black outline). On the paper panel: ink, no outline, no shadow. (user review 2026-11-17)"
+    "_look": "Over my face: white, 2 px ink edge, 2 px shadow blurred 3 px at 55 % (soft, never a heavy black outline). On the paper panel: ink, no outline, no shadow. (user review 2026-11-17)"
   },
   "safe_areas": {
     "vertical": {
@@ -170,7 +172,7 @@
       },
       "caption": {
         "y_fraction": 0.72,
-        "size_px": 72,
+        "size_px": 96,
         "words_per_cue": {
           "target": 2,
           "max": 3
