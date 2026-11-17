@@ -2,7 +2,7 @@
 
 | # | I say / it does | File produced |
 |---|---|---|
-| 0 | **"write a script for <topic>"** — the **writer** turns a topic into `script.md`: a hook, named beats (each one maps to a card and a layout), the CTA, and recording notes (framing, pauses, what screen recording to capture). I read it to camera. | `videos/<date>_<slug>/script.md` |
+| 0 | **"write a script for <topic>"** — the **writer** turns a topic into `script.md`: a hook, named beats (each one maps to a card and a layout), the CTA, recording notes, and the **assets to capture** (screenshots/recordings, one per beat) into `videos/<folder>/assets/`. Natural spoken sentences, never fragments. I read it to camera. | `videos/<date>_<slug>/script.md`, `assets/` |
 | 1 | I drop clips into `videos/2026-11-16_first-reel/` and add a line to `videos/index.md` (status: `raw`). | — |
 | 1a | A laptop (16:9) clip for a reel is reframed first: `reframe.py --to vertical --x <face>` crops a 9:16 column around my face (soft above 1.5x upscale, the helper warns). | `<clip>_vertical.mp4` |
 | 1b | Or upload from the studio (“New video”): clips land at the folder top level, recordings in `voice/`, and `edit/brief.json` records the mode (voiceover / commentary / clips), the offset and my notes. | `edit/brief.json`, `videos/index.md` line |

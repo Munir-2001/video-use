@@ -10,6 +10,7 @@ Conversation-driven video editing, everything local and free. No paid APIs, ever
 ## Read only when needed
 - `HOW_IT_WORKS.md` — one video through the system. Read when asked "where are we?" or when lost.
 - `DECISIONS.md` — why things are the way they are. Read before changing any tool, helper, agent or folder.
+- `ROADMAP.md` — my review feedback as a list with status. Read before a new reel and after any review.
 - `cards/` — style/motion/caption/sound cards. Read when planning graphics or matching a style. `cards/_inbox/` is raw drops; never read it except via "process the inbox".
 - `examples/` — approved EDLs. Read only when writing a new EDL.
 - `studio/` — the local dashboard (HTML/JS/CSS) served by `helpers/studio_ui.py`. Read only when changing the UI.
@@ -23,6 +24,7 @@ Conversation-driven video editing, everything local and free. No paid APIs, ever
 
 ## Layout
 - `videos/YYYY-MM-DD_slug/` raw clips at top level, `edit/` inside (upstream layout). `videos/index.md` one line per video.
+- `videos/<folder>/assets/` screenshots/recordings the script asked for (real screens in the windows, camera moves on the named thing).
 - `videos/<folder>/voice/` separate recordings + `edit/brief.json` (mode voiceover | commentary | clips, offset, notes). Voiceover: cut the voice, clips are footage, `helpers/voiceover.py build`. Commentary: clip keeps its sound, voice rides on top.
 - `brand/` style.json, `motion.md` (how things move: build / hold / change / exit; read by planner, motion, designer, critic), `fonts/`, `sfx/` (palette in its README), `music/`.
 - `cards/` max 12 cards; `cards/_inbox/` drops + `links.md`.

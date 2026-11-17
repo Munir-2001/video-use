@@ -35,6 +35,8 @@ Marked **(seen)** = read directly off the frame sequence (timecodes on the playe
 | big caption words + CTA pill (seen, adapted) | reference swaps one word hard per 0.125–0.5 s; brand keeps 2–3 words per cue at 120 px with the word pop and cue rise; pill slides up 20 px + fade 125 ms once; mono tagline hard-appears ~1.5 s later | hard cut with the shot |
 | chat composer (seen) | frame hard-cuts in empty; attachment body then header fade 125 ms apart; prompt types with my words at ~24 cps | hard cut (to the reel's first frame for a loop) |
 | live screen window with zoom beats | window slides up 350 ms with the recording already playing inside; on each named thing the inner view pushes in 350 ms cubic (scale ≈ 2.2) and a 3 px accent ring draws 150 ms later; holds ≥ 1.5 s; next beat 250 ms direct | eases back to 1.0 then slides out, or hard cut (my request 2026-11-16) |
+| screenshot inside a window (assets/) | window slides up with the image inside; camera pushes in 350 ms on each named thing with a flame outline 150 ms later; pans 250 ms between boxes; eases back before the window leaves (user request 2026-11-17) | slides out left while the next window slides in, or eases back then hard cut |
+| window hold | drift translateY −8 px + scale 1.00→1.02 over the hold, cursor moves 60–120 px between beats (user request 2026-11-17: "moving windows, as much animation as possible") | — |
 | editorial title / end card | hard cut onto the card; line 2 lands on its word 350 ms; numeral counts 300 ms; checklist rows tick one per beat (assumed from stills; measure from a screen recording) | hard cut |
 
 Transitions between shots are **hard cuts** (STYLE.md). Fades are for elements inside a shot, never between shots.
@@ -47,7 +49,11 @@ Transitions between shots are **hard cuts** (STYLE.md). Fades are for elements i
 ## 4b. Split-top layout (seen 2026-11-16: ref-backlinks-reel.mp4)
 On 9:16 the top half (y 0–0.50; the reference's edge measured at 240/480 px) is a flat panel with a faint static dot grid that holds every graphic; my footage fills the bottom half, cropped, never zoomed. Graphics stay inside the panel and never cross the edge. Captions sit on the panel's bottom edge (centre y ≈ 0.465), 2–3 words, above my face. Shots switch between split_top and face_full with hard cuts on word boundaries; the CTA/payoff goes face_full with big 2–3 word captions (preset `big`). Brand default: paper panel #F3EEE4 with ink #141418 text and the flame accent #F4502A (decided 2026-11-16); dark #15161C only for full-frame cards. `brand/style.json` has the `split_top` layout (panel 0.50, captions 0.465) and the `big` caption preset; the planner names them per stretch.
 
+## 4c. Sync (user review 2026-11-17)
+Every named thing gets a visible mark on its own spoken word; nothing on screen changes on a word that was not said; every change starts 120 ms before the onset so it is landed on the word.
+
 ## 5. Engagement rhythm for an explainer (30–60 s vertical)
+The scenery changes every 5–8 s. My face is for the personal lines (hook, an opinion, a joke, the CTA): a couple of seconds each, face_full. The informational parts drop my video: graphic_full with the animation alone, up to ~8 s, something changing every ≤ 3 s. split_top / face_corner bridge the two. (user review 2026-11-17)
 1. **Hook (0–3 s)**: title lands on my first strong word; face full.
 2. **Name the thing (3–10 s)**: one card or mockup enters beside me and builds while I describe it.
 3. **Show it (10–40 s)**: the diagram / steps / timeline; a change on every beat I name; my face in a corner PiP.

@@ -2,6 +2,12 @@
 
 Append-only, newest first. Format: `## date · title` then Why / Trade-off / Alternatives / Status.
 
+## 2026-11-17 · First review of a real reel → ROADMAP.md, natural scripts with asset lists, real screens, sync, caption look, moving windows, scenery rhythm
+**Why:** The user reviewed 2026-11-17_scrapling: animations are the focus and "not bad", but the script sounded broken (telegraphic beats), sync can be tighter, the caption outline is heavy, windows should move, the scenery should change every 5–8 s with the face only for the personal lines, and the script should tell him which assets to capture. All of it is now in `ROADMAP.md` (feedback list with status) and as dated STYLE.md lines. Changes: writer writes complete spoken sentences and ends with an "Assets to capture" table (`videos/<folder>/assets/`); planner applies the rhythm rule (face_full for personal lines, graphic_full up to ~8 s for information, change every 5–8 s), plans real screens from assets with camera moves (`graphic.image` + `zoom_beats`), and marks every named thing on its word; motion agent shows screenshots inside windows with push-in / outline / pan, drifts holding windows and slides swaps; captions presets carry colour / outline / shadow (panel = ink, no outline; face = white, 2 px edge, soft shadow); `brand/motion.md` sections 3, 4c, 5 updated.
+**Trade-off:** More agent work per reel (asset placement needs the planner to look at images). Drift and slides add render time. Music still undecided.
+**Alternatives:** Keep drawn mockups (lower retention), keep hard outlines (the user disliked them), keep one layout (boring).
+**Status:** done for the plumbing; the next reel is the test. Open: music; two STYLE questions from the critic (pill/tagline spacing, 100 px CTA captions).
+
 ## 2026-11-17 · sound_mix.py gains a `speech` conditioning block (knob for the sound agent)
 **Why:** First real reel: the laptop mic recorded at −37 LUFS, so every effect out-shouted the speech and the sound agent had to pre-process a copy of the video by hand. Now `sound.json` may carry `"speech": {highpass_hz, gain_db, compress, limit}` and the helper applies it when extracting the speech track; the agent decides the numbers from the measured raw level. Principle kept: the agent decides, the helper executes.
 **Trade-off:** Compression is a fixed gentle curve; a badly clipped recording still needs re-recording.

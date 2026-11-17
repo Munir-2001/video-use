@@ -203,3 +203,14 @@ def test_word_events_never_overlap_even_for_very_short_words():
 
     for (s0, e0, _), (s1, e1, _) in zip(ev, ev[1:]):
         assert e0 <= s1
+
+
+def test_cue_preset_can_change_colour_outline_and_shadow():
+    style = {**STYLE, "colors": {**STYLE["colors"], "ink": "#141418", "accent": "#F4502A"}}
+    cue = {"start": 1.0, "end": 1.6, "words": [w("It's", 1.0, 1.2), w("called", 1.25, 1.6)],
+           "caption": {"color": "ink", "highlight": "accent", "outline_px": 0, "shadow_px": 0, "size_px": 64}}
+
+    text, _ = ca.build_ass([cue], style, "vertical", 1080, 1920)
+
+    assert "\\fs64\\c&H00181414\\bord0\\shad0}" in text          # ink, no outline, no shadow on the panel
+    assert "{\\c&H002A50F4" in text and "{\\c&H00181414\\fscx100" in text  # flame highlight, ink restore

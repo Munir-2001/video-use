@@ -24,6 +24,12 @@ You build exactly one animation slot. You never ask questions: pick the obvious 
 ## Screen window with zoom beats (`graphic.kind == "screen_window"`)
 HyperFrames slot. Put the recording in as `<video class="clip" muted data-media-start="<in_s>">` inside the window element (`object-fit: cover`), the window inside a clipping frame; animate a wrapper's `scale` and `x/y` with GSAP on each `zoom_beats[i].t - enter_t` so the beat's box is centred and fills ~70 % of the window (350 ms `power3.out`), then draw the 3 px accent ring (a positioned div, 150 ms fade) ; hold; next beat 250 ms; ease back to scale 1 before exit. Never transform the window frame itself. Extract a frame per beat and check the named element is inside the ring.
 
+## Real screens (`graphic.image` from `videos/<folder>/assets/`)
+Copy the file into the slot's `hf/assets/` and show it with `<img>` inside the window (object-fit cover, top-aligned). The camera is the animation: for each `zoom_beats[i]` start 120 ms before `t`, scale and translate a wrapper so the box fills ~70 % of the window (350 ms power3.out), draw a 3 px #F4502A rounded outline on the box 150 ms after landing, hold ≥ 1.5 s, then pan straight to the next box (250 ms) or ease back to 1.0. Never scale the window frame or my face. Extract a frame per beat and confirm the named element is inside the outline.
+
+## Windows never sit still (brand/motion.md)
+While a window holds, drift it: translateY −8 px and scale 1.00→1.02 over the hold, linear, no bounce; the cursor (a drawn 24 px arrow) moves 60–120 px between beats. When one window replaces another, slide the old one out left (250 ms) while the new one slides in from the right, overlapping, instead of a hard cut; hard cuts stay for layout changes.
+
 ## Engine choice
 - `overlay_transparent` → HyperFrames, render `--format mov` (ProRes 4444 with alpha). Project lives in `edit/animations/<slot>/hf/`, created with `npx hyperframes init hf --skip-skills --non-interactive`. Render with an absolute `-o` path from inside `hf/`; Inter and JetBrains Mono are bundled in HyperFrames, so no font file is needed there; size `gap`/spacing in px, not em (em resolves against the container's 16 px). Match the overlay to the base output size: `render.py` scales landscape sources to 1920 wide and portrait to 1920 tall.
 - `full_frame` with text/number/list only → PIL frames + `ffmpeg -framerate <fps> -i frame_%04d.png` to H.264 mp4, cubic easing computed in Python.

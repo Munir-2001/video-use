@@ -362,7 +362,19 @@ def build_ass(cues: list[dict], style: dict, profile: str, width: int, height: i
         ov = cue.get("caption") or {}
         cue_layout = layout_for(style, profile, width, height, ov.get("y_fraction", y_fraction)) if ov else layout
         extra = f"\\fs{int(ov['size_px'])}" if ov.get("size_px") else ""
-        for start, end, text in word_events(cue, cue_layout, ass_colour(hl_hex), ass_colour(base_hex), scale,
+        # per-preset look: colour, highlight, outline, shadow (panel = ink with no outline; face = soft shadow)
+        cue_base = ass_colour(resolve_colour(style, ov["color"])) if ov.get("color") else ass_colour(base_hex)
+        cue_hl = ass_colour(resolve_colour(style, ov["highlight"])) if ov.get("highlight") else ass_colour(hl_hex)
+        if ov.get("color"):
+            extra += f"\\c{cue_base}"
+        if "outline_px" in ov:
+            extra += f"\\bord{float(ov['outline_px']):g}"
+        if "shadow_px" in ov:
+            extra += f"\\shad{float(ov['shadow_px']):g}"
+        if ov.get("outline_color"):
+            oc = ass_colour(resolve_colour(style, ov["outline_color"]))
+            extra += f"\\3c{oc}\\4c{oc}"
+        for start, end, text in word_events(cue, cue_layout, cue_hl, cue_base, scale,
                                             caps.get("motion"), extra):
             lines.append(f"Dialogue: 0,{ass_time(start)},{ass_time(end)},Cap,,0,0,0,,{text}")
     return "\n".join(lines) + "\n", warnings
