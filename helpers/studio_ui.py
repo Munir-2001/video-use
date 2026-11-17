@@ -39,7 +39,7 @@ SAFE_NAME = re.compile(r"[^A-Za-z0-9._-]+")
 PREVIEW_PRIORITY = ("final.mp4", "preview_mixed.mp4", "preview_subs.mp4", "preview.mp4")
 THUMB_NAME = "thumb.jpg"
 ASS_DIALOGUE = re.compile(r"^Dialogue:\s*\d+,([^,]+),([^,]+),[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,(.*)$")
-ASS_HL = re.compile(r"\{\\c[^}]*\}(.*?)\{\\r\}")
+ASS_HL = re.compile(r"\{\\c[^}]*\}(.*?)\{(?:\\r|\\c)[^}]*\}")
 ASS_TAGS = re.compile(r"\{[^}]*\}")
 _PROBE_CACHE: dict[tuple[str, float], dict] = {}
 

@@ -39,3 +39,9 @@ def test_ffmpeg_command_crops_then_scales_and_copies_audio():
     cmd = rf.ffmpeg_command(Path("a.mov"), Path("b.mp4"), {"x": 656, "y": 0, "w": 608, "h": 1080}, 1080, 1920)
 
     assert cmd[cmd.index("-vf") + 1].startswith("crop=608:1080:656:0,scale=1080:1920") and "-c:a" in cmd and cmd[cmd.index("-c:a") + 1] == "copy"
+
+
+def test_ffmpeg_command_adds_constant_fps_when_asked():
+    cmd = rf.ffmpeg_command(Path("a.mov"), Path("b.mp4"), {"x": 0, "y": 0, "w": 608, "h": 1080}, 1080, 1920, fps=30)
+
+    assert cmd[cmd.index("-vf") + 1].endswith(",setsar=1,fps=30")

@@ -70,6 +70,7 @@ def main() -> None:
     ap.add_argument("--y", type=float, default=0.5, help="vertical centre of the crop as a fraction of the height")
     ap.add_argument("-o", "--output", type=Path, default=None)
     ap.add_argument("--style", type=Path, default=BRAND_STYLE)
+    ap.add_argument("--fps", type=int, default=None, help="constant frame rate for the output (default: the profile's fps; phone/laptop clips are often variable-rate)")
     args = ap.parse_args()
 
     src = args.clip.resolve()
@@ -80,10 +81,11 @@ def main() -> None:
     src_w, src_h = probe(src)
     box = crop_box(src_w, src_h, target_w, target_h, args.x, args.y)
     dest = (args.output or src.with_name(f"{src.stem}_{args.to}.mp4")).resolve()
-    subprocess.run(ffmpeg_command(src, dest, box, target_w, target_h), check=True)
+    fps = args.fps or int(prof.get("fps", 30))
+    subprocess.run(ffmpeg_command(src, dest, box, target_w, target_h, fps), check=True)
     note = "  WARNING: upscale above 1.5x, the clip will look soft; record closer or in portrait next time" if box["upscale"] > 1.5 else ""
     print(f"{src.name} {src_w}x{src_h} -> {dest.name} {target_w}x{target_h}: crop {box['w']}x{box['h']} at ({box['x']},{box['y']}), "
-          f"upscale {box['upscale']}x{note}")
+          f"upscale {box['upscale']}x, {fps} fps constant{note}")
 
 
 if __name__ == "__main__":

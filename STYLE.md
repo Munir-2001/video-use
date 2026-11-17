@@ -7,11 +7,12 @@ One rule per line. Each line ends with `(date · origin)`. Origins: `seed` = ini
 - 2–3 words per cue. (2026-11-16 · seed)
 - Word-synced highlight: the word being spoken is brighter and slightly larger than the rest of the cue. (2026-11-16 · seed)
 - Vertical (9:16): captions sit in the lower band, centre ≈ 68 % down, just under the chin: never over my face, never in the bottom 20 %. (2026-11-16 · rule)
-- Catchy text is its own layer: a new idea opens with a 2–4 word title, heavy sans, exactly one accent word in yellow. Captions never repeat the title's words while it is on screen. (2026-11-16 · seed)
+- Catchy text is its own layer: a new idea opens with a 2–4 word title, heavy sans, exactly one accent word in flame. Captions never repeat the title's words while it is on screen. (2026-11-16 · seed)
 - Text beside my face goes in a card in the empty side of the frame, never across the face. (2026-11-16 · seed)
 - Captions are applied last, after every overlay, so nothing hides them. (2026-11-16 · seed)
 - Captions are big (96 px at 1080x1920, 80 px at 1080p) and they move: the spoken word pops in and each cue rises into place. Static subtitles are wrong. (2026-11-16 · rule)
 - Two layout exceptions to the size and band lines above: in a `split_top` stretch the captions are a smaller line (64 px) at the panel's bottom edge (y ≈ 0.465); a hook or call-to-action stretch may use the `big` preset, still 2–3 words per cue, at 120 px, y 0.64, with the CTA pill under it. One word per cue is never used. (2026-11-16 · rule)
+- When my face fills the lower half of a face_full shot (head top below y 0.45), the hook/CTA captions and the CTA pill go above my head (captions y ≈ 0.24, pill ≈ 0.34), never across the face. (2026-11-17 · review)
 
 ## Framing and safe areas
 - Vertical: the bottom 20% and the right edge stay clear of captions and graphics (platform UI lives there). (2026-11-16 · seed)

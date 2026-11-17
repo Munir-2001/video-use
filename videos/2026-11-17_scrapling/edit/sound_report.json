@@ -1,11 +1,11 @@
 {
-  "video": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-17_scrapling/edit/preview.mp4",
+  "video": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-17_scrapling/edit/preview_speechprep.mp4",
   "output": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-17_scrapling/edit/mix.wav",
   "duration_s": 37.051,
   "speech_track": {
-    "integrated_lufs": -37.3,
-    "lra_lu": 2.8,
-    "true_peak_dbtp": -16.6
+    "integrated_lufs": -21.5,
+    "lra_lu": 1.9,
+    "true_peak_dbtp": -4.1
   },
   "music": null,
   "voice": null,
@@ -15,7 +15,7 @@
       "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/soft_impact.mp3",
       "contact_s": 2.74,
       "event": "title lands ('scraper' pops)",
-      "gain_db": -14,
+      "gain_db": -18,
       "attack_s": 0.0231,
       "start_s": 2.7169
     },
@@ -85,37 +85,37 @@
   ],
   "skipped": [],
   "premix_measured": {
-    "integrated_lufs": -27.83,
-    "true_peak_dbtp": -8.13,
-    "lra_lu": 18.5
+    "integrated_lufs": -21.3,
+    "true_peak_dbtp": -3.1,
+    "lra_lu": 2.2
   },
   "final": {
-    "integrated_lufs": -15.1,
-    "lra_lu": 10.0,
-    "true_peak_dbtp": -0.5
+    "integrated_lufs": -14.1,
+    "lra_lu": 2.8,
+    "true_peak_dbtp": -1.0
   },
   "sections": [
     {
       "name": "hook",
       "start": 0,
       "end": 3.5,
-      "integrated_lufs": -11.7,
-      "lra_lu": 3.5,
-      "true_peak_dbtp": -1.9
+      "integrated_lufs": -13.2,
+      "lra_lu": 0.8,
+      "true_peak_dbtp": -1.0
     },
     {
       "name": "readme",
       "start": 3.5,
       "end": 21.5,
-      "integrated_lufs": -17.0,
-      "lra_lu": 2.7,
+      "integrated_lufs": -14.4,
+      "lra_lu": 2.0,
       "true_peak_dbtp": -1.0
     },
     {
       "name": "config",
       "start": 21.5,
       "end": 24.5,
-      "integrated_lufs": -16.6,
+      "integrated_lufs": -14.2,
       "lra_lu": 20.0,
       "true_peak_dbtp": -1.0
     },
@@ -123,17 +123,17 @@
       "name": "terminal",
       "start": 24.5,
       "end": 34.1,
-      "integrated_lufs": -14.3,
-      "lra_lu": 2.3,
+      "integrated_lufs": -13.7,
+      "lra_lu": 2.4,
       "true_peak_dbtp": -1.0
     },
     {
       "name": "cta",
       "start": 34.1,
       "end": 37.0,
-      "integrated_lufs": -17.6,
+      "integrated_lufs": -13.8,
       "lra_lu": 0.0,
-      "true_peak_dbtp": -0.5
+      "true_peak_dbtp": -1.0
     }
   ]
 }

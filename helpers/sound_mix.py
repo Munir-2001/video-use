@@ -7,6 +7,7 @@ Reads <edit>/sound.json (written by the sound agent):
      "effects": [{"effect": "pop", "file": "brand/sfx/pop.wav", "contact_s": 5.1,
                   "event": "90% lands", "gain_db": -6}],
      "voice": {"file": "../voice/take1.mp3", "offset_s": 0.0, "gain_db": 0},   # commentary mode only
+     "speech": {"highpass_hz": 70, "gain_db": 20, "compress": true},          # optional: condition a quiet mic first
      "sections": [{"name": "hook", "start": 0.0, "end": 4.2}]}
 
 Steps: extract the speech track from the video; measure each effect's attack
@@ -125,6 +126,22 @@ def plan_effects(effects: list[dict], edit_dir: Path) -> tuple[list[dict], list[
     return planned, skipped
 
 
+def speech_filter(speech: dict) -> str:
+    """Condition a quiet or boomy speech track before the mix (sound.json `speech`):
+    {"highpass_hz": 70, "gain_db": 20, "compress": true, "limit": true}. Decided by
+    the sound agent from the measured raw level; a laptop mic at -37 LUFS needs it."""
+    parts = []
+    if speech.get("highpass_hz"):
+        parts.append(f"highpass=f={int(speech['highpass_hz'])}")
+    if speech.get("compress", False):
+        parts.append("acompressor=threshold=-24dB:ratio=3:attack=10:release=150:makeup=0")
+    if speech.get("gain_db"):
+        parts.append(f"volume={float(speech['gain_db'])}dB")
+    if speech.get("limit", True):
+        parts.append("alimiter=limit=0.891:attack=5:release=50")  # -1 dBTP ceiling
+    return ",".join(parts) or "anull"
+
+
 def build_filter(speech_dur: float, music: dict | None, effects: list[dict],
                  voice: dict | None = None) -> tuple[list[str], str]:
     """Return (ffmpeg inputs after the speech input, filter_complex).
@@ -217,7 +234,8 @@ def main() -> None:
 
     with tempfile.TemporaryDirectory() as tmp:
         speech = Path(tmp) / "speech.wav"
-        run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(video), "-vn", "-ac", "2", "-ar", str(SAMPLE_RATE), "-c:a", "pcm_s16le", str(speech)])
+        run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(video), "-vn", "-ac", "2", "-ar", str(SAMPLE_RATE),
+             *(["-af", speech_filter(spec["speech"])] if spec.get("speech") else []), "-c:a", "pcm_s16le", str(speech)])
         inputs, graph = build_filter(dur, music, effects, voice)
         premix = Path(tmp) / "premix.wav"
         run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(speech), *inputs, "-filter_complex", graph,

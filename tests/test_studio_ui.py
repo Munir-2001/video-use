@@ -115,3 +115,11 @@ def test_save_upload_into_existing_folder_merges_brief_and_rejects_traversal(tmp
             assert False, "expected ValueError"
         except ValueError:
             pass
+
+
+def test_parse_ass_events_accepts_explicit_highlight_close():
+    ass = "[Events]\nDialogue: 0,0:00:01.00,0:00:01.50,Cap,,0,0,0,,{\\an5\\pos(1,2)\\fs64}a {\\c&H002A50F4\\fscx86\\fscy86}b{\\c&H00F7F5F5\\fscx100\\fscy100} c\n"
+
+    ev = ui.parse_ass_events(ass)
+
+    assert ev[0]["text"] == "a b c" and ev[0]["hl"] == 1

@@ -1,5 +1,5 @@
 {
- "video": "preview.mp4",
+ "video": "preview_speechprep.mp4",
  "output": "mix.wav",
  "music": null,
  "effects": [
@@ -8,7 +8,7 @@
    "file": "brand/sfx/soft_impact.mp3",
    "contact_s": 2.74,
    "event": "title lands ('scraper' pops)",
-   "gain_db": -14
+   "gain_db": -18
   },
   {
    "effect": "whoosh_short",

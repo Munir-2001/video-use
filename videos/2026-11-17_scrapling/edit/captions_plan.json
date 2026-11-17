@@ -1,191 +1,191 @@
 {
- "cues": [
-  {
-   "i": [
-    9,
-    11
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    12,
-    13
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    14,
-    15
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    16,
-    18
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    19,
-    21
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    22,
-    23
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    24,
-    25
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    26,
-    28
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    29,
-    31
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    32,
-    34
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    35,
-    37
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    38,
-    40
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    41,
-    43
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    44,
-    45
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    46,
-    48
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    49,
-    51
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    52,
-    54
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    55,
-    56
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    57,
-    58
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    59,
-    60
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    61,
-    63
-   ],
-   "preset": "panel"
-  },
-  {
-   "i": [
-    64,
-    65
-   ],
-   "preset": {
-    "y_fraction": 0.24,
-    "size_px": 120
-   }
-  },
-  {
-   "i": [
-    66,
-    67
-   ],
-   "preset": {
-    "y_fraction": 0.24,
-    "size_px": 120
-   }
-  },
-  {
-   "i": [
-    68,
-    70
-   ],
-   "preset": {
-    "y_fraction": 0.24,
-    "size_px": 120
-   }
-  },
-  {
-   "i": [
-    71,
-    72
-   ],
-   "preset": {
-    "y_fraction": 0.24,
-    "size_px": 120
-   }
-  }
- ]
+  "cues": [
+    {
+      "i": [
+        9,
+        11
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        12,
+        13
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        14,
+        15
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        16,
+        18
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        19,
+        21
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        22,
+        23
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        24,
+        25
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        26,
+        28
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        29,
+        31
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        32,
+        34
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        35,
+        37
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        38,
+        40
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        41,
+        43
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        44,
+        45
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        46,
+        48
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        49,
+        51
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        52,
+        54
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        55,
+        56
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        57,
+        58
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        59,
+        60
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        61,
+        63
+      ],
+      "preset": "panel"
+    },
+    {
+      "i": [
+        64,
+        65
+      ],
+      "preset": {
+        "y_fraction": 0.24,
+        "size_px": 100
+      }
+    },
+    {
+      "i": [
+        66,
+        67
+      ],
+      "preset": {
+        "y_fraction": 0.24,
+        "size_px": 100
+      }
+    },
+    {
+      "i": [
+        68,
+        70
+      ],
+      "preset": {
+        "y_fraction": 0.24,
+        "size_px": 100
+      }
+    },
+    {
+      "i": [
+        71,
+        72
+      ],
+      "preset": {
+        "y_fraction": 0.24,
+        "size_px": 100
+      }
+    }
+  ]
 }

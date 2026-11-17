@@ -2,6 +2,12 @@
 
 Append-only, newest first. Format: `## date · title` then Why / Trade-off / Alternatives / Status.
 
+## 2026-11-17 · sound_mix.py gains a `speech` conditioning block (knob for the sound agent)
+**Why:** First real reel: the laptop mic recorded at −37 LUFS, so every effect out-shouted the speech and the sound agent had to pre-process a copy of the video by hand. Now `sound.json` may carry `"speech": {highpass_hz, gain_db, compress, limit}` and the helper applies it when extracting the speech track; the agent decides the numbers from the measured raw level. Principle kept: the agent decides, the helper executes.
+**Trade-off:** Compression is a fixed gentle curve; a badly clipped recording still needs re-recording.
+**Alternatives:** Normalising speech automatically (hides a bad recording from the agent's report), leaving it to loudnorm at the end (too late: effects are balanced against speech before mastering).
+**Status:** done; tested; to be used in round 2 of 2026-11-17_scrapling.
+
 ## 2026-11-17 · Reframe tool: laptop 16:9 recordings become 9:16 reels by cropping, never stretching
 **Why:** I may record on the laptop instead of the phone. `helpers/reframe.py` crops the tallest 9:16 column at an x the main session chooses by looking at a frame (where the face is), scales to the profile with lanczos, copies the audio, and reports the upscale factor; it works the other way too (vertical → horizontal band). Runs at inventory before transcription so every later step sees a native-aspect clip.
 **Trade-off:** A 1080p webcam clip yields a 608 px wide column upscaled 1.78x, visibly softer than phone footage; a 4K laptop recording needs no upscale. Recording in portrait (phone, or iPhone as a Continuity camera held upright) stays the better path; the tool is the fallback.

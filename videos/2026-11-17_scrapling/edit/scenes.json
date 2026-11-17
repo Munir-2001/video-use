@@ -1,78 +1,251 @@
 {
-  "profile": "vertical", "width": 1080, "height": 1920, "fps": 30,
+  "profile": "vertical",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
   "total_s": 37.0,
   "timeline_note": "All times are OUTPUT times (source - 0.30). Word indices match `captions_ass.py --dump-words`.",
   "stretches": [
     {
-      "id": "s1", "start": 0.0, "end": 34.10, "layout": "split_top", "caption": "panel",
+      "id": "s1",
+      "start": 0.0,
+      "end": 34.1,
+      "layout": "split_top",
+      "caption": "panel",
       "graphic": {
         "slot": "panel",
         "card": "cards/window-mockup-slide-up.md",
-        "cards_used": ["cards/kinetic-title-accent-word.md", "cards/window-mockup-slide-up.md (drawn document variant, paper version)", "cards/icon-grid-chapters.md (panel + dot grid spec only)"],
+        "cards_used": [
+          "cards/kinetic-title-accent-word.md",
+          "cards/window-mockup-slide-up.md (drawn document variant, paper version)",
+          "cards/icon-grid-chapters.md (panel + dot grid spec only)"
+        ],
         "kind": "overlay_transparent",
-        "payoff_word": "scraper.", "payoff_t": 2.74,
-        "enter_t": 0.0, "exit_t": 34.10,
+        "payoff_word": "scraper.",
+        "payoff_t": 2.74,
+        "enter_t": 0.0,
+        "exit_t": 34.1,
         "brief": "One HyperFrames composition, 1080x1920 with alpha, 0.00-34.10 s: the paper panel (y 0-960 px) is on from frame 0 and never moves; four sub-scenes play on it in order: hook title, window A (README card), window B (JSON config), window C (terminal session). Everything drawn, no screenshots. Hard cut out at 34.10 (the CTA stretch starts on 'comment').",
         "data": {
-          "panel": {"rect_px": [0, 0, 1080, 960], "fill": "#F3EEE4", "dot_grid": {"dot_px": 3, "pitch_px": 28, "color": "#141418", "opacity": 0.06}, "static": true},
-          "safe": {"content_x_px": [48, 940], "content_y_px": [150, 830], "note": "captions (panel preset, 64 px) sit at y 0.465 = 893 px, so nothing below 840 px; 140 px clear right; the face starts at 0.47 and is never covered"},
-          "window_frame": {"rect_px": [48, 150, 892, 680], "fill": "#FFFFFF", "stroke": "1px #DCD6CA", "radius_px": 24, "shadow": "0 18 40 rgba(20,20,24,.16)", "chrome_bar_px": 48, "dots": "three 10 px #DCD6CA top-left", "chrome_label_font": "JetBrains Mono Medium 22 px #6E6A64", "note": "paper-panel version of the card's dark window: white card on paper, ink text, flame accent, cobalt only for a second emphasis"}
+          "panel": {
+            "rect_px": [
+              0,
+              0,
+              1080,
+              960
+            ],
+            "fill": "#F3EEE4",
+            "dot_grid": {
+              "dot_px": 3,
+              "pitch_px": 28,
+              "color": "#141418",
+              "opacity": 0.06
+            },
+            "static": true
+          },
+          "safe": {
+            "content_x_px": [
+              48,
+              940
+            ],
+            "content_y_px": [
+              150,
+              830
+            ],
+            "note": "captions (panel preset, 64 px) sit at y 0.465 = 893 px, so nothing below 840 px; 140 px clear right; the face starts at 0.47 and is never covered"
+          },
+          "window_frame": {
+            "rect_px": [
+              48,
+              150,
+              892,
+              680
+            ],
+            "fill": "#FFFFFF",
+            "stroke": "1px #DCD6CA",
+            "radius_px": 24,
+            "shadow": "0 18 40 rgba(20,20,24,.16)",
+            "chrome_bar_px": 48,
+            "dots": "three 10 px #DCD6CA top-left",
+            "chrome_label_font": "JetBrains Mono Medium 22 px #6E6A64",
+            "note": "paper-panel version of the card's dark window: white card on paper, ink text, flame accent, cobalt only for a second emphasis"
+          }
         },
         "sub_scenes": [
           {
-            "id": "hook_title", "card": "cards/kinetic-title-accent-word.md",
-            "enter_t": 0.0, "exit_t": 3.46, "exit": "all words fade together 250 ms starting on 'It's' onset 3.46",
-            "payoff_word": "scraper.", "payoff_t": 2.74,
+            "id": "hook_title",
+            "card": "cards/kinetic-title-accent-word.md",
+            "enter_t": 0.0,
+            "exit_t": 3.46,
+            "exit": "all words fade together 250 ms starting on 'It's' onset 3.46",
+            "payoff_word": "scraper.",
+            "payoff_t": 2.74,
             "data": {
-              "kicker": {"text": "ONE TOOL", "font": "Inter SemiBold 36 px, letter-spacing 0.18 em, #6E6A64", "y_px": 250, "x_px": 48},
-              "line_1": {"text": "Claude Code,", "font": "Inter ExtraBold 112 px #141418", "y_px": 400, "x_px": 48},
-              "line_2": {"text": "lead scraper", "font": "Inter ExtraBold 112 px #141418", "accent_word": "scraper", "accent_font": "Instrument Serif Italic 124 px #F4502A", "y_px": 530, "x_px": 48}
+              "kicker": {
+                "text": "ONE TOOL",
+                "font": "Inter SemiBold 36 px, letter-spacing 0.18 em, #6E6A64",
+                "y_px": 250,
+                "x_px": 48
+              },
+              "line_1": {
+                "text": "Claude Code,",
+                "font": "Inter ExtraBold 112 px #141418",
+                "y_px": 400,
+                "x_px": 48
+              },
+              "line_2": {
+                "text": "lead scraper",
+                "font": "Inter ExtraBold 112 px #141418",
+                "accent_word": "scraper",
+                "accent_font": "Instrument Serif Italic 124 px #F4502A",
+                "y_px": 530,
+                "x_px": 48
+              }
             },
             "beats": [
-              {"word": "One", "t": 0.18, "change": "kicker ONE TOOL fades in 125 ms"},
-              {"word": "Claude", "t": 1.22, "change": "'Claude' pops (scale 0.92->1 + fade 350 ms)"},
-              {"word": "Code", "t": 1.70, "change": "'Code,' pops"},
-              {"word": "lead", "t": 2.34, "change": "'lead' pops on line 2"},
-              {"word": "scraper.", "t": 2.74, "change": "'scraper' pops in flame serif italic: title landed"}
+              {
+                "word": "One",
+                "t": 0.18,
+                "change": "kicker ONE TOOL fades in 125 ms"
+              },
+              {
+                "word": "Claude",
+                "t": 1.22,
+                "change": "'Claude' pops (scale 0.92->1 + fade 350 ms)"
+              },
+              {
+                "word": "Code",
+                "t": 1.7,
+                "change": "'Code,' pops"
+              },
+              {
+                "word": "lead",
+                "t": 2.34,
+                "change": "'lead' pops on line 2"
+              },
+              {
+                "word": "scraper.",
+                "t": 2.74,
+                "change": "'scraper' pops in flame serif italic: title landed"
+              }
             ],
             "sfx_event": "title lands (soft_impact, low gain) at 2.74"
           },
           {
-            "id": "window_A_readme", "card": "cards/window-mockup-slide-up.md (drawn document variant)",
-            "enter_t": 3.78, "exit_t": 21.54, "enter": "slide up 80 px + fade 350 ms from 'called' onset 3.78, landed 4.13", "exit": "hard cut at the end of 'server.' 21.54",
-            "payoff_word": "Scrapling.", "payoff_t": 4.26,
+            "id": "window_A_readme",
+            "card": "cards/window-mockup-slide-up.md (drawn document variant)",
+            "enter_t": 3.78,
+            "exit_t": 21.54,
+            "enter": "slide up 80 px + fade 350 ms from 'called' onset 3.78, landed 4.13",
+            "exit": "hard cut at the end of 'server.' 21.54",
+            "payoff_word": "Scrapling.",
+            "payoff_t": 4.26,
             "data": {
               "chrome_label": "README.md",
-              "title": {"text": "Scrapling", "font": "Inter ExtraBold 72 px #141418"},
-              "tag_pill": {"text": "open source", "font": "Inter SemiBold 26 px #141418", "fill": "#F4502A", "position": "right of the title, ends <= x 900"},
-              "repo_line": {"text": "github.com/D4Vinci/Scrapling", "font": "JetBrains Mono Medium 26 px #6E6A64"},
+              "title": {
+                "text": "Scrapling",
+                "font": "Inter ExtraBold 72 px #141418"
+              },
+              "tag_pill": {
+                "text": "open source",
+                "font": "Inter SemiBold 26 px #141418",
+                "fill": "#F4502A",
+                "position": "right of the title, ends <= x 900"
+              },
+              "repo_line": {
+                "text": "github.com/D4Vinci/Scrapling",
+                "font": "JetBrains Mono Medium 26 px #6E6A64"
+              },
               "rows": [
-                {"n": "01", "icon": "simple target/crosshair glyph", "label": "Adaptive selectors", "grey_line": "survives site changes", "chip_before": "div.card > h2", "chip_after": "article.item > h3"},
-                {"n": "02", "icon": "simple shield glyph", "label": "Stealth fetchers", "grey_line": "gets past anti-bot walls", "chip": "Cloudflare"},
-                {"n": "03", "icon": "simple plug glyph", "label": "MCP server", "grey_line": "plugs into Claude Code"}
+                {
+                  "n": "01",
+                  "icon": "simple target/crosshair glyph",
+                  "label": "Adaptive selectors",
+                  "grey_line": "survives site changes",
+                  "chip_before": "div.card > h2",
+                  "chip_after": "article.item > h3"
+                },
+                {
+                  "n": "02",
+                  "icon": "simple shield glyph",
+                  "label": "Stealth fetchers",
+                  "grey_line": "gets past anti-bot walls",
+                  "chip": "Cloudflare"
+                },
+                {
+                  "n": "03",
+                  "icon": "simple plug glyph",
+                  "label": "MCP server",
+                  "grey_line": "plugs into Claude Code"
+                }
               ],
               "row_style": "each row 800x120 px: 72 px tile (#FFFFFF, 1 px #DCD6CA, 16 px radius, #141418 glyph), label Inter ExtraBold 44 px #141418, grey line Inter SemiBold 26 px #6E6A64, mono chip JetBrains Mono 22 px on #F3EEE4 right side; empty state = 2 px dashed #DCD6CA outline with the mono number '01'..'03' in #6E6A64",
               "highlight_band": "rgba(244,80,42,.12) with a 4 px #F4502A left bar, on the active row only; moves 250 ms",
               "zoom_beats": []
             },
             "beats": [
-              {"word": "Scrapling.", "t": 4.26, "change": "title 'Scrapling' pops; the three empty dashed row slots are already in the frame"},
-              {"word": "Open", "t": 5.46, "change": "'open source' pill pops 170 ms"},
-              {"word": "GitHub.", "t": 6.34, "change": "mono repo line types in (fast, done by 6.90)"},
-              {"word": "adaptive", "t": 7.78, "change": "row 01 fills: tile, label 'Adaptive selectors', grey line; band on row 01"},
-              {"word": "changes", "t": 10.34, "change": "row 01 chip swaps 'div.card > h2' -> 'article.item > h3' (old slides up + fades, new rises, 250 ms)"},
-              {"word": "working.", "t": 12.82, "change": "flame check pops 150 ms on row 01"},
-              {"word": "stealth", "t": 14.34, "change": "row 02 fills 'Stealth fetchers'; band moves to row 02"},
-              {"word": "walls", "t": 16.74, "change": "grey chip 'Cloudflare' with a small lock glyph pops on row 02"},
-              {"word": "Cloudflare.", "t": 17.46, "change": "lock swaps to a check, chip turns flame"},
-              {"word": "MCP", "t": 20.18, "change": "row 03 fills 'MCP server'; band moves to row 03"}
+              {
+                "word": "Scrapling.",
+                "t": 4.26,
+                "change": "title 'Scrapling' pops; the three empty dashed row slots are already in the frame"
+              },
+              {
+                "word": "Open",
+                "t": 5.46,
+                "change": "'open source' pill pops 170 ms"
+              },
+              {
+                "word": "GitHub.",
+                "t": 6.34,
+                "change": "mono repo line types in (fast, done by 6.90)"
+              },
+              {
+                "word": "adaptive",
+                "t": 7.78,
+                "change": "row 01 fills: tile, label 'Adaptive selectors', grey line; band on row 01"
+              },
+              {
+                "word": "changes",
+                "t": 10.34,
+                "change": "row 01 chip swaps 'div.card > h2' -> 'article.item > h3' (old slides up + fades, new rises, 250 ms)"
+              },
+              {
+                "word": "working.",
+                "t": 12.82,
+                "change": "flame check pops 150 ms on row 01"
+              },
+              {
+                "word": "stealth",
+                "t": 14.34,
+                "change": "row 02 fills 'Stealth fetchers'; band moves to row 02"
+              },
+              {
+                "word": "walls",
+                "t": 16.74,
+                "change": "grey chip 'Cloudflare' with a small lock glyph pops on row 02"
+              },
+              {
+                "word": "Cloudflare.",
+                "t": 17.46,
+                "change": "lock swaps to a check, chip turns flame"
+              },
+              {
+                "word": "MCP",
+                "t": 20.18,
+                "change": "row 03 fills 'MCP server'; band moves to row 03"
+              }
             ],
             "sfx_event": "window enters (whoosh_short) at 3.78"
           },
           {
-            "id": "window_B_config", "card": "cards/window-mockup-slide-up.md (drawn code variant)",
-            "enter_t": 21.54, "exit_t": 24.54, "enter": "slide up 80 px + fade 350 ms from 21.54 (end of 'server.'), landed 21.89", "exit": "hard cut at 24.54 (silence after 'ask,')",
-            "payoff_word": "Claude", "payoff_t": 22.50,
+            "id": "window_B_config",
+            "card": "cards/window-mockup-slide-up.md (drawn code variant)",
+            "enter_t": 21.54,
+            "exit_t": 24.54,
+            "enter": "slide up 80 px + fade 350 ms from 21.54 (end of 'server.'), landed 21.89",
+            "exit": "hard cut at 24.54 (silence after 'ask,')",
+            "payoff_word": "Claude",
+            "payoff_t": 22.5,
             "data": {
               "chrome_label": ".claude.json  (mcpServers only)",
               "code_font": "JetBrains Mono Medium 34 px, keys #141418, strings #1F5BFF, punctuation #6E6A64, line numbers 22 px #6E6A64",
@@ -80,98 +253,395 @@
                 "{",
                 "  \"mcpServers\": {",
                 "    \"scrapling\": {",
-                "      \"command\": \"…\",",
-                "      \"args\": [\"…\"]",
+                "      \"command\": \"\u2026\",",
+                "      \"args\": [\"\u2026\"]",
                 "    }",
                 "  }",
                 "}"
               ],
-              "placeholder_note": "command and args are placeholders ('…' in #6E6A64); do not invent the real command",
+              "placeholder_note": "command and args are placeholders ('\u2026' in #6E6A64); do not invent the real command",
               "highlight_band": "same band style as window A; full line width",
               "zoom_beats": [
-                {"word": "Claude", "t": 22.50, "box": [0.06, 0.30, 0.70, 0.40], "scale": 1.35, "note": "box = lines 3-5 (the scrapling entry) as fractions of the window content area below the chrome bar; push 350 ms cubic, ring 150 ms later; hard cut out, no ease back needed"}
+                {
+                  "word": "Claude",
+                  "t": 22.5,
+                  "box": [
+                    0.06,
+                    0.3,
+                    0.7,
+                    0.4
+                  ],
+                  "scale": 1.35,
+                  "note": "box = lines 3-5 (the scrapling entry) as fractions of the window content area below the chrome bar; push 350 ms cubic, ring 150 ms later; hard cut out, no ease back needed"
+                }
               ]
             },
             "beats": [
-              {"word": "Plug", "t": 21.89, "change": "frame landed; the 8 code lines draw top-down in 250 ms; band on line 2 '\"mcpServers\"'"},
-              {"word": "Claude", "t": 22.50, "change": "band moves to line 3 '\"scrapling\"' + inner view pushes in (zoom beat), flame ring"},
-              {"word": "ask,", "t": 24.02, "change": "the two '…' placeholders blink once to ink (small change so the hold is never static); optional"}
+              {
+                "word": "Plug",
+                "t": 21.89,
+                "change": "frame landed; the 8 code lines draw top-down in 250 ms; band on line 2 '\"mcpServers\"'"
+              },
+              {
+                "word": "Claude",
+                "t": 22.5,
+                "change": "band moves to line 3 '\"scrapling\"' + inner view pushes in (zoom beat), flame ring"
+              },
+              {
+                "word": "ask,",
+                "t": 24.02,
+                "change": "the two '\u2026' placeholders blink once to ink (small change so the hold is never static); optional"
+              }
             ],
             "sfx_event": "window enters (whoosh_short) at 21.54"
           },
           {
-            "id": "window_C_session", "card": "cards/window-mockup-slide-up.md (drawn terminal variant) + cards/prompt-card-on-colour.md (composer typing rule only)",
-            "enter_t": 24.54, "exit_t": 34.10, "enter": "slide up 80 px + fade 350 ms from 24.54, landed 24.89", "exit": "hard cut on 'comment' onset 34.10 (shot cut to face_full)",
-            "payoff_word": "directory.", "payoff_t": 25.70,
+            "id": "window_C_session",
+            "card": "cards/window-mockup-slide-up.md (drawn terminal variant) + cards/prompt-card-on-colour.md (composer typing rule only)",
+            "enter_t": 24.54,
+            "exit_t": 34.1,
+            "enter": "slide up 80 px + fade 350 ms from 24.54, landed 24.89",
+            "exit": "hard cut on 'comment' onset 34.10 (shot cut to face_full)",
+            "payoff_word": "directory.",
+            "payoff_t": 25.7,
             "data": {
-              "chrome_label": "claude  ·  demo-folder",
-              "prompt": {"prefix": "> ", "text": "Scrape this directory", "url_chip": "directory.example/companies", "font": "Inter SemiBold 40 px #141418, cursor 3 px #F4502A blinking 1 Hz", "typing": "each word appears on its spoken onset (typing follows speech): 'Scrape' 24.89 (on landing), 'this' 25.46, 'directory' 25.70; url chip pops on 25.70"},
-              "tool_call": {"line_1": "scrapling  fetch(directory.example/companies)", "line_2_selector": "css: \"div.listing > a[href^='mailto:']\"", "font": "JetBrains Mono Medium 28 px; line_1 #6E6A64 with a #F4502A dot; selector string #1F5BFF"},
-              "table": {"header": ["name", "site", "email"], "rows": [
-                ["Acme Co", "acme.example", "hello@acme.example"],
-                ["Birch Labs", "birchlabs.example", "info@birchlabs.example"],
-                ["Cedar & Co", "cedar.example", "team@cedar.example"]
-              ], "font": "header JetBrains Mono Medium 24 px #6E6A64 uppercase-free; cells Inter SemiBold 28 px #141418; 1 px #DCD6CA row rules", "note": "placeholder companies on reserved .example domains only"},
+              "chrome_label": "claude  \u00b7  demo-folder",
+              "prompt": {
+                "prefix": "> ",
+                "text": "Scrape this directory",
+                "url_chip": "directory.example/companies",
+                "font": "Inter SemiBold 40 px #141418, cursor 3 px #F4502A blinking 1 Hz",
+                "typing": "each word appears on its spoken onset (typing follows speech): 'Scrape' 24.89 (on landing), 'this' 25.46, 'directory' 25.70; url chip pops on 25.70"
+              },
+              "tool_call": {
+                "line_1": "scrapling  fetch(directory.example/companies)",
+                "line_2_selector": "css: \"div.listing > a[href^='mailto:']\"",
+                "font": "JetBrains Mono Medium 28 px; line_1 #6E6A64 with a #F4502A dot; selector string #1F5BFF"
+              },
+              "table": {
+                "header": [
+                  "name",
+                  "site",
+                  "email"
+                ],
+                "rows": [
+                  [
+                    "Acme Co",
+                    "acme.example",
+                    "hello@acme.example"
+                  ],
+                  [
+                    "Birch Labs",
+                    "birchlabs.example",
+                    "info@birchlabs.example"
+                  ],
+                  [
+                    "Cedar & Co",
+                    "cedar.example",
+                    "team@cedar.example"
+                  ]
+                ],
+                "font": "header JetBrains Mono Medium 24 px #6E6A64 uppercase-free; cells Inter SemiBold 28 px #141418; 1 px #DCD6CA row rules",
+                "note": "placeholder companies on reserved .example domains only"
+              },
               "layout_in_window": "content area (below chrome): prompt y 0.04-0.14, tool call y 0.20-0.38, table y 0.46-0.94",
               "zoom_beats": [
-                {"word": "selectors.", "t": 28.50, "box": [0.06, 0.28, 0.62, 0.10], "scale": 1.6, "note": "push on the selector string; ring 150 ms later; hold to 31.14"},
-                {"word": "table,", "t": 31.14, "box": [0.0, 0.0, 1.0, 1.0], "scale": 1.0, "note": "ease back to 1.0 (250 ms) so the table builds at full view; this is the last beat, the window then hard-cuts"}
+                {
+                  "word": "selectors.",
+                  "t": 28.5,
+                  "box": [
+                    0.06,
+                    0.28,
+                    0.62,
+                    0.1
+                  ],
+                  "scale": 1.6,
+                  "note": "push on the selector string; ring 150 ms later; hold to 31.14"
+                },
+                {
+                  "word": "table,",
+                  "t": 31.14,
+                  "box": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0
+                  ],
+                  "scale": 1.0,
+                  "note": "ease back to 1.0 (250 ms) so the table builds at full view; this is the last beat, the window then hard-cuts"
+                }
               ]
             },
             "beats": [
-              {"word": "scrape", "t": 24.89, "change": "frame landed; 'Scrape' typed (spoken onset 24.82, shown on landing)"},
-              {"word": "this", "t": 25.46, "change": "'this' typed"},
-              {"word": "directory.", "t": 25.70, "change": "'directory' typed + url chip pops; send arrow turns flame"},
-              {"word": "picks", "t": 27.30, "change": "tool-call line 1 pops 170 ms"},
-              {"word": "CSS", "t": 27.86, "change": "selector line types in"},
-              {"word": "selectors.", "t": 28.50, "change": "zoom beat: inner view pushes in on the selector string, flame band + ring"},
-              {"word": "table,", "t": 31.14, "change": "view eases back to 1.0; table header 'name | site | email' draws"},
-              {"word": "name,", "t": 31.86, "change": "row 1 slides in (170 ms); header 'name' flashes flame"},
-              {"word": "site,", "t": 32.58, "change": "row 2 slides in; header 'site' flashes flame"},
-              {"word": "email,", "t": 33.30, "change": "row 3 slides in; header 'email' flashes flame"}
+              {
+                "word": "scrape",
+                "t": 24.89,
+                "change": "frame landed; 'Scrape' typed (spoken onset 24.82, shown on landing)"
+              },
+              {
+                "word": "this",
+                "t": 25.46,
+                "change": "'this' typed"
+              },
+              {
+                "word": "directory.",
+                "t": 25.7,
+                "change": "'directory' typed + url chip pops; send arrow turns flame"
+              },
+              {
+                "word": "picks",
+                "t": 27.3,
+                "change": "tool-call line 1 pops 170 ms"
+              },
+              {
+                "word": "CSS",
+                "t": 27.86,
+                "change": "selector line types in"
+              },
+              {
+                "word": "selectors.",
+                "t": 28.5,
+                "change": "zoom beat: inner view pushes in on the selector string, flame band + ring"
+              },
+              {
+                "word": "table,",
+                "t": 31.14,
+                "change": "view eases back to 1.0; table header 'name | site | email' draws"
+              },
+              {
+                "word": "name,",
+                "t": 31.86,
+                "change": "row 1 slides in (170 ms); header 'name' flashes flame"
+              },
+              {
+                "word": "site,",
+                "t": 32.58,
+                "change": "row 2 slides in; header 'site' flashes flame"
+              },
+              {
+                "word": "email,",
+                "t": 33.3,
+                "change": "row 3 slides in; header 'email' flashes flame"
+              }
             ],
             "sfx_event": "window enters (whoosh_short) at 24.54; table rows (tick) at 31.86, 32.58, 33.30"
           }
         ],
         "beats": [
-          {"word": "One", "t": 0.18}, {"word": "Claude", "t": 1.22}, {"word": "Code", "t": 1.70}, {"word": "lead", "t": 2.34}, {"word": "scraper.", "t": 2.74},
-          {"word": "Scrapling.", "t": 4.26}, {"word": "Open", "t": 5.46}, {"word": "GitHub.", "t": 6.34}, {"word": "adaptive", "t": 7.78}, {"word": "changes", "t": 10.34}, {"word": "working.", "t": 12.82}, {"word": "stealth", "t": 14.34}, {"word": "walls", "t": 16.74}, {"word": "Cloudflare.", "t": 17.46}, {"word": "MCP", "t": 20.18},
-          {"word": "Plug", "t": 21.89}, {"word": "Claude", "t": 22.50}, {"word": "ask,", "t": 24.02},
-          {"word": "scrape", "t": 24.89}, {"word": "this", "t": 25.46}, {"word": "directory.", "t": 25.70}, {"word": "picks", "t": 27.30}, {"word": "CSS", "t": 27.86}, {"word": "selectors.", "t": 28.50}, {"word": "table,", "t": 31.14}, {"word": "name,", "t": 31.86}, {"word": "site,", "t": 32.58}, {"word": "email,", "t": 33.30}
+          {
+            "word": "One",
+            "t": 0.18
+          },
+          {
+            "word": "Claude",
+            "t": 1.22
+          },
+          {
+            "word": "Code",
+            "t": 1.7
+          },
+          {
+            "word": "lead",
+            "t": 2.34
+          },
+          {
+            "word": "scraper.",
+            "t": 2.74
+          },
+          {
+            "word": "Scrapling.",
+            "t": 4.26
+          },
+          {
+            "word": "Open",
+            "t": 5.46
+          },
+          {
+            "word": "GitHub.",
+            "t": 6.34
+          },
+          {
+            "word": "adaptive",
+            "t": 7.78
+          },
+          {
+            "word": "changes",
+            "t": 10.34
+          },
+          {
+            "word": "working.",
+            "t": 12.82
+          },
+          {
+            "word": "stealth",
+            "t": 14.34
+          },
+          {
+            "word": "walls",
+            "t": 16.74
+          },
+          {
+            "word": "Cloudflare.",
+            "t": 17.46
+          },
+          {
+            "word": "MCP",
+            "t": 20.18
+          },
+          {
+            "word": "Plug",
+            "t": 21.89
+          },
+          {
+            "word": "Claude",
+            "t": 22.5
+          },
+          {
+            "word": "ask,",
+            "t": 24.02
+          },
+          {
+            "word": "scrape",
+            "t": 24.89
+          },
+          {
+            "word": "this",
+            "t": 25.46
+          },
+          {
+            "word": "directory.",
+            "t": 25.7
+          },
+          {
+            "word": "picks",
+            "t": 27.3
+          },
+          {
+            "word": "CSS",
+            "t": 27.86
+          },
+          {
+            "word": "selectors.",
+            "t": 28.5
+          },
+          {
+            "word": "table,",
+            "t": 31.14
+          },
+          {
+            "word": "name,",
+            "t": 31.86
+          },
+          {
+            "word": "site,",
+            "t": 32.58
+          },
+          {
+            "word": "email,",
+            "t": 33.3
+          }
         ],
         "sfx_event": "title lands",
         "sfx_events": [
-          {"t": 2.74, "event": "title lands", "sfx": "soft_impact", "gain": "low"},
-          {"t": 3.78, "event": "window A enters", "sfx": "whoosh_short"},
-          {"t": 21.54, "event": "window B enters", "sfx": "whoosh_short"},
-          {"t": 24.54, "event": "window C enters", "sfx": "whoosh_short"},
-          {"t": 31.86, "event": "table row 1", "sfx": "tick"},
-          {"t": 32.58, "event": "table row 2", "sfx": "tick"},
-          {"t": 33.30, "event": "table row 3", "sfx": "tick"}
+          {
+            "t": 2.74,
+            "event": "title lands",
+            "sfx": "soft_impact",
+            "gain": "low"
+          },
+          {
+            "t": 3.78,
+            "event": "window A enters",
+            "sfx": "whoosh_short"
+          },
+          {
+            "t": 21.54,
+            "event": "window B enters",
+            "sfx": "whoosh_short"
+          },
+          {
+            "t": 24.54,
+            "event": "window C enters",
+            "sfx": "whoosh_short"
+          },
+          {
+            "t": 31.86,
+            "event": "table row 1",
+            "sfx": "tick"
+          },
+          {
+            "t": 32.58,
+            "event": "table row 2",
+            "sfx": "tick"
+          },
+          {
+            "t": 33.3,
+            "event": "table row 3",
+            "sfx": "tick"
+          }
         ]
       }
     },
     {
-      "id": "s2", "start": 34.10, "end": 37.0, "layout": "face_full",
-      "caption": {"y_fraction": 0.24, "size_px": 120, "words_per_cue": {"target": 2, "max": 3}},
+      "id": "s2",
+      "start": 34.1,
+      "end": 37.0,
+      "layout": "face_full",
+      "caption": {
+        "y_fraction": 0.24,
+        "size_px": 100,
+        "words_per_cue": {
+          "target": 2,
+          "max": 3
+        }
+      },
       "graphic": {
         "slot": "cta",
         "card": "cards/big-words-cta-caption.md",
         "kind": "overlay_transparent",
-        "payoff_word": "scrape,", "payoff_t": 34.58,
-        "enter_t": 34.10, "exit_t": 37.0,
+        "payoff_word": "scrape,",
+        "payoff_t": 34.58,
+        "enter_t": 34.1,
+        "exit_t": 37.0,
         "data": {
-          "pill": {"text": "Comment \"Scrape\"", "y_fraction": 0.34, "height_px": 72, "fill": "#F4502A", "font": "Inter SemiBold 34 px #0B0B0F", "glyph": "28 px #0B0B0F speech bubble", "enter": "slide up 20 px + fade 125 ms on 'comment' 34.10, then still"},
-          "tagline": {"text": "setup steps, sent to you", "y_fraction": 0.40, "font": "JetBrains Mono Medium 26 px #F5F5F7 at 80 %, 2 px #000 shadow for the wall", "enter": "hard appear on 'send' 35.30"},
+          "pill": {
+            "text": "Comment \"Scrape\"",
+            "y_fraction": 0.34,
+            "height_px": 72,
+            "fill": "#F4502A",
+            "font": "Inter SemiBold 34 px #0B0B0F",
+            "glyph": "28 px #0B0B0F speech bubble",
+            "enter": "slide up 20 px + fade 125 ms on 'comment' 34.10, then still"
+          },
+          "tagline": {
+            "text": "setup steps, sent to you",
+            "y_fraction": 0.4,
+            "font": "JetBrains Mono Medium 26 px #F5F5F7 at 80 %, 2 px #000 shadow for the wall",
+            "enter": "hard appear on 'send' 35.30"
+          },
           "placement_note": "both sit above the head (head top at 0.47) on the cream wall, under the big captions at y 0.24; nothing reaches the eyes (0.62) or the bottom 20 %; pill width <= 600 px centred so x stays < 940"
         },
         "brief": "CTA payoff on my full face: the comment keyword as a flame pill and the promise as a mono tagline, both on the wall above my head because the face sits low in this take.",
         "beats": [
-          {"word": "comment", "t": 34.10, "change": "pill slides up 20 px + fade 125 ms"},
-          {"word": "send", "t": 35.30, "change": "tagline hard-appears"}
+          {
+            "word": "comment",
+            "t": 34.1,
+            "change": "pill slides up 20 px + fade 125 ms"
+          },
+          {
+            "word": "send",
+            "t": 35.3,
+            "change": "tagline hard-appears"
+          }
         ],
         "sfx_event": "pill lands",
-        "sfx_events": [{"t": 34.10, "event": "pill lands", "sfx": "pop"}]
+        "sfx_events": [
+          {
+            "t": 34.1,
+            "event": "pill lands",
+            "sfx": "pop"
+          }
+        ]
       }
     }
   ],

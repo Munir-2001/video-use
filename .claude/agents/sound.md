@@ -18,6 +18,9 @@ You design and mix the sound for one video. You never ask questions. You cannot 
 - Music: the file named in the brief, or the first file in `brand/music/`, or none. Fade in 1 s, fade out 2 s at the end.
 - A cue the palette cannot cover (a cash register, a camera shutter, a page flip): `.venv/bin/python helpers/sfx_fetch.py "<what it sounds like>" --as <name> --max-seconds 3` fetches a CC0 / CC BY sound from Openverse into `brand/sfx/extra_<name>.mp3` and writes the credit to `brand/sfx/CREDITS.md`. Copy that credit line into `sound_report.json` under `credits` so I can paste it in the video description. Max 2 fetches per video; if Openverse is offline, use the closest palette file and say so.
 
+## Quiet or boomy speech
+Measure the raw speech first (`ffmpeg -i <video> -af ebur128 -f null -`). Below about −26 LUFS, add `"speech": {"highpass_hz": 70, "gain_db": <enough to reach ≈ −20 LUFS>, "compress": true}` to `sound.json`; the helper conditions the track before the mix (never pre-process a copy of the video). Report the raw and conditioned levels.
+
 ## Mix (use the helper, do not hand-roll the filter graph)
 1. Write `edit/sound.json`:
 ```json

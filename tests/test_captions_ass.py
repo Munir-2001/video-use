@@ -155,6 +155,7 @@ def test_output_cues_per_stretch_caption_overrides(tmp_path):
     assert cues[0]["caption"]["y_fraction"] == 0.44 and cues[2]["caption"]["size_px"] == 140
     text, _ = ca.build_ass(cues, style, "vertical", 1080, 1920)
     assert "\\pos(470,845)\\fad" in text or "\\move(470,873,470,845" in text  # 0.44 * 1920 = 845
+    assert "{\\r}" not in text  # a reset would drop the per-cue \\fs override
     assert "\\fs140}" in text and "\\fs56}" in text
 
 
@@ -193,3 +194,12 @@ def test_captions_plan_keeps_punctuated_words_in_one_cue(tmp_path):
     cues = ca.output_cues(edl, tmp_path, 2, 3, None, STYLE, {"cues": [{"i": [0, 2]}]})
 
     assert len(cues) == 1 and [x["text"] for x in cues[0]["words"]] == ["name,", "site,", "email,"]
+
+
+def test_word_events_never_overlap_even_for_very_short_words():
+    cue = {"start": 1.0, "end": 1.5, "words": [w("a", 1.0, 1.03), w("b", 1.05, 1.08), w("c", 1.10, 1.5)]}
+
+    ev = ca.word_events(cue, {"an": 5, "x": 1, "y": 2}, "&H0066D1FF", "&H00F7F5F5", 112, {"pop_ms": 0, "rise_px": 0, "fade_in_ms": 0})
+
+    for (s0, e0, _), (s1, e1, _) in zip(ev, ev[1:]):
+        assert e0 <= s1

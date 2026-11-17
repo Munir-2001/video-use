@@ -49,3 +49,10 @@ def test_filter_graph_voice_commentary_is_delayed_and_ducks_the_clip():
     assert inputs == ["-i", "/v/take1.mp3"]
     assert "volume=1.0dB,adelay=2500|2500,asplit=2[vo][vkey]" in graph
     assert "[sp0][vkey]sidechaincompress=" in graph and graph.endswith("[sp][vo]amix=inputs=2:duration=first:normalize=0[mix]")
+
+
+def test_speech_filter_chain_orders_highpass_compress_gain_limit():
+    f = sm.speech_filter({"highpass_hz": 70, "gain_db": 20, "compress": True})
+
+    assert f.startswith("highpass=f=70,acompressor") and ",volume=20.0dB,alimiter" in f
+    assert sm.speech_filter({}) == "alimiter=limit=0.891:attack=5:release=50"

@@ -294,17 +294,21 @@ def word_events(cue: dict, layout: dict, highlight: str, base: str, scale: int,
     fade_ms = int(m["fade_in_ms"])
     events = []
     words = cue["words"]
+    prev_end = cue["start"]
     for k, w in enumerate(words):
-        start = w["start"] if k > 0 else cue["start"]
+        start = max(w["start"], prev_end) if k > 0 else cue["start"]  # events never overlap
         end = words[k + 1]["start"] if k + 1 < len(words) else cue["end"]
         if end - start < MIN_WORD_EVENT_S and k + 1 < len(words):
             end = min(start + MIN_WORD_EVENT_S, cue["end"])
+        end = max(end, start)
+        prev_end = end
         parts = []
         for j, other in enumerate(words):
             t = escape_text(other["text"])
             if j == k:
                 pop = f"\\fscx{pop_from}\\fscy{pop_from}\\t(0,{pop_ms},\\fscx{scale}\\fscy{scale})" if pop_ms > 0 else f"\\fscx{scale}\\fscy{scale}"
-                parts.append(f"{{\\c{highlight}{pop}}}{t}{{\\r}}")
+                # restore explicitly: {\\r} would reset the per-cue \\fs size override too
+                parts.append(f"{{\\c{highlight}{pop}}}{t}{{\\c{base}\\fscx100\\fscy100}}")
             else:
                 parts.append(t)
         x, y = layout["x"], layout["y"]
