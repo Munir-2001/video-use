@@ -1,0 +1,23 @@
+{
+  "source": "laptop_vertical.json",
+  "changes": [
+    {
+      "index": 6,
+      "old": "Cloud",
+      "new": "Claude",
+      "by": "vocabulary"
+    },
+    {
+      "index": 88,
+      "old": "Cloud",
+      "new": "Claude",
+      "by": "vocabulary"
+    },
+    {
+      "index": 22,
+      "old": "scrappling.",
+      "new": "Scrapling.",
+      "by": "vocabulary"
+    }
+  ]
+}

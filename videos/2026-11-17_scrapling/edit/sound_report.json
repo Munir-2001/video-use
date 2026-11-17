@@ -1,0 +1,139 @@
+{
+  "video": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-17_scrapling/edit/preview.mp4",
+  "output": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-17_scrapling/edit/mix.wav",
+  "duration_s": 37.051,
+  "speech_track": {
+    "integrated_lufs": -37.3,
+    "lra_lu": 2.8,
+    "true_peak_dbtp": -16.6
+  },
+  "music": null,
+  "voice": null,
+  "effects": [
+    {
+      "effect": "soft_impact",
+      "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/soft_impact.mp3",
+      "contact_s": 2.74,
+      "event": "title lands ('scraper' pops)",
+      "gain_db": -14,
+      "attack_s": 0.0231,
+      "start_s": 2.7169
+    },
+    {
+      "effect": "whoosh_short",
+      "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/whoosh_short.mp3",
+      "contact_s": 3.78,
+      "event": "window A (README) enters",
+      "gain_db": -10,
+      "attack_s": 0.1371,
+      "start_s": 3.6429
+    },
+    {
+      "effect": "whoosh_short",
+      "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/whoosh_short.mp3",
+      "contact_s": 21.54,
+      "event": "window B (config) enters",
+      "gain_db": -10,
+      "attack_s": 0.1371,
+      "start_s": 21.4029
+    },
+    {
+      "effect": "whoosh_short",
+      "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/whoosh_short.mp3",
+      "contact_s": 24.54,
+      "event": "window C (terminal) enters",
+      "gain_db": -10,
+      "attack_s": 0.1371,
+      "start_s": 24.4029
+    },
+    {
+      "effect": "tick",
+      "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/tick.mp3",
+      "contact_s": 31.86,
+      "event": "table row 1",
+      "gain_db": -8,
+      "attack_s": 0.0511,
+      "start_s": 31.8089
+    },
+    {
+      "effect": "tick",
+      "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/tick.mp3",
+      "contact_s": 32.58,
+      "event": "table row 2",
+      "gain_db": -8,
+      "attack_s": 0.0511,
+      "start_s": 32.5289
+    },
+    {
+      "effect": "tick",
+      "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/tick.mp3",
+      "contact_s": 33.3,
+      "event": "table row 3",
+      "gain_db": -8,
+      "attack_s": 0.0511,
+      "start_s": 33.2489
+    },
+    {
+      "effect": "pop",
+      "file": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/brand/sfx/pop.mp3",
+      "contact_s": 34.1,
+      "event": "CTA pill lands",
+      "gain_db": -6,
+      "attack_s": 0.1174,
+      "start_s": 33.9826
+    }
+  ],
+  "skipped": [],
+  "premix_measured": {
+    "integrated_lufs": -27.83,
+    "true_peak_dbtp": -8.13,
+    "lra_lu": 18.5
+  },
+  "final": {
+    "integrated_lufs": -15.1,
+    "lra_lu": 10.0,
+    "true_peak_dbtp": -0.5
+  },
+  "sections": [
+    {
+      "name": "hook",
+      "start": 0,
+      "end": 3.5,
+      "integrated_lufs": -11.7,
+      "lra_lu": 3.5,
+      "true_peak_dbtp": -1.9
+    },
+    {
+      "name": "readme",
+      "start": 3.5,
+      "end": 21.5,
+      "integrated_lufs": -17.0,
+      "lra_lu": 2.7,
+      "true_peak_dbtp": -1.0
+    },
+    {
+      "name": "config",
+      "start": 21.5,
+      "end": 24.5,
+      "integrated_lufs": -16.6,
+      "lra_lu": 20.0,
+      "true_peak_dbtp": -1.0
+    },
+    {
+      "name": "terminal",
+      "start": 24.5,
+      "end": 34.1,
+      "integrated_lufs": -14.3,
+      "lra_lu": 2.3,
+      "true_peak_dbtp": -1.0
+    },
+    {
+      "name": "cta",
+      "start": 34.1,
+      "end": 37.0,
+      "integrated_lufs": -17.6,
+      "lra_lu": 0.0,
+      "true_peak_dbtp": -0.5
+    }
+  ]
+}

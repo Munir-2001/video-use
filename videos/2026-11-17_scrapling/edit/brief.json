@@ -1,0 +1,11 @@
+{
+  "mode": "clips",
+  "footage": [
+    "laptop_vertical.mp4"
+  ],
+  "voice": [],
+  "voice_offset_s": 0.0,
+  "notes": "face take recorded on the laptop (QuickTime, landscape) from script.md; no screen recordings yet; laptop.mov reframed to 9:16 around the face (x 0.48, upscale 1.78x)",
+  "created": "2026-11-17T00:28:29+00:00",
+  "updated": "2026-11-17T00:28:29+00:00"
+}

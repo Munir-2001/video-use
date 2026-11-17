@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "profile": "vertical",
+  "sources": {
+    "laptop_vertical": "/Users/munirabbasi/Desktop/ClaudeVideoMaking/videos/2026-11-17_scrapling/laptop_vertical.mp4"
+  },
+  "ranges": [
+    {
+      "source": "laptop_vertical",
+      "start": 0.3,
+      "end": 37.3,
+      "beat": "HOOK",
+      "quote": "One tool turns Claude Code into a lead scraper. ... Comment scrape, and I'll send you the setup steps.",
+      "reason": "Single range covering the whole take (HOOK through FEATURES, DEMO, CTA run continuously; planner splits beats by word time). Head pad 180 ms before 'One' (0.48), tail pad 180 ms after 'steps.' (37.12). Gaps >= 400 ms exist only at 5.36-5.76, 26.96-27.36 and 29.84-30.24, each exactly 0.40 s; cutting there with 30-200 ms pads would remove at most 0.1 s per cut for three jump cuts, so not cut. Script check: all 74 words present in order. Slips vs script: 'The site changes your scrapers. Keep working.' (script: 'your scraper keeps working', plural scrapers, split by a 0.32 s gap); 'Then I ask, scrape this directory' fine; 'Back comes a table, name, site, email, comment scrape, and I'll send...' CTA runs on with no pause after 'email' (0.24 s), 'comment scrape' kept as approved. No clean second attempt exists, nothing removed. Pauses at [pause] marks were not taken (only 0.24-0.40 s gaps)."
+    }
+  ],
+  "grade": "none",
+  "overlays": [
+    {
+      "file": "animations/panel/render.mov",
+      "start_in_output": 0.0,
+      "duration": 34.1,
+      "slot": "panel"
+    },
+    {
+      "file": "animations/cta/render.mov",
+      "start_in_output": 34.1,
+      "duration": 2.9,
+      "slot": "cta"
+    }
+  ],
+  "subtitles": "master.ass",
+  "total_duration_s": 37.0
+}

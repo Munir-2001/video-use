@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: transparent; }
+      #root { position: relative; width: 1080px; height: 1920px; background: transparent; }
+      .row { position: absolute; left: 0; width: 1080px; display: flex; justify-content: center; }
+      #pillrow { top: 617px; } /* centre y 653 = 0.34 */
+      #tagrow { top: 741px; }  /* centre y 768 = 0.40 */
+      #pill {
+        height: 72px; padding: 0 32px; border-radius: 999px; background: #F4502A;
+        display: flex; align-items: center; gap: 14px; color: #0B0B0F;
+        font-family: "Inter", sans-serif; font-weight: 600; font-size: 34px; white-space: nowrap;
+      }
+      #tag {
+        height: 54px; padding: 0 26px; border-radius: 999px; background: rgba(11,11,15,0.4);
+        display: flex; align-items: center; color: rgba(245,245,247,0.8);
+        font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 30px; white-space: nowrap;
+        text-shadow: 0 2px 0 #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="2.9" data-width="1080" data-height="1920">
+      <div class="row" id="pillrow">
+        <div id="pill">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#0B0B0F"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
+          <span>Comment “Scrape”</span>
+        </div>
+      </div>
+      <div class="row" id="tagrow"><div id="tag">setup steps, sent to you</div></div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#pill", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.125, ease: "power3.out" }, 0);
+      gsap.set("#tag", { opacity: 0 });
+      tl.set("#tag", { opacity: 1 }, 1.2);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

@@ -227,6 +227,34 @@
       {
         "heard": "hyperframes",
         "say": "HyperFrames"
+      },
+      {
+        "heard": "scrappling",
+        "say": "Scrapling"
+      },
+      {
+        "heard": "scrapling",
+        "say": "Scrapling"
+      },
+      {
+        "heard": "scrap ling",
+        "say": "Scrapling"
+      },
+      {
+        "heard": "cloudflare",
+        "say": "Cloudflare"
+      },
+      {
+        "heard": "github",
+        "say": "GitHub"
+      },
+      {
+        "heard": "mcp",
+        "say": "MCP"
+      },
+      {
+        "heard": "css",
+        "say": "CSS"
       }
     ],
     "always_capitalize": [

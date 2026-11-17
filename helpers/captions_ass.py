@@ -201,7 +201,11 @@ def planned_cues(words: list[dict], plan: dict, style: dict) -> list[dict]:
             raise ValueError(f"captions_plan cue {n}: bad index range {spec['i']} (words 0..{len(words) - 1}, must be in order, no overlap)")
         last = i1
         caption = stretch_caption({"caption": spec.get("preset")}, style) if spec.get("preset") else None
-        cues += cues_from_words(words[i0:i1 + 1], i1 - i0 + 1, i1 - i0 + 1, caption)
+        ws = words[i0:i1 + 1]  # exactly the agent's cue: no re-chunking at punctuation
+        cue = {"start": ws[0]["start"], "end": max(ws[-1]["end"], ws[0]["start"] + MIN_CUE_S), "words": list(ws)}
+        if caption:
+            cue["caption"] = caption
+        cues.append(cue)
     return cues
 
 

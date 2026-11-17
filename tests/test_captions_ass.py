@@ -183,3 +183,13 @@ def test_captions_plan_overrides_automatic_grouping(tmp_path):
         assert False, "overlap should fail"
     except ValueError:
         pass
+
+
+def test_captions_plan_keeps_punctuated_words_in_one_cue(tmp_path):
+    import json
+    (tmp_path / "t.json").write_text(json.dumps({"words": [w("name,", 0.0, 0.3), w("site,", 0.4, 0.7), w("email,", 0.8, 1.2)]}))
+    edl = {"ranges": [{"source": "t", "start": 0.0, "end": 2.0}]}
+
+    cues = ca.output_cues(edl, tmp_path, 2, 3, None, STYLE, {"cues": [{"i": [0, 2]}]})
+
+    assert len(cues) == 1 and [x["text"] for x in cues[0]["words"]] == ["name,", "site,", "email,"]
