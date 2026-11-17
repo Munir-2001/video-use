@@ -15,7 +15,7 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:transparen
   background-image:radial-gradient(circle at 14px 14px, rgba(20,20,24,.06) 0 1.5px, rgba(20,20,24,0) 1.7px); background-size:28px 28px; }
 /* hook */
 #hook { left:0; top:0; width:1080px; height:960px; }
-#kicker { position:absolute; left:48px; top:250px; font:600 36px/44px "Inter"; letter-spacing:6.5px; color:var(--muted); opacity:0; }
+#kicker { position:absolute; left:48px; top:250px; font:600 36px/44px "Inter"; letter-spacing:6.5px; color:var(--muted); opacity:1; }
 .t1, .t2 { position:absolute; left:48px; white-space:nowrap; font:800 112px/120px "Inter"; color:var(--ink); letter-spacing:-2px; }
 .t1 { top:400px; } .t2 { top:530px; }
 .w { display:inline-block; opacity:0; transform-origin:0% 100%; }
@@ -25,33 +25,33 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:transparen
 .win { position:absolute; inset:0; background:#fff; border:1px solid var(--line); border-radius:24px; overflow:hidden; box-shadow:0 18px 40px rgba(20,20,24,.16); opacity:0; }
 .chrome { position:absolute; left:0; top:0; width:892px; height:48px; border-bottom:1px solid var(--line); background:#fff; }
 .chrome i { position:absolute; top:19px; width:10px; height:10px; border-radius:5px; background:var(--line); }
-.chrome span { position:absolute; left:96px; top:0; line-height:48px; font:500 22px/48px "JetBrains Mono"; color:var(--muted); white-space:pre; }
+.chrome span { position:absolute; left:96px; top:0; line-height:48px; font:500 28px/48px "JetBrains Mono"; color:var(--muted); white-space:pre; }
 .cont { position:absolute; left:0; top:48px; width:892px; height:632px; overflow:hidden; }
 .mono { font-family:"JetBrains Mono"; font-weight:500; }
 /* A */
 #aTitle { left:46px; top:12px; font:800 72px/84px "Inter"; opacity:0; }
-#aPill { left:400px; top:30px; height:44px; padding:0 20px; border-radius:22px; background:var(--flame); font:600 26px/44px "Inter"; color:var(--ink); opacity:0; }
-#aRepo { left:48px; top:100px; font:500 26px/32px "JetBrains Mono"; color:var(--muted); white-space:pre; }
+#aPill { left:400px; top:30px; height:44px; padding:0 20px; border-radius:22px; background:var(--flame); font:600 28px/44px "Inter"; color:var(--ink); opacity:0; }
+#aRepo { left:48px; top:100px; font:500 28px/32px "JetBrains Mono"; color:var(--muted); white-space:pre; }
 .row { position:absolute; left:46px; width:800px; height:120px; }
 .slot { position:absolute; inset:0; border:2px dashed var(--line); border-radius:16px; font:500 28px/116px "JetBrains Mono"; color:var(--muted); padding-left:30px; }
 .fill { position:absolute; inset:0; opacity:0; }
 .tile { position:absolute; left:24px; top:24px; width:72px; height:72px; background:#fff; border:1px solid var(--line); border-radius:16px; }
 .tile svg { position:absolute; left:18px; top:18px; }
-.label { position:absolute; left:120px; top:12px; font:800 44px/50px "Inter"; white-space:nowrap; }
-.grey { position:absolute; left:120px; top:72px; font:600 26px/30px "Inter"; color:var(--muted); white-space:nowrap; }
-.chip { position:absolute; right:84px; top:66px; height:38px; background:var(--paper); border-radius:10px; font:500 22px/38px "JetBrains Mono"; white-space:nowrap; }
+.label { position:absolute; left:120px; top:8px; font:800 44px/50px "Inter"; white-space:nowrap; }
+.grey { position:absolute; left:120px; top:66px; font:600 28px/32px "Inter"; color:var(--muted); white-space:nowrap; }
+.chip { position:absolute; right:24px; top:64px; height:40px; background:var(--paper); border-radius:10px; font:500 28px/40px "JetBrains Mono"; white-space:nowrap; }
 #band { position:absolute; left:46px; top:100px; width:800px; height:120px; border-radius:14px; background:rgba(244,80,42,.12); opacity:0; }
 .bar { position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--flame); border-radius:2px; }
-#chip1 { width:250px; } #chip1 span { position:absolute; left:12px; top:0; }
-#chip2 { width:190px; opacity:0; right:84px; } 
+#chip1 { width:310px; } #chip1 span { position:absolute; left:12px; top:0; }
+#chip2 { width:236px; opacity:0; } 
 #chip2 .lock, #chip2 .ck { position:absolute; left:12px; top:8px; }
 #chip2 .ck { opacity:0; }
 #chip2 .tx { position:absolute; left:46px; top:0; }
-#check1 { position:absolute; right:24px; top:40px; width:40px; height:40px; border-radius:20px; background:var(--flame); opacity:0; }
+#check1 { position:absolute; right:24px; top:8px; width:40px; height:40px; border-radius:20px; background:var(--flame); opacity:0; }
 #check1 svg { position:absolute; left:9px; top:10px; }
 /* B */
 .ln { position:absolute; left:0; width:892px; height:64px; white-space:pre; font:500 34px/64px "JetBrains Mono"; opacity:0; }
-.ln b { position:absolute; left:24px; font:500 22px/64px "JetBrains Mono"; color:var(--muted); }
+.ln b { position:absolute; left:24px; font:500 28px/64px "JetBrains Mono"; color:var(--muted); }
 .ln u { position:absolute; left:72px; text-decoration:none; color:var(--ink); }
 .p { color:var(--muted); } .ph { color:var(--muted); }
 #bBand { position:absolute; left:0; top:154px; width:892px; height:64px; background:rgba(244,80,42,.12); opacity:0; }
@@ -62,17 +62,17 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:transparen
 #cCur { display:inline-block; width:3px; height:40px; background:var(--flame); vertical-align:-6px; margin-left:4px; opacity:0; }
 #cSend { left:820px; top:24px; width:44px; height:44px; border-radius:22px; background:var(--line); }
 #cSend svg { position:absolute; left:11px; top:11px; }
-#cUrl { left:70px; top:82px; height:34px; padding:0 14px; border-radius:10px; background:var(--paper); font:500 20px/34px "JetBrains Mono"; color:var(--ink); opacity:0; }
+#cUrl { left:70px; top:78px; height:40px; padding:0 14px; border-radius:10px; background:var(--paper); font:500 28px/40px "JetBrains Mono"; color:var(--ink); opacity:0; }
 #cT1 { left:24px; top:128px; font:500 28px/36px "JetBrains Mono"; color:var(--muted); white-space:pre; opacity:0; }
 #cT1 em { display:inline-block; width:12px; height:12px; border-radius:6px; background:var(--flame); margin-right:12px; vertical-align:1px; }
-#cT2 { left:24px; top:176px; font:500 26px/36px "JetBrains Mono"; color:var(--muted); white-space:pre; }
+#cT2 { left:24px; top:176px; font:500 28px/36px "JetBrains Mono"; color:var(--muted); white-space:pre; }
 #cT2 .selstr { color:var(--cobalt); }
 #cT2 span.c { opacity:0; }
 #cBand { left:0; top:170px; width:892px; height:48px; background:rgba(244,80,42,.12); opacity:0; }
 #cHead, .trow { position:absolute; left:24px; width:844px; }
 #cHead { top:291px; height:44px; border-bottom:1px solid var(--line); opacity:0; }
 .trow { height:72px; border-bottom:1px solid var(--line); opacity:0; }
-#cHead span { position:absolute; top:0; font:500 24px/44px "JetBrains Mono"; color:var(--muted); }
+#cHead span { position:absolute; top:0; font:500 28px/44px "JetBrains Mono"; color:var(--muted); }
 .trow span { position:absolute; top:0; font:600 28px/72px "Inter"; white-space:nowrap; }
 .c1 { left:0; } .c2 { left:190px; } .c3 { left:460px; }
 </style>
@@ -83,7 +83,7 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:transparen
 
   <div id="hook" class="abs clip" data-start="0" data-duration="3.71" data-track-index="1">
     <div id="kicker">ONE TOOL</div>
-    <div class="t1"><span class="w" id="wClaude">Claude</span> <span class="w" id="wCode">Code,</span></div>
+    <div class="t1"><span class="w" id="wClaude" style="opacity:1">Claude</span> <span class="w" id="wCode">Code,</span></div>
     <div class="t2"><span class="w" id="wLead">lead</span> <span class="w serif" id="wScraper">scraper</span></div>
   </div>
 
@@ -195,87 +195,89 @@ const slideIn = (el, t, dy = 80, d = 0.35) => tl.fromTo(el, { y: dy, opacity: 0 
 const pop = (el, t, d = 0.17, s0 = 0.8) => tl.fromTo(el, { scale: s0, opacity: 0 }, { scale: 1, opacity: 1, duration: d, ease: OUT }, t);
 
 // ---------- Hook ----------
-tl.fromTo("#kicker", { opacity: 0 }, { opacity: 1, duration: 0.125, ease: OUT }, 0.18);
-[["#wClaude", 1.22], ["#wCode", 1.7], ["#wLead", 2.34], ["#wScraper", 2.74]].forEach(([id, t]) =>
-  tl.fromTo(id, { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: OUT }, t));
+// kicker + "Claude Code," are on frame 0; lead/scraper pop 120 ms before their onsets (170 ms pop)
+[["#wCode", 1.70], ["#wLead", 2.34], ["#wScraper", 2.74]].forEach(([id, t]) =>
+  tl.fromTo(id, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.17, ease: OUT }, t - 0.12));
 tl.to("#hook", { opacity: 0, duration: 0.25, ease: IN }, 3.46);
 
 // ---------- Window A ----------
 slideIn("#aWin", 3.78);
-pop("#aTitle", 4.26, 0.25, 0.92);
-pop("#aPill", 5.46, 0.17, 0.8);
-const repo = splitChars($("#aRepo")); typeChars(repo, 6.34, 6.88);
+pop("#aTitle", 4.14, 0.25, 0.92);
+pop("#aPill", 5.34, 0.17, 0.8);
+const repo = splitChars($("#aRepo")); typeChars(repo, 6.22, 6.76);
 const rows = [152, 292, 432];
 const fillRow = (n, t) => {
   tl.to("#slot" + n, { opacity: 0, duration: 0.2, ease: OUT }, t);
   tl.fromTo("#fill" + n, { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.25, ease: OUT }, t);
 };
 tl.set("#band", { y: rows[0] - 100 }, 0);
-fillRow(1, 7.78);
-tl.to("#band", { opacity: 1, duration: 0.17, ease: OUT }, 7.78);
-tl.to("#chip1a", { y: -14, opacity: 0, duration: 0.25, ease: IO }, 10.34);
-tl.fromTo("#chip1b", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.25, ease: OUT }, 10.34);
-tl.fromTo("#check1", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.15, ease: OUT }, 12.82);
-fillRow(2, 14.34);
-tl.to("#band", { y: rows[1] - 100, duration: 0.25, ease: IO }, 14.34);
-pop("#chip2", 16.74, 0.17, 0.8);
-tl.to(".lock", { opacity: 0, scale: 0.6, duration: 0.15, ease: OUT }, 17.46);
-tl.to(".ck", { opacity: 1, duration: 0.15, ease: OUT }, 17.46);
-tl.to("#chip2", { backgroundColor: FLAME, duration: 0.2, ease: OUT }, 17.46);
-fillRow(3, 20.18);
-tl.to("#band", { y: rows[2] - 100, duration: 0.25, ease: IO }, 20.18);
+fillRow(1, 7.66);
+tl.to("#band", { opacity: 1, duration: 0.17, ease: OUT }, 7.66);
+tl.to("#chip1a", { y: -14, opacity: 0, duration: 0.25, ease: IO }, 10.22);
+tl.fromTo("#chip1b", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.25, ease: OUT }, 10.22);
+tl.fromTo("#check1", { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.15, ease: OUT }, 12.70);
+fillRow(2, 14.22);
+tl.to("#band", { y: rows[1] - 100, duration: 0.25, ease: IO }, 14.22);
+pop("#chip2", 16.62, 0.17, 0.8);
+tl.to(".lock", { opacity: 0, scale: 0.6, duration: 0.15, ease: OUT }, 17.34);
+tl.to(".ck", { opacity: 1, duration: 0.15, ease: OUT }, 17.34);
+tl.to("#chip2", { backgroundColor: FLAME, duration: 0.2, ease: OUT }, 17.34);
+fillRow(3, 20.06);
+tl.to("#band", { y: rows[2] - 100, duration: 0.25, ease: IO }, 20.06);
 
 // ---------- Window B ----------
 slideIn("#bWin", 21.54);
 document.querySelectorAll("#winB .ln").forEach((el, i) =>
-  tl.fromTo(el, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.12, ease: OUT }, 21.89 + i * 0.018));
-tl.to("#bBand", { opacity: 1, duration: 0.12, ease: OUT }, 21.89);
-tl.to("#bBand", { y: 64, duration: 0.25, ease: IO }, 22.5);
+  tl.fromTo(el, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.12, ease: OUT }, 21.77 + i * 0.018));
+tl.to("#bBand", { opacity: 1, duration: 0.12, ease: OUT }, 21.77);
+tl.to("#winB .ln b", { opacity: 0, duration: 0.12, ease: OUT }, 22.38);
+tl.to("#bBand", { y: 64, duration: 0.25, ease: IO }, 22.38);
 { // zoom: box [0.06,0.3,0.7,0.4] of 892x632, scale 1.35
   const W = 892, H = 632, s = 1.35, bx = 0.06 * W, by = 210, bw = 0.7 * W, bh = 208;
   const cx = bx + bw / 2, cy = by + bh / 2;
-  tl.to("#bZoom", { scale: s, x: W / 2 - s * cx, y: H / 2 - s * cy, duration: 0.35, ease: OUT }, 22.5);
+  tl.to("#bZoom", { scale: s, x: W / 2 - s * cx, y: H / 2 - s * cy, duration: 0.35, ease: OUT }, 22.38);
   const r = $("#bRing"); r.style.width = bw * s + "px"; r.style.height = bh * s + "px";
   r.style.left = (W / 2 - bw * s / 2) + "px"; r.style.top = (H / 2 - bh * s / 2) + "px";
-  tl.to(r, { opacity: 1, duration: 0.15, ease: OUT }, 22.85);
+  tl.to(r, { opacity: 1, duration: 0.15, ease: OUT }, 22.73);
 }
-tl.to("#winB .ph", { color: INK, duration: 0.08, ease: OUT }, 24.02);
-tl.to("#winB .ph", { color: MUTED, duration: 0.2, ease: OUT }, 24.12);
+tl.to("#winB .ph", { color: INK, duration: 0.08, ease: OUT }, 23.90);
+tl.to("#winB .ph", { color: MUTED, duration: 0.2, ease: OUT }, 24.00);
 
 // ---------- Window C ----------
 slideIn("#cWin", 24.54);
-[["#pw1", 24.89], ["#pw2", 25.46], ["#pw3", 25.70]].forEach(([id, t]) => {
+[["#pw1", 24.77], ["#pw2", 25.34], ["#pw3", 25.58]].forEach(([id, t]) => {
   tl.set(id, { display: "inline" }, t);
   tl.fromTo(id, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: OUT }, t);
 });
 // cursor blink 1 Hz (on 0.5 s / off 0.5 s) until the tool call
-for (let t = 24.89; t < 27.3; t += 1.0) { tl.set("#cCur", { opacity: 1 }, t); tl.set("#cCur", { opacity: 0 }, Math.min(t + 0.5, 27.3)); }
-tl.set("#cCur", { opacity: 0 }, 27.3);
-pop("#cUrl", 25.70, 0.17, 0.8);
-tl.to("#cSend", { backgroundColor: FLAME, duration: 0.12, ease: OUT }, 25.70);
-tl.fromTo("#cT1", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.17, ease: OUT }, 27.3);
+for (let t = 24.77; t < 27.18; t += 1.0) { tl.set("#cCur", { opacity: 1 }, t); tl.set("#cCur", { opacity: 0 }, Math.min(t + 0.5, 27.18)); }
+tl.set("#cCur", { opacity: 0 }, 27.18);
+pop("#cUrl", 25.58, 0.17, 0.8);
+tl.to("#cSend", { backgroundColor: FLAME, duration: 0.12, ease: OUT }, 25.58);
+tl.fromTo("#cT1", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.17, ease: OUT }, 27.18);
 const selSpans = [...document.querySelectorAll("#cT2 span.c")];
 const selChars = splitChars($("#selstr"));
-typeChars(selSpans.concat(selChars), 27.86, 28.42);
-{ // zoom on selector string, 1.6x
-  const W = 892, H = 632, s = 1.6;
+typeChars(selSpans.concat(selChars), 27.74, 28.30);
+{ // zoom on the selector line: 1.25x (28 px line is 655 px wide, 1.25x keeps it whole with a 16 px+ inset)
+  const W = 892, H = 632, s = 1.25;
   const cont = $("#cWin .cont").getBoundingClientRect();
-  const sr = $("#selstr").getBoundingClientRect();
-  // getBoundingClientRect on a .cont whose parent window may be translated: use relative offsets only
+  const sr = $("#cT2").getBoundingClientRect();
   const rx = sr.left - cont.left, ry = sr.top - cont.top, rw = sr.width, rh = sr.height;
   const padX = 8, padY = 5;
   const cx = rx + rw / 2, cy = ry + rh / 2;
-  tl.to("#cZoom", { scale: s, x: W / 2 - s * cx, y: H / 2 - s * cy, duration: 0.35, ease: OUT }, 28.5);
-  tl.to("#cBand", { opacity: 1, duration: 0.2, ease: OUT }, 28.5);
+  tl.to("#cZoom", { scale: s, x: W / 2 - s * cx, y: H / 2 - s * cy, duration: 0.35, ease: OUT }, 28.38);
+  tl.to(["#cPrompt", "#cSend", "#cUrl", "#cT1"], { opacity: 0.15, duration: 0.25, ease: OUT }, 28.38);
+  tl.to(["#cPrompt", "#cSend", "#cUrl", "#cT1"], { opacity: 1, duration: 0.25, ease: OUT }, 31.02);
+  tl.to("#cBand", { opacity: 1, duration: 0.2, ease: OUT }, 28.38);
   const r = $("#cRing"); const rw2 = (rw + 2 * padX) * s, rh2 = (rh + 2 * padY) * s;
   r.style.width = rw2 + "px"; r.style.height = rh2 + "px"; r.style.left = (W / 2 - rw2 / 2) + "px"; r.style.top = (H / 2 - rh2 / 2) + "px";
-  tl.to(r, { opacity: 1, duration: 0.15, ease: OUT }, 28.85);
-  tl.to(r, { opacity: 0, duration: 0.125, ease: IN }, 31.14);
-  tl.to("#cBand", { opacity: 0, duration: 0.125, ease: IN }, 31.14);
-  tl.to("#cZoom", { scale: 1, x: 0, y: 0, duration: 0.25, ease: IO }, 31.14);
+  tl.to(r, { opacity: 1, duration: 0.15, ease: OUT }, 28.73);
+  tl.to(r, { opacity: 0, duration: 0.125, ease: IN }, 31.02);
+  tl.to("#cBand", { opacity: 0, duration: 0.125, ease: IN }, 31.02);
+  tl.to("#cZoom", { scale: 1, x: 0, y: 0, duration: 0.25, ease: IO }, 31.02);
 }
-tl.fromTo("#cHead", { opacity: 0 }, { opacity: 1, duration: 0.17, ease: OUT }, 31.14);
-[["#tr1", 31.86, ".c1"], ["#tr2", 32.58, ".c2"], ["#tr3", 33.3, ".c3"]].forEach(([id, t, col]) => {
+tl.fromTo("#cHead", { opacity: 0 }, { opacity: 1, duration: 0.17, ease: OUT }, 31.02);
+[["#tr1", 31.74, ".c1"], ["#tr2", 32.46, ".c2"], ["#tr3", 33.18, ".c3"]].forEach(([id, t, col]) => {
   tl.fromTo(id, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.17, ease: OUT }, t);
   tl.to("#cHead " + col, { color: FLAME, duration: 0.1, ease: OUT }, t);
   tl.to("#cHead " + col, { color: MUTED, duration: 0.25, ease: OUT }, t + 0.45);

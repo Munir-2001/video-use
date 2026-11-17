@@ -36,21 +36,21 @@
       "file": "brand/sfx/tick.mp3",
       "contact_s": 31.86,
       "event": "table row 1",
-      "gain_db": -10
+      "gain_db": -6
     },
     {
       "effect": "tick",
       "file": "brand/sfx/tick.mp3",
       "contact_s": 32.58,
       "event": "table row 2",
-      "gain_db": -10
+      "gain_db": -6
     },
     {
       "effect": "tick",
       "file": "brand/sfx/tick.mp3",
       "contact_s": 33.3,
       "event": "table row 3",
-      "gain_db": -10
+      "gain_db": -6
     },
     {
       "effect": "pop",
@@ -91,5 +91,8 @@
     "highpass_hz": 70,
     "gain_db": 17,
     "compress": true
-  }
+  },
+  "_notes": [
+    "round 3: ticks -10 -> -6 dB per the critic (sat ~20 dB under speech)"
+  ]
 }

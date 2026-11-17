@@ -4,4 +4,4 @@ One line per video: `- YYYY-MM-DD · slug · status` (status: raw | transcribed 
 
 - 2026-11-16 · test-clip · preview (31 s mic test, not for publishing; smoke: captions under the chin + one HyperFrames title overlay)
 - 2026-11-16 · voice-smoke · preview (voice-over smoke: test clip audio exported as the voice file, footage cover + background + contain; not for publishing)
-- 2026-11-17 · scrapling · scripted (Scrape leads with Claude Code (Scrapling))
+- 2026-11-17 · scrapling · preview (Scrape leads with Claude Code; 37 s, critic PASS; two STYLE decisions open; laptop take, soft)

@@ -1,56 +1,77 @@
-# critic: 2026-11-17_scrapling, round 1 (preview_mixed.mp4)
+# critic: 2026-11-17_scrapling, round 2 (preview_mixed.mp4, 37.03 s, 30 fps)
 
-VERDICT: FIX FIRST
+VERDICT: PASS
 
-No never-show line is broken and the structure works. But the captions have a systemic size bug that shows in 39 of 64 cues, window C's zoom holds on visibly clipped text for 2.6 s, the hook's payoff word lands late, the CTA's first cue wraps and its tagline can't be read, and the whooshes and the pop sit almost as loud as the voice.
+Every round-1 fix is verified in the new file. I found no clipped text, no ghosted or wrong-sized captions, no late hook, and no unreadable tagline. Effects now sit 11–20 dB under the voice and true peak is under the limit. Nothing on the never-show list appears. Everything left is a nitpick or a STYLE.md decision the user has to make. The pill and tagline (problem 1) is a literal STYLE.md line that needs either the user's exception or a one-element change. It is the only thing I would raise with the user before publishing.
 
-## TOP 5 FIXES (do these first)
+## TOP 5 FIXES (do these first, all small)
 
-1. [03.46-36.82, every cue] **Caption words after the highlighted word render at the wrong size.** Every event writes `{\r}` after the highlighted word. `\r` resets to the `Cap` style, so the inline `\fs64` / `\fs120` is lost and the trailing words fall back to the style's 96 px. Evidence: 39 of 64 Dialogue lines have text after `{\r}`. At 22.70 "Claude **Code.**" the trailing "Code." is about 1.5x the highlighted word. At 14.34 "Second, stealth fetchers." wraps onto two lines for the first frame because the 96 px tail overflows the 832 px line. At 34.30 "Scrape" (96 px) is smaller than "Comment" (134 px). The highlighted word is therefore SMALLER than the rest of the cue, the opposite of STYLE.md. Fix (captions agent + `helpers/captions_ass.py`): close the highlight with explicit tags instead of `\r`, e.g. `{\c&H00F7F5F5&\fscx100\fscy100}`, or emit `{\r\fs64}` / `{\r\fs120}`. Then rebuild master.ass and re-burn. In the same pass, fix the overlap of the two events at 22.26-22.30 ("Plug it into" with `it` highlighted ends 22.30, but the `into` event starts 22.26). The frame at 22.28 shows both drawn on top of each other as ghosted text "PPlug iitt into". End the first event at 22.26.
+1. [34.10 / 35.30] **The pill and the tagline are two new graphic elements 1.2 s apart.** This is unchanged from round 1. STYLE.md still says "Never more than one new graphic element per 3 seconds." The new dated exception (line 15) covers the position of the captions and pill, not this. The CTA card allows it, but STYLE.md outranks cards. Fix: either the user approves a dated exception ("the CTA tagline may land on the reward word ≥ 1 s after the pill"), or the motion agent (cta slot) makes the pill and tagline one element. For example, the tagline is pre-drawn inside the pill's paper box at 0 % and fades in on "send", so it is a change inside the element rather than a new one.
 
-2. [28.50-31.14] **Window C's zoom beat reads as a rendering bug.** At 1.6x the neighbouring lines are cut on both sides and held for 2.6 s: "crape this directory", "irectory.example/companies", "rapling  fetch(directory.example/c". The flame ring also runs into the window's right edge (frame 29.50). Fix (motion agent, panel slot): during the zoom, fade every line except the selector to 0 (or 15 % ink) over the same 350 ms. Alternatively, anchor the push to the left content edge (x 0) at about 1.3x so lines are only cut on the right, where the clip reads as overflow. Also inset the ring at least 16 px from the window edge. Window B's zoom (22.50-24.54) is acceptable: no words are clipped, only the line-number gutter. During the push (22.60-22.80), half-digit gutter fragments flicker at the left edge, so fade the gutter out with the push.
+2. [04.26, 05.46, 07.78, 14.34, 20.18, 27.30, …] **Panel beats after the hook still start on their onset, so they are fully in about 170 ms late.** On the payoff frame 4.26 "Scrapling" is absent; it is in at 4.41. The same holds for the pill at 5.46/5.61, row 01 at 7.78/7.93, row 03 at 20.18/20.33 and the tool call at 27.30/27.45. The hook got the 120 ms lead; the windows did not. This is just over the 150 ms "late" line. Fix (motion agent, panel slot): apply the same −120 ms lead to every pop and fill in windows A/B/C.
 
-3. [00.00-03.09] **The hook lands late and opens empty.** At 2.74 (the payoff frame) "scraper" is absent. It is visible at 2.89 and only settles at 3.09, about 350 ms late. The soft_impact hits at 2.74 on an empty slot, so the sound plays before the picture. "Claude" behaves the same way: absent at 1.22, in at 1.37. Also, frames 0.00-1.22 show only the small "ONE TOOL" kicker on a blank cream panel, which is a weak first frame for a scroll-stopper. Fix (motion agent, panel slot): start each title word's tween 120 ms before its onset, or use the 170 ms pop from motion.md §2 instead of the card's 350 ms, so "scraper" is fully in by 2.86 at the latest. Put "Claude Code," on frame 0 (kicker + line 1 already on, as in the editorial variant) so the first frame says something.
+3. [34.10–36.82] **CTA captions are 100 px. STYLE line 14 says the big preset is "at 120 px".** The new exception line 15 changes the position, not the size. 100 px is the right call (one line, fits within 832 px), but it needs the rule updated. Fix: the user adds "(100 px when above the head)" to line 15, or the captions agent goes back to 120 px with a deliberate two-line `\N` cue. A rules decision, not a render fix.
 
-4. [34.10-37.05] **The CTA's first cue breaks and the tagline is illegible.** 'Comment "Scrape"' at 120 px is wider than the 832 px line, so it wraps to two lines (frame 34.30). Fixing #1 alone will not stop that. The tagline "setup steps, sent to you" is light grey 30 px mono on a 40 % near-black scrim over the cream wall. At 360 px wide (36.20) it is a grey smudge with roughly 2:1 contrast. Fix: captions agent: write that cue deliberately as two stacked 120 px lines with `\N` ("Comment" / "Scrape" in flame), or drop that cue to 100 px so it fits on one line. Motion agent (cta slot): tagline in ink #141418 on a paper #F3EEE4 pill (or #F5F5F7 on a 75 % ink scrim), 34 px. The pill itself reads fine. The hand that swings in at 34.6-35.3 passes beside the caption and never covers the pill or the words, so it is OK.
+4. [00.00–02.22] **The hook panel does not change for 2.2 s.** With "Claude Code," on frame 0, the 1.22 "Claude" and 1.70 "Code" beats no longer do anything. The first motion is "lead" at about 2.22. That is under the 3 s static limit, so it passes, but the most important 2 s of the reel are a still slide. Optional fix (motion agent): land "turns" as a small flame arrow or underline on 0.66, or pop "Code," on 1.70 while "Claude" is on frame 0.
 
-5. [02.74, 03.78, 21.54, 24.54, 34.10] **Effects are nearly as loud as the voice, and true peak is over the limit.** Residual after subtracting the fitted speech track: the whooshes reach a max 50 ms RMS of −12.2 to −12.7 dBFS, against speech maxima of −9.2 to −11.4 dBFS in the same ±1.5 s. That is only 1-3 dB under the voice. Whoosh B at 21.54 is 0.8 dB under. The pop at 34.10 peaks at −1.4 dBFS in a speech gap, so it is the loudest transient of the CTA (visible spike in timeline_view 32.6-35.6). The "low gain" soft_impact still sits only 2.3 dB under speech. ebur128 on preview_mixed.mp4 gives a true peak of **−0.9 dBTP**, over the −1 dBTP line (sound_report claims −1.0). Fix (sound agent): whoosh_short −10 → −18 dB, pop −6 → −14 dB, soft_impact −18 → −22 dB, and move the impact to the corrected landing frame from #3. Set the limiter ceiling to −1.5 dBTP and re-measure on the muxed mp4, not on mix.wav. The ticks are fine (about 14 dB under speech).
+5. [31.86 / 32.58 / 33.30] **The ticks are quieter than needed.** Estimated tick level about −27.6 dBFS (max 50 ms RMS) against speech at −7 to −9: about 20 dB under. On a phone speaker they may disappear under "name, site, email". Optional (sound agent): ticks −10 → −6 dB. The whooshes (11–14 dB under) and the pop (13 dB under) are now right.
 
 ## ALL PROBLEMS (ranked, with timecodes)
 
-1. [03.46-36.82] `{\r}` resets the caption size to 96 px for every word after the highlight (39/64 cues). This violates "the word being spoken is brighter and slightly larger than the rest of the cue". It is the cause of the 14.34 line wrap. (captions, helper)
-2. [28.50-31.14] Window C zoom holds clipped neighbouring lines and the ring touches the window edge. (motion)
-3. [22.26-22.30] Two caption events overlap and the text is drawn twice, ghosted. (captions)
-4. [02.74] "scraper" not landed on its payoff (in at 2.89, settled 3.09; >150 ms late). The impact sfx fires before the visual. [01.22] "Claude" has the same lag. (motion, sound)
-5. [00.00-01.22] The first frame is an almost empty panel (only the 36 px "ONE TOOL"). (motion)
-6. [34.10-34.90] 'Comment "Scrape"' wraps to two lines with two different sizes. (captions)
-7. [35.30-37.05] Tagline grey-on-grey, about 2:1 contrast, unreadable at 360 px. (motion, cta)
-8. [whole mix] Whooshes and the pop sit 1-3 dB under speech peaks. The pop is the loudest transient in the CTA. True peak −0.9 dBTP fails "Final mix: −14 LUFS integrated, true peak ≤ −1 dBTP." (sound)
-9. [03.78-34.10] Phone readability at 360 px wide: text under 28 px at 1080 is too small. Window A: grey descriptors 26 px, mono chips 22 px ("article.item > h3", "Cloudflare"), repo line 26 px. Chrome labels are 22 px everywhere. Window C: tool-call and selector lines 26 px unzoomed, url chip about 20 px, table header 24 px. Labels (44 px), titles and table cells (28 px) pass. Fix (motion): descriptors and chips to ≥ 28 px. The chrome label can stay small because it is decoration.
-10. [all] Output is 29.2 fps (r_frame_rate 11360/389, 1081 frames), not the profile's 30 fps: the laptop source's VFR average was carried through, while the overlays are 30 fps, so overlay frames are dropped and duplicated (uneven motion on the slides and zooms). Fix (render): add `-r 30` / `fps=30` on the base before the overlays.
-11. [22.60-22.80] Window B push: the line-number gutter shows half-digit fragments at the left edge. (motion, minor)
-12. [34.10 / 35.30] Pill and tagline are two new graphic elements 1.2 s apart. Against "Never more than one new graphic element per 3 seconds." the card sanctions it, but STYLE.md has no exception for it. Either add the exception line or delay the tagline to ≥ 37.1 (impossible), i.e. ask the user for the exception. [21.54 → 24.54] Windows B and C are exactly 3.00 s apart, which is on the line.
-13. [34.10-36.82] CTA captions are at y 0.24 at 120 px. The STYLE line says "a hook or call-to-action stretch may use the `big` preset ... at 120 px, y 0.64, with the CTA pill under it." This is a deliberate deviation (the face sits low in this take). It needs the user's approval as a dated STYLE exception, otherwise it stays a standing violation.
-14. [00.18-03.71] STYLE.md says "exactly one accent word in yellow". The title uses flame per the later palette rule ("flame #F4502A as the only accent"). The rules contradict each other, so STYLE.md needs a one-word fix ("yellow" → "flame"). Rule hygiene, not a render fix.
-15. [00.18-03.71] The kicker "ONE TOOL" is uppercase. The card allows uppercase for kickers, and the STYLE "never ALL CAPS" line is under Captions. Nitpick.
-16. [00.00-34.10] The paper panel edge (y 960) slices flat across the top of the hair (the head starts at about 0.47). It reads as the head tucked under the panel. Acceptable for split_top. If the reframe allows it, shift the crop 60 px down. (reframe/render, nitpick)
-17. [35.30-37.05] The tagline uses a near-black (#0B0B0F) scrim over footage. The palette rule reserves near-black "only for full-frame cards". This goes away with fix #4.
-18. [36.82-37.05] No loop seam back to the hook frame (motion.md §5, optional). Nitpick.
-19. [34.60-35.30] A motion-blurred hand swings up beside "Comment"/"Scrape". Nothing is covered. Nitpick.
+1. [34.10 / 35.30] Pill and tagline are two new elements 1.2 s apart, against "Never more than one new graphic element per 3 seconds." STYLE.md needs a decision (see fix 1).
+2. [4.26–27.45] Window beats land fully about 170 ms after their onset (payoff frame 4.26 shows no "Scrapling"). Motion agent: −120 ms lead.
+3. [34.10–36.82] CTA caption size is 100 px against "at 120 px" in STYLE line 14. Rule wording needed.
+4. [00.00–02.22] Static hook panel, 2.2 s. Under the limit.
+5. [31.86–33.30] Ticks about 20 dB under speech, possibly inaudible on phones.
+6. [21.54 → 24.54] Windows B and C are exactly 3.00 s apart: on the line, not over it. Deliberate.
+7. [34.40–35.40] A motion-blurred hand swings up on the left beside "Comment" and "and I'll". It covers no caption, pill or face feature. Nitpick (footage).
+8. [00.00–34.10] The panel edge at y 960 slices flat across the top of the hair. It is consistent with split_top. Nitpick.
+9. [all] Integrated −14.3 LUFS against the −14 target (0.3 LU under). Nitpick.
+10. [36.82–37.03] No loop seam back to the hook frame. Optional, deliberate.
+
+Verified fixed from round 1:
+- **Caption sizes:** 0 `{\r}` in master.ass. Panel cues are 64 px throughout; at 14.34 "Second, stealth fetchers." is one line; at 22.70 "Claude Code." is all one size.
+- **Caption overlaps:** none among the 64 events. 22.28 shows a single clean "Plug it into".
+- **Hook:** "lead" is fully in at 2.34 and "scraper" fully in at 2.74; the impact sound and the visual coincide. Frame 0 reads "ONE TOOL / Claude Code,".
+- **Window C zoom (28.50–31.14):** 1.25x, other lines at 15 % ink, ring inset about 26 px from the window edges. It reads as a focus, not a bug. It eases back at 31.14 and the table builds at full view.
+- **Window B zoom (22.50):** line numbers hidden during the push; no fragments at 22.70.
+- **CTA:** 'Comment "Scrape"' is one line at 34.30; the tagline is 34 px ink on a paper pill, legible at 360 px (36.20).
+- **Phone readability (360 px):** window A descriptors and chips, window C tool-call and selector lines, and the table header all read; nothing under 28 px except the decorative title-bar labels.
+- **Frame rate:** constant 30 fps, 1110 frames.
 
 Checked and clean:
-- Single range: no cut seams inside the speech. Window swaps at 3.46/3.78, 21.54, 24.54 and 34.10 are hard cuts with no flash or duplicated frame. Each element is absent at enter_t − 1 frame. No clipped words at the head or tail (pads 0.18 s).
-- No clicks: the largest sample jumps (3.777, 14.55) are speech consonants ("called", "stealth") that are present in speechprep too. Gaps sit at −42 to −57 dBFS.
-- Captions never sit over the face: panel cues at y 893 stay on paper above the hair line at 5.0, 12.9, 22.7, 26.2 and 33.4, white with a 4 px outline, readable on cream. CTA cues sit on the wall above the head. Nothing is in the bottom 20 % or right of x 940.
-- No graphic is static for more than 3 s. Longest holds: 17.46→20.18 (2.72 s) and 28.50→31.14 (2.64 s, the ring lands at 28.85).
-- Never-show (frames every 2 s, 0-36 s): no cigarettes, no private screens (all windows are drawn mockups with `.example` data and "…" placeholders for the config), no client or Innova data, no other faces.
-- Captions are 2-3 words per cue, sentence case, burned last, and never repeat the title words.
+- **Cuts:** the window hard cuts at 3.46/3.78, 21.54, 24.54 and 34.10 show no flash and no duplicated frame. Each element is absent one frame before its entry.
+- **Seams and audio:** no waveform spikes at the seams. The largest sample jumps (3.777, 14.553) are consonants. Gaps sit at −45 to −60 dBFS.
+- **Captions vs face and safe areas:** panel captions at y 893 stay on paper above the hairline (5.0, 12.9, 22.7, 26.2, 33.4). CTA captions and pill sit on the wall above the head, now covered by STYLE line 15. Nothing is in the bottom 20 % or right of x 940.
+- **Static spans:** no graphic is static for more than 3 s. The longest are 2.72 s (17.46→20.18) and 2.64 s (28.50→31.14, ring at 28.85).
+- **Never-show list** (frames every 2 s): clean. Drawn mockups with `.example` data and "…" config placeholders, one face, no cigarettes, no private screens.
+- **STYLE.md walk:** sentence case; 2–3 words per cue; spoken word brighter and larger; title has exactly one flame accent word ("yellow" → "flame" fixed); captions are burned last and never repeat the title; hard cuts only; palette is paper/ink/flame/cobalt with no near-black on footage; no paid APIs. Exceptions: problems 1 and 3 above.
 
 ## MEASURED
-- Duration: 37.051 s (format) vs total_duration_s 37.0. Within ±0.1. Video stream 37.017 s, 1081 frames at 29.20 fps (not 30).
-- Loudness (ebur128 on preview_mixed.mp4): integrated **−14.1 LUFS**, LRA 2.8 LU, true peak **−0.9 dBTP** (sound_report says −1.0).
-- Per section RMS / peak (dBFS): hook 0-3.5 −15.7 / −1.0 · readme 3.5-21.5 −17.1 / −0.9 · config 21.5-24.5 −17.5 / −1.0 · terminal 24.5-34.1 −17.1 / −1.0 · cta 34.1-37.05 −17.3 / −1.0. The hook runs about 1.5 dB hot (impact + whoosh tail). Every section is pinned on the limiter.
-- SFX vs speech (max 50 ms RMS, fitted residual): impact −14.0 vs −11.7 · whoosh A −12.7 vs −10.7 · whoosh B −12.2 vs −11.4 · whoosh C −12.2 vs −9.2 · ticks −24.3 vs about −10 · pop −12.9 (peak −1.4) vs −10.6.
-- Music: none.
-- Graphics per 3 s: top-level new elements max 2 (pill 34.10 + tagline 35.30). Internal changes max 4 in 1.52 s (title words 1.22-2.74), which is within the motion grammar.
-- SFX per 30 s: max 6 (8 total in 37 s). Cap of 8 respected. Each effect is tied to a visible event, except the impact, which comes about 150-350 ms before "scraper" lands.
+- **Duration:** 37.033 s (format) against total_duration_s 37.0 (within ±0.1). Video 37.000 s, 1110 frames, 30/1 constant.
+- **Loudness (ebur128 on the mp4):** integrated **−14.3 LUFS**, LRA 2.7 LU, true peak **−1.4 dBTP**. That passes ≤ −1. sound_report.json says −1.5 on the wav; the AAC encode adds 0.1.
+- **Per section, RMS / peak (dBFS):**
+
+  | Section | Time (s) | RMS | Peak |
+  |---|---|---|---|
+  | hook | 0–3.5 | −16.2 | −1.4 |
+  | readme | 3.5–21.5 | −17.7 | −1.4 |
+  | config | 21.5–24.5 | −17.8 | −1.5 |
+  | terminal | 24.5–34.1 | −17.2 | −1.5 |
+  | cta | 34.1–37.0 | −18.3 | −1.5 |
+
+  The CTA is about 1 dB quieter than the body, which is fine.
+- **Effects vs voice:** I rebuilt the speech chain (high-pass 70, compressor, +17 dB, limiter), fitted it to the mix (corr 0.957) and took the residual as the effects. The residual floor is about −25, so the impact and whoosh A figures are upper bounds.
+
+  | Effect | Time (s) | Effect, max 50 ms RMS (dBFS) | Voice nearby | Under the voice by |
+  |---|---|---|---|---|
+  | impact | 2.74 | ≤ −18.1 | −10.3 | ≥ 8 dB |
+  | whoosh A | 3.78 | ≤ −17.3 | −10.1 | ≥ 7 dB |
+  | whoosh B | 21.54 | −21.1 | −10.0 | 11 dB |
+  | whoosh C | 24.54 | −21.4 | −6.8 | 14.6 dB |
+  | ticks | 31.86–33.30 | −27.6 (peak −9) | −7.2 to −8.8 | about 20 dB |
+  | pop | 34.10 | −22.3 (peak −10.8) | −8.8 | 13.5 dB |
+
+- **Music:** none (brand/music is empty).
+- **Graphics per 3 s:** at most 2 new elements (pill 34.10 + tagline 35.30); everything else is 1. Internal changes peak in window A (pill 5.46, repo line 6.34, row 7.78).
+- **Effects per 30 s:** at most 6 (8 total). Every effect lands on a visible event.
