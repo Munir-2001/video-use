@@ -222,3 +222,15 @@ def test_soft_shadow_fields_emit_blur_and_shadow_alpha():
     text, _ = ca.build_ass([cue], STYLE, "vertical", 1080, 1920)
 
     assert "\\shad2\\blur3\\4a&H73&}" in text
+
+
+def test_wide_cue_gets_a_fixed_balanced_break_in_every_event():
+    cue = {"start": 1.0, "end": 2.0, "words": [w("Second,", 1.0, 1.3), w("stealth", 1.35, 1.7), w("fetchers.", 1.75, 2.0)],
+           "caption": {"size_px": 96}}
+
+    text, _ = ca.build_ass([cue], STYLE, "vertical", 1080, 1920)
+    events = [l for l in text.splitlines() if l.startswith("Dialogue")]
+
+    assert len(events) == 3 and all("\\N" in e for e in events)
+    assert all(e.count("\\N") == 1 for e in events) and "WrapStyle: 2" in text
+    assert ca.break_index([w("a", 0, 1), w("b", 1, 2)], 64, 864) is None  # short cue: one line

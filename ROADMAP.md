@@ -18,7 +18,8 @@ Verdict from the user: "not bad, significant room for improvement; the animation
 | 8 | "I will drop more reels tomorrow." | `cards/_inbox/` → "process the inbox"; the designer measures timings from video and updates cards + `brand/motion.md`. Ask for one with lively window transitions. | waiting for drops |
 | 9 | Music: "I don't know about the music right now." | Undecided. `brand/music/` empty; the mixer ducks a bed automatically once a file is there. Options if wanted: a track the user picks, or local MusicGen (2 GB install). | open |
 | 10 | Face sharpness (laptop 1080p crop, upscaled 1.78x). | Not a priority for the user. Phone portrait or iPhone-as-camera on the Mac fixes it. | user's call |
-| 11 | Critic's two open STYLE questions: pill + tagline 1.2 s apart; CTA captions 100 px above the head. | Need a yes/no. | open |
+| 11 | Critic's two open STYLE questions: pill + tagline 1.6 s apart; CTA captions 100 px above the head. | Need a yes/no. | open |
+| 12 | (from the re-plan) Optional polish the critic listed: card 03 empty for 1.4 s before "MCP"; graphic_full cards could be 1.15x larger and centred; 29.74 content nudge. | Motion-agent tweaks, next pass or next reel. | open |
 
 ## Next reel checklist (what changes next time)
 1. "write a script for <topic>" → natural spoken script + assets list → user captures the screenshots/recordings into `videos/<folder>/assets/` and records with the pauses.

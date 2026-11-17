@@ -17,16 +17,52 @@
   "grade": "none",
   "overlays": [
     {
-      "file": "animations/panel/render.mov",
+      "file": "animations/s1/render.mov",
       "start_in_output": 0.0,
-      "duration": 34.1,
-      "slot": "panel"
+      "duration": 3.42,
+      "slot": "s1"
     },
     {
-      "file": "animations/cta/render.mov",
-      "start_in_output": 34.1,
-      "duration": 2.9,
-      "slot": "cta"
+      "file": "animations/s2/render.mov",
+      "start_in_output": 3.42,
+      "duration": 3.68,
+      "slot": "s2"
+    },
+    {
+      "file": "animations/s3/render.mov",
+      "start_in_output": 7.1,
+      "duration": 6.36,
+      "slot": "s3"
+    },
+    {
+      "file": "animations/s4/render.mov",
+      "start_in_output": 13.46,
+      "duration": 5.16,
+      "slot": "s4"
+    },
+    {
+      "file": "animations/s5/render.mov",
+      "start_in_output": 18.62,
+      "duration": 4.76,
+      "slot": "s5"
+    },
+    {
+      "file": "animations/s6/render.mov",
+      "start_in_output": 23.38,
+      "duration": 6.36,
+      "slot": "s6"
+    },
+    {
+      "file": "animations/s7/render.mov",
+      "start_in_output": 29.74,
+      "duration": 4.24,
+      "slot": "s7"
+    },
+    {
+      "file": "animations/s8/render.mov",
+      "start_in_output": 33.98,
+      "duration": 3.02,
+      "slot": "s8"
     }
   ],
   "subtitles": "master.ass",

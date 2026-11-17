@@ -279,8 +279,32 @@ def escape_text(text: str) -> str:
 DEFAULT_MOTION = {"pop_ms": 120, "pop_from": 0.86, "rise_px": 28, "fade_in_ms": 80}
 
 
+CHAR_WIDTH_EM = 0.58  # Inter ExtraBold average advance, generous
+
+
+def break_index(words: list[dict], font_px: int, line_px: int, highlight_scale: int = 112) -> int | None:
+    """Index of the word after which a fixed line break goes, or None if the
+    cue fits on one line even with the spoken word scaled up. A fixed break
+    keeps the block from re-wrapping when the highlight moves (libass would
+    otherwise re-break on every event and the text jumps half a line)."""
+    texts = [w["text"] for w in words]
+    est = lambda s: len(s) * font_px * CHAR_WIDTH_EM
+    total = sum(est(s) for s in texts) + (len(texts) - 1) * font_px * 0.3
+    total *= highlight_scale / 100.0
+    if total <= line_px or len(texts) < 2:
+        return None
+    best, best_diff = 0, None
+    for i in range(len(texts) - 1):
+        left = sum(est(s) for s in texts[: i + 1])
+        right = sum(est(s) for s in texts[i + 1:])
+        diff = abs(left - right)
+        if best_diff is None or diff < best_diff:
+            best, best_diff = i, diff
+    return best
+
+
 def word_events(cue: dict, layout: dict, highlight: str, base: str, scale: int,
-                motion: dict | None = None, extra_tags: str = "") -> list[tuple[float, float, str]]:
+                motion: dict | None = None, extra_tags: str = "", break_after: int | None = None) -> list[tuple[float, float, str]]:
     """One event per word: that word highlighted + scaled, the others base.
 
     Motion (brand/style.json captions.motion): the spoken word pops in from
@@ -318,7 +342,11 @@ def word_events(cue: dict, layout: dict, highlight: str, base: str, scale: int,
             fade = f"\\fad({fade_ms},0)" if fade_ms > 0 else ""
         else:
             place, fade = f"\\pos({x},{y})", ""
-        text = f"{{\\an{layout['an']}{place}{fade}{extra_tags}}}" + " ".join(parts)
+        if break_after is not None and 0 <= break_after < len(parts) - 1:
+            body = " ".join(parts[: break_after + 1]) + "\\N" + " ".join(parts[break_after + 1:])
+        else:
+            body = " ".join(parts)
+        text = f"{{\\an{layout['an']}{place}{fade}{extra_tags}}}" + body
         events.append((start, end, text))
     return events
 
@@ -341,7 +369,7 @@ def build_ass(cues: list[dict], style: dict, profile: str, width: int, height: i
         "ScriptType: v4.00+",
         f"PlayResX: {width}",
         f"PlayResY: {height}",
-        "WrapStyle: 0",  # smart wrap: a long cue becomes two balanced lines instead of overflowing
+        "WrapStyle: 2",  # no auto-wrap: line breaks are fixed per cue (break_index) so the block never re-flows
         "ScaledBorderAndShadow: yes",
         "YCbCr Matrix: TV.709",
         "",
@@ -378,8 +406,11 @@ def build_ass(cues: list[dict], style: dict, profile: str, width: int, height: i
             extra += f"\\blur{float(ov['shadow_blur']):g}"
         if ov.get("shadow_alpha") is not None:
             extra += f"\\4a&H{int(round((1 - float(ov['shadow_alpha'])) * 255)):02X}&"
+        font_px = int(ov["size_px"]) if ov.get("size_px") else cue_layout["font_size"]
+        line_px = width - cue_layout["margin_l"] - cue_layout["margin_r"]
+        brk = break_index(cue["words"], font_px, line_px, scale)
         for start, end, text in word_events(cue, cue_layout, cue_hl, cue_base, scale,
-                                            caps.get("motion"), extra):
+                                            caps.get("motion"), extra, brk):
             lines.append(f"Dialogue: 0,{ass_time(start)},{ass_time(end)},Cap,,0,0,0,,{text}")
     return "\n".join(lines) + "\n", warnings
 
