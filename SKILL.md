@@ -377,6 +377,9 @@ Overlays: the planner's slots become EDL `overlays` entries (`file`, `start_in_o
 ### Persist
 End of session: append to `edit/project.md` (format above), copy the approved `edl.json` to `examples/<date>_<slug>.edl.json` with a line in `examples/index.md`, update `videos/index.md`, commit. Any change to helpers, agents, folders or workflow gets a `DECISIONS.md` entry and a `HOW_IT_WORKS.md` update in the same commit.
 
+### Laptop recordings (wrong aspect)
+A 16:9 clip for a 9:16 reel (or the reverse) is reframed at inventory, before transcription: `helpers/reframe.py <clip> --to vertical --x <face centre as a fraction of the width>` crops the tallest 9:16 column around the face and scales it to the profile (audio untouched), writing `<stem>_vertical.mp4` next to the source; the EDL then uses the reframed file. The main session looks at one frame to choose `--x`. A 1080p laptop clip upscales 1.78x and looks soft; the helper warns above 1.5x, and the critic's phone-readability check still applies. Portrait phone footage needs nothing.
+
 ### Script first (optional, recommended)
 "write a script for <topic>" runs the **writer** agent before anything is recorded: `videos/<date>_<slug>/script.md` with the hook, the named beats pre-mapped to cards and layouts, the CTA and recording notes. When the folder has a `script.md`, inventory reads it first and the planner treats its beat table as the first draft of `scenes.json` (the transcript decides the real timings).
 

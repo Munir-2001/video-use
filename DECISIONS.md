@@ -2,6 +2,12 @@
 
 Append-only, newest first. Format: `## date · title` then Why / Trade-off / Alternatives / Status.
 
+## 2026-11-17 · Reframe tool: laptop 16:9 recordings become 9:16 reels by cropping, never stretching
+**Why:** I may record on the laptop instead of the phone. `helpers/reframe.py` crops the tallest 9:16 column at an x the main session chooses by looking at a frame (where the face is), scales to the profile with lanczos, copies the audio, and reports the upscale factor; it works the other way too (vertical → horizontal band). Runs at inventory before transcription so every later step sees a native-aspect clip.
+**Trade-off:** A 1080p webcam clip yields a 608 px wide column upscaled 1.78x, visibly softer than phone footage; a 4K laptop recording needs no upscale. Recording in portrait (phone, or iPhone as a Continuity camera held upright) stays the better path; the tool is the fallback.
+**Alternatives:** Stretching (never), blurred-background pillarboxing (reads as repost content), changing render.py (upstream, off limits).
+**Status:** done; tested geometry; agents told in SKILL.md and HOW_IT_WORKS.
+
 ## 2026-11-16 · Principle: Claude edits, helpers execute (and the one gap closed: cue grouping)
 **Why:** My rule: the videos are edited by Claude, not by scripts; scripts are tools that agents use. Audit of the helpers: `render.py`, `sound_mix.py`, `voiceover.py build`, `fix_transcript.py`, `transcribe*.py`, `studio_ui.py` are deterministic executors of decisions written by agents (`edl.json` by the editor, `scenes.json` by the planner, `sound.json` by the sound agent, `brief.json` by me). The one helper that was still deciding something editorial was `captions_ass.py`, whose 2–3 word grouping is a rule, not a judgment. Now the captions agent reviews the cues and may write `edit/captions_plan.json` (explicit word-index cues with optional presets); the helper draws exactly that. `--dump-words` prints the indexed word list to plan from. The principle is one line in CLAUDE.md. The two smoke folders have hand-written `edl.json`/`scenes.json` as stand-ins; real videos never do.
 **Trade-off:** One more file the captions agent may write; the automatic grouping stays as the starting point so simple videos cost nothing extra.
