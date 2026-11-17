@@ -9,71 +9,71 @@ YCbCr Matrix: TV.709
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,Inter,96,&H00F7F5F5,&H002A50F4,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,4,2,5,108,140,0,1
+Style: Cap,Inter,96,&H00F7F5F5,&H002A50F4,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,2,3,5,108,140,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:03.46,0:00:03.78,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}It's{\c&H00F7F5F5\fscx100\fscy100} called Scrapling.
-Dialogue: 0,0:00:03.78,0:00:04.26,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}It's {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}called{\c&H00F7F5F5\fscx100\fscy100} Scrapling.
-Dialogue: 0,0:00:04.26,0:00:05.06,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}It's called {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Scrapling.{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:05.46,0:00:05.86,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Open{\c&H00F7F5F5\fscx100\fscy100} source
-Dialogue: 0,0:00:05.86,0:00:06.18,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Open {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}source{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:06.18,0:00:06.34,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}on{\c&H00F7F5F5\fscx100\fscy100} GitHub.
-Dialogue: 0,0:00:06.34,0:00:06.98,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}on {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}GitHub.{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:07.22,0:00:07.78,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}First,{\c&H00F7F5F5\fscx100\fscy100} adaptive selectors.
-Dialogue: 0,0:00:07.78,0:00:08.50,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}First, {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}adaptive{\c&H00F7F5F5\fscx100\fscy100} selectors.
-Dialogue: 0,0:00:08.50,0:00:09.30,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}First, adaptive {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}selectors.{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:09.54,0:00:09.86,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}The{\c&H00F7F5F5\fscx100\fscy100} site changes
-Dialogue: 0,0:00:09.86,0:00:10.34,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}The {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}site{\c&H00F7F5F5\fscx100\fscy100} changes
-Dialogue: 0,0:00:10.34,0:00:10.98,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}The site {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}changes{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:10.98,0:00:11.22,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}your{\c&H00F7F5F5\fscx100\fscy100} scrapers.
-Dialogue: 0,0:00:11.22,0:00:12.10,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}your {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}scrapers.{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:12.42,0:00:12.82,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Keep{\c&H00F7F5F5\fscx100\fscy100} working.
-Dialogue: 0,0:00:12.82,0:00:13.38,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Keep {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}working.{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:13.54,0:00:14.34,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Second,{\c&H00F7F5F5\fscx100\fscy100} stealth fetchers.
-Dialogue: 0,0:00:14.34,0:00:14.98,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Second, {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}stealth{\c&H00F7F5F5\fscx100\fscy100} fetchers.
-Dialogue: 0,0:00:14.98,0:00:15.62,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Second, stealth {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}fetchers.{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:15.78,0:00:16.10,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}They{\c&H00F7F5F5\fscx100\fscy100} get past
-Dialogue: 0,0:00:16.10,0:00:16.42,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}They {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}get{\c&H00F7F5F5\fscx100\fscy100} past
-Dialogue: 0,0:00:16.42,0:00:16.74,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}They get {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}past{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:16.74,0:00:17.22,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}walls{\c&H00F7F5F5\fscx100\fscy100} like Cloudflare.
-Dialogue: 0,0:00:17.22,0:00:17.46,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}walls {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}like{\c&H00F7F5F5\fscx100\fscy100} Cloudflare.
-Dialogue: 0,0:00:17.46,0:00:18.50,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}walls like {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Cloudflare.{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:18.74,0:00:19.38,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Third,{\c&H00F7F5F5\fscx100\fscy100} it ships
-Dialogue: 0,0:00:19.38,0:00:19.54,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Third, {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}it{\c&H00F7F5F5\fscx100\fscy100} ships
-Dialogue: 0,0:00:19.54,0:00:20.02,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Third, it {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}ships{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:20.02,0:00:20.18,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}an{\c&H00F7F5F5\fscx100\fscy100} MCP server.
-Dialogue: 0,0:00:20.18,0:00:20.90,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}an {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}MCP{\c&H00F7F5F5\fscx100\fscy100} server.
-Dialogue: 0,0:00:20.90,0:00:21.54,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}an MCP {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}server.{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:21.78,0:00:22.18,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Plug{\c&H00F7F5F5\fscx100\fscy100} it into
-Dialogue: 0,0:00:22.18,0:00:22.30,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Plug {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}it{\c&H00F7F5F5\fscx100\fscy100} into
-Dialogue: 0,0:00:22.30,0:00:22.50,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Plug it {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}into{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:22.50,0:00:22.98,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Claude{\c&H00F7F5F5\fscx100\fscy100} Code.
-Dialogue: 0,0:00:22.98,0:00:23.30,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Claude {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Code.{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:23.46,0:00:23.70,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Then{\c&H00F7F5F5\fscx100\fscy100} I ask,
-Dialogue: 0,0:00:23.70,0:00:24.02,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Then {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}I{\c&H00F7F5F5\fscx100\fscy100} ask,
-Dialogue: 0,0:00:24.02,0:00:24.50,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Then I {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}ask,{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:24.82,0:00:25.46,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}scrape{\c&H00F7F5F5\fscx100\fscy100} this directory.
-Dialogue: 0,0:00:25.46,0:00:25.70,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}scrape {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}this{\c&H00F7F5F5\fscx100\fscy100} directory.
-Dialogue: 0,0:00:25.70,0:00:26.66,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}scrape this {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}directory.{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:27.06,0:00:27.30,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}It{\c&H00F7F5F5\fscx100\fscy100} picks the
-Dialogue: 0,0:00:27.30,0:00:27.70,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}It {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}picks{\c&H00F7F5F5\fscx100\fscy100} the
-Dialogue: 0,0:00:27.70,0:00:27.86,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}It picks {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}the{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:27.86,0:00:28.50,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}CSS{\c&H00F7F5F5\fscx100\fscy100} selectors.
-Dialogue: 0,0:00:28.50,0:00:29.54,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}CSS {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}selectors.{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:29.94,0:00:30.42,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Back{\c&H00F7F5F5\fscx100\fscy100} comes
-Dialogue: 0,0:00:30.42,0:00:30.82,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}Back {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}comes{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:30.82,0:00:31.14,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}a{\c&H00F7F5F5\fscx100\fscy100} table,
-Dialogue: 0,0:00:31.14,0:00:31.62,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}a {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}table,{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:31.86,0:00:32.58,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}name,{\c&H00F7F5F5\fscx100\fscy100} site, email,
-Dialogue: 0,0:00:32.58,0:00:33.30,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}name, {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}site,{\c&H00F7F5F5\fscx100\fscy100} email,
-Dialogue: 0,0:00:33.30,0:00:33.86,Cap,,0,0,0,,{\an5\pos(470,893)\fs64}name, site, {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}email,{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:34.10,0:00:34.58,Cap,,0,0,0,,{\an5\move(470,489,470,461,0,120)\fad(80,0)\fs100}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Comment{\c&H00F7F5F5\fscx100\fscy100} "Scrape"
-Dialogue: 0,0:00:34.58,0:00:34.90,Cap,,0,0,0,,{\an5\pos(470,461)\fs100}Comment {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}"Scrape"{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:34.98,0:00:35.14,Cap,,0,0,0,,{\an5\move(470,489,470,461,0,120)\fad(80,0)\fs100}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}and{\c&H00F7F5F5\fscx100\fscy100} I'll
-Dialogue: 0,0:00:35.14,0:00:35.30,Cap,,0,0,0,,{\an5\pos(470,461)\fs100}and {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}I'll{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:35.30,0:00:35.46,Cap,,0,0,0,,{\an5\move(470,489,470,461,0,120)\fad(80,0)\fs100}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}send{\c&H00F7F5F5\fscx100\fscy100} you the
-Dialogue: 0,0:00:35.46,0:00:35.62,Cap,,0,0,0,,{\an5\pos(470,461)\fs100}send {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}you{\c&H00F7F5F5\fscx100\fscy100} the
-Dialogue: 0,0:00:35.62,0:00:35.70,Cap,,0,0,0,,{\an5\pos(470,461)\fs100}send you {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}the{\c&H00F7F5F5\fscx100\fscy100}
-Dialogue: 0,0:00:35.70,0:00:36.18,Cap,,0,0,0,,{\an5\move(470,489,470,461,0,120)\fad(80,0)\fs100}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}setup{\c&H00F7F5F5\fscx100\fscy100} steps.
-Dialogue: 0,0:00:36.18,0:00:36.82,Cap,,0,0,0,,{\an5\pos(470,461)\fs100}setup {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}steps.{\c&H00F7F5F5\fscx100\fscy100}
+Dialogue: 0,0:00:03.46,0:00:03.78,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}It's{\c&H00181414\fscx100\fscy100} called Scrapling.
+Dialogue: 0,0:00:03.78,0:00:04.26,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}It's {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}called{\c&H00181414\fscx100\fscy100} Scrapling.
+Dialogue: 0,0:00:04.26,0:00:05.06,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}It's called {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Scrapling.{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:05.46,0:00:05.86,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Open{\c&H00181414\fscx100\fscy100} source
+Dialogue: 0,0:00:05.86,0:00:06.18,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}Open {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}source{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:06.18,0:00:06.34,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}on{\c&H00181414\fscx100\fscy100} GitHub.
+Dialogue: 0,0:00:06.34,0:00:06.98,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}on {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}GitHub.{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:07.22,0:00:07.78,Cap,,0,0,0,,{\an5\move(470,1410,470,1382,0,120)\fad(80,0)\fs72\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}First,{\c&H00181414\fscx100\fscy100} adaptive selectors.
+Dialogue: 0,0:00:07.78,0:00:08.50,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}First, {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}adaptive{\c&H00181414\fscx100\fscy100} selectors.
+Dialogue: 0,0:00:08.50,0:00:09.30,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}First, adaptive {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}selectors.{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:09.54,0:00:09.86,Cap,,0,0,0,,{\an5\move(470,1410,470,1382,0,120)\fad(80,0)\fs72\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}The{\c&H00181414\fscx100\fscy100} site changes
+Dialogue: 0,0:00:09.86,0:00:10.34,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}The {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}site{\c&H00181414\fscx100\fscy100} changes
+Dialogue: 0,0:00:10.34,0:00:10.98,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}The site {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}changes{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:10.98,0:00:11.22,Cap,,0,0,0,,{\an5\move(470,1410,470,1382,0,120)\fad(80,0)\fs72\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}your{\c&H00181414\fscx100\fscy100} scrapers.
+Dialogue: 0,0:00:11.22,0:00:12.10,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}your {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}scrapers.{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:12.42,0:00:12.82,Cap,,0,0,0,,{\an5\move(470,1410,470,1382,0,120)\fad(80,0)\fs72\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Keep{\c&H00181414\fscx100\fscy100} working.
+Dialogue: 0,0:00:12.82,0:00:13.38,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}Keep {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}working.{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:13.54,0:00:14.34,Cap,,0,0,0,,{\an5\move(470,1410,470,1382,0,120)\fad(80,0)\fs72\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Second,{\c&H00181414\fscx100\fscy100} stealth fetchers.
+Dialogue: 0,0:00:14.34,0:00:14.98,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}Second, {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}stealth{\c&H00181414\fscx100\fscy100} fetchers.
+Dialogue: 0,0:00:14.98,0:00:15.62,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}Second, stealth {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}fetchers.{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:15.78,0:00:16.10,Cap,,0,0,0,,{\an5\move(470,1410,470,1382,0,120)\fad(80,0)\fs72\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}They{\c&H00181414\fscx100\fscy100} get past
+Dialogue: 0,0:00:16.10,0:00:16.42,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}They {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}get{\c&H00181414\fscx100\fscy100} past
+Dialogue: 0,0:00:16.42,0:00:16.74,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}They get {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}past{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:16.74,0:00:17.22,Cap,,0,0,0,,{\an5\move(470,1410,470,1382,0,120)\fad(80,0)\fs72\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}walls{\c&H00181414\fscx100\fscy100} like Cloudflare.
+Dialogue: 0,0:00:17.22,0:00:17.46,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}walls {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}like{\c&H00181414\fscx100\fscy100} Cloudflare.
+Dialogue: 0,0:00:17.46,0:00:18.50,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}walls like {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Cloudflare.{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:18.74,0:00:19.38,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Third,{\c&H00181414\fscx100\fscy100} it ships
+Dialogue: 0,0:00:19.38,0:00:19.54,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}Third, {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}it{\c&H00181414\fscx100\fscy100} ships
+Dialogue: 0,0:00:19.54,0:00:20.02,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}Third, it {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}ships{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:20.02,0:00:20.18,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}an{\c&H00181414\fscx100\fscy100} MCP server.
+Dialogue: 0,0:00:20.18,0:00:20.90,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}an {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}MCP{\c&H00181414\fscx100\fscy100} server.
+Dialogue: 0,0:00:20.90,0:00:21.54,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}an MCP {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}server.{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:21.78,0:00:22.18,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Plug{\c&H00181414\fscx100\fscy100} it into
+Dialogue: 0,0:00:22.18,0:00:22.30,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}Plug {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}it{\c&H00181414\fscx100\fscy100} into
+Dialogue: 0,0:00:22.30,0:00:22.50,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}Plug it {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}into{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:22.50,0:00:22.98,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Claude{\c&H00181414\fscx100\fscy100} Code.
+Dialogue: 0,0:00:22.98,0:00:23.30,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}Claude {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Code.{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:23.46,0:00:23.70,Cap,,0,0,0,,{\an5\move(470,1410,470,1382,0,120)\fad(80,0)\fs72\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Then{\c&H00181414\fscx100\fscy100} I ask,
+Dialogue: 0,0:00:23.70,0:00:24.02,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}Then {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}I{\c&H00181414\fscx100\fscy100} ask,
+Dialogue: 0,0:00:24.02,0:00:24.50,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}Then I {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}ask,{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:24.82,0:00:25.46,Cap,,0,0,0,,{\an5\move(470,1410,470,1382,0,120)\fad(80,0)\fs72\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}scrape{\c&H00181414\fscx100\fscy100} this directory.
+Dialogue: 0,0:00:25.46,0:00:25.70,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}scrape {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}this{\c&H00181414\fscx100\fscy100} directory.
+Dialogue: 0,0:00:25.70,0:00:26.66,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}scrape this {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}directory.{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:27.06,0:00:27.30,Cap,,0,0,0,,{\an5\move(470,1410,470,1382,0,120)\fad(80,0)\fs72\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}It{\c&H00181414\fscx100\fscy100} picks the
+Dialogue: 0,0:00:27.30,0:00:27.70,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}It {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}picks{\c&H00181414\fscx100\fscy100} the
+Dialogue: 0,0:00:27.70,0:00:27.86,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}It picks {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}the{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:27.86,0:00:28.50,Cap,,0,0,0,,{\an5\move(470,1410,470,1382,0,120)\fad(80,0)\fs72\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}CSS{\c&H00181414\fscx100\fscy100} selectors.
+Dialogue: 0,0:00:28.50,0:00:29.54,Cap,,0,0,0,,{\an5\pos(470,1382)\fs72\c&H00181414\bord0\shad0}CSS {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}selectors.{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:29.94,0:00:30.42,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Back{\c&H00181414\fscx100\fscy100} comes
+Dialogue: 0,0:00:30.42,0:00:30.82,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}Back {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}comes{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:30.82,0:00:31.14,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}a{\c&H00181414\fscx100\fscy100} table,
+Dialogue: 0,0:00:31.14,0:00:31.62,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}a {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}table,{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:31.86,0:00:32.58,Cap,,0,0,0,,{\an5\move(470,921,470,893,0,120)\fad(80,0)\fs64\c&H00181414\bord0\shad0}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}name,{\c&H00181414\fscx100\fscy100} site, email,
+Dialogue: 0,0:00:32.58,0:00:33.30,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}name, {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}site,{\c&H00181414\fscx100\fscy100} email,
+Dialogue: 0,0:00:33.30,0:00:33.86,Cap,,0,0,0,,{\an5\pos(470,893)\fs64\c&H00181414\bord0\shad0}name, site, {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}email,{\c&H00181414\fscx100\fscy100}
+Dialogue: 0,0:00:34.10,0:00:34.58,Cap,,0,0,0,,{\an5\move(470,489,470,461,0,120)\fad(80,0)\fs100\bord2\shad4\3c&H00181414\4c&H00181414}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}Comment{\c&H00F7F5F5\fscx100\fscy100} "Scrape"
+Dialogue: 0,0:00:34.58,0:00:34.90,Cap,,0,0,0,,{\an5\pos(470,461)\fs100\bord2\shad4\3c&H00181414\4c&H00181414}Comment {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}"Scrape"{\c&H00F7F5F5\fscx100\fscy100}
+Dialogue: 0,0:00:34.98,0:00:35.14,Cap,,0,0,0,,{\an5\move(470,489,470,461,0,120)\fad(80,0)\fs100\bord2\shad4\3c&H00181414\4c&H00181414}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}and{\c&H00F7F5F5\fscx100\fscy100} I'll
+Dialogue: 0,0:00:35.14,0:00:35.30,Cap,,0,0,0,,{\an5\pos(470,461)\fs100\bord2\shad4\3c&H00181414\4c&H00181414}and {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}I'll{\c&H00F7F5F5\fscx100\fscy100}
+Dialogue: 0,0:00:35.30,0:00:35.46,Cap,,0,0,0,,{\an5\move(470,489,470,461,0,120)\fad(80,0)\fs100\bord2\shad4\3c&H00181414\4c&H00181414}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}send{\c&H00F7F5F5\fscx100\fscy100} you the
+Dialogue: 0,0:00:35.46,0:00:35.62,Cap,,0,0,0,,{\an5\pos(470,461)\fs100\bord2\shad4\3c&H00181414\4c&H00181414}send {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}you{\c&H00F7F5F5\fscx100\fscy100} the
+Dialogue: 0,0:00:35.62,0:00:35.70,Cap,,0,0,0,,{\an5\pos(470,461)\fs100\bord2\shad4\3c&H00181414\4c&H00181414}send you {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}the{\c&H00F7F5F5\fscx100\fscy100}
+Dialogue: 0,0:00:35.70,0:00:36.18,Cap,,0,0,0,,{\an5\move(470,489,470,461,0,120)\fad(80,0)\fs100\bord2\shad4\3c&H00181414\4c&H00181414}{\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}setup{\c&H00F7F5F5\fscx100\fscy100} steps.
+Dialogue: 0,0:00:36.18,0:00:36.82,Cap,,0,0,0,,{\an5\pos(470,461)\fs100\bord2\shad4\3c&H00181414\4c&H00181414}setup {\c&H002A50F4\fscx86\fscy86\t(0,120,\fscx112\fscy112)}steps.{\c&H00F7F5F5\fscx100\fscy100}

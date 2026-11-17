@@ -1,0 +1,7 @@
+# s8 slot
+- Engine: HyperFrames 0.9.59, overlay_transparent, `--format mov` (ProRes 4444). Card: big-words-cta-caption (variant above the head, per STYLE line 2026-11-17). 1080x1920 @ 30 fps, data-duration 3.02 s (clip 0 = output 33.98).
+- Fonts: Inter 600/800 and JetBrains Mono 500 bundled with HyperFrames; `document.fonts.check` asserted in the page.
+- Timings (clip s, each 120 ms before its word): pill pops empty, glyph only, 0.00 (170 ms, y +20, scale 0.8, fade; word comment 34.10); text `Comment "Scrape"` (Scrape in 800 weight) width-reveals 0.48-0.65 (scrape 34.58, landing frame 0.60 shows it essentially complete); glyph bubble to send arrow crossfade 1.20 (250 ms, brief beat; send 35.30); tagline pill pops with "setup steps," at 1.60 (setup 35.70); " sent to you" width-reveals at 2.08 (steps 36.18). Both pills drift -4 px together 2.08-3.02 (sine in-out). No exit.
+- Judgment calls: pill centre y 653 (0.34), tagline centre y 768 (0.40); both centred on x 470 so nothing is right of x 940 (max ~740); nothing below y 820. Pill is 72 px high, padding 20 px, flame #F4502A, ink #0B0B0F text per slide data. Straight quotes. Tagline text ink #141418 on paper with 1 px #DCD6CA stroke and shadow (per task, overrides the card's light text). Clip carries nothing before 0.00 beyond transparent; first.png is the first frame (pill already starting its pop).
+- check: 0 errors.
+- ffprobe: codec_name=prores width=1080 height=1920 pix_fmt=yuva444p12le r_frame_rate=30/1 duration=3.033333

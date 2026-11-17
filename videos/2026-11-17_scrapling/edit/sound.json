@@ -7,56 +7,56 @@
       "effect": "soft_impact",
       "file": "brand/sfx/soft_impact.mp3",
       "contact_s": 2.74,
-      "event": "title lands ('scraper' pops)",
+      "event": "title lands (scraper)",
       "gain_db": -22
     },
     {
       "effect": "whoosh_short",
       "file": "brand/sfx/whoosh_short.mp3",
-      "contact_s": 3.78,
-      "event": "window A (README) enters",
+      "contact_s": 3.46,
+      "event": "README window slides in",
       "gain_db": -18
     },
     {
       "effect": "whoosh_short",
       "file": "brand/sfx/whoosh_short.mp3",
-      "contact_s": 21.54,
-      "event": "window B (config) enters",
+      "contact_s": 21.78,
+      "event": "config window slides in",
       "gain_db": -18
     },
     {
       "effect": "whoosh_short",
       "file": "brand/sfx/whoosh_short.mp3",
-      "contact_s": 24.54,
-      "event": "window C (terminal) enters",
+      "contact_s": 23.38,
+      "event": "session window on the cut",
       "gain_db": -18
     },
     {
       "effect": "tick",
       "file": "brand/sfx/tick.mp3",
       "contact_s": 31.86,
-      "event": "table row 1",
+      "event": "table column name",
       "gain_db": -6
     },
     {
       "effect": "tick",
       "file": "brand/sfx/tick.mp3",
       "contact_s": 32.58,
-      "event": "table row 2",
+      "event": "table column site",
       "gain_db": -6
     },
     {
       "effect": "tick",
       "file": "brand/sfx/tick.mp3",
       "contact_s": 33.3,
-      "event": "table row 3",
+      "event": "table column email",
       "gain_db": -6
     },
     {
       "effect": "pop",
       "file": "brand/sfx/pop.mp3",
       "contact_s": 34.1,
-      "event": "CTA pill lands",
+      "event": "CTA pill pops",
       "gain_db": -14
     }
   ],
@@ -64,26 +64,31 @@
     {
       "name": "hook",
       "start": 0,
-      "end": 3.5
+      "end": 3.42
     },
     {
-      "name": "readme",
-      "start": 3.5,
-      "end": 21.5
+      "name": "name it",
+      "start": 3.42,
+      "end": 7.1
     },
     {
-      "name": "config",
-      "start": 21.5,
-      "end": 24.5
+      "name": "features",
+      "start": 7.1,
+      "end": 18.62
     },
     {
-      "name": "terminal",
-      "start": 24.5,
-      "end": 34.1
+      "name": "mcp+config",
+      "start": 18.62,
+      "end": 23.38
+    },
+    {
+      "name": "demo",
+      "start": 23.38,
+      "end": 33.98
     },
     {
       "name": "cta",
-      "start": 34.1,
+      "start": 33.98,
       "end": 37.0
     }
   ],

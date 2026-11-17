@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: transparent; }
+      #root { position: relative; width: 1080px; height: 1920px; background: transparent; }
+      .row { position: absolute; left: 0; width: 940px; display: flex; justify-content: center; }
+      #pillrow { top: 617px; } /* centre y 653 = 0.34 */
+      #tagrow { top: 746px; }  /* centre y 768 = 0.40 (pill 44+24 = 68 px tall) */
+      #drift { display: flex; flex-direction: column; align-items: center; }
+      #pill {
+        height: 72px; padding: 0 20px; border-radius: 999px; background: #F4502A;
+        display: flex; align-items: center; color: #0B0B0F;
+        font-family: "Inter", sans-serif; font-weight: 600; font-size: 34px; white-space: nowrap;
+      }
+      #glyph { position: relative; width: 28px; height: 28px; flex: none; }
+      #glyph svg { position: absolute; left: 0; top: 0; }
+      #ptext { display: inline-block; overflow: hidden; width: 0; opacity: 0; white-space: nowrap; }
+      #ptext b { font-weight: 800; }
+      #ptext span.in { display: inline-block; padding-left: 14px; padding-right: 12px; }
+      #tag {
+        padding: 12px 24px; border-radius: 999px; background: #F3EEE4; border: 1px solid #DCD6CA;
+        box-shadow: 0 6px 16px rgba(20,20,24,0.18);
+        display: flex; align-items: center; color: #141418; opacity: 0;
+        font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 34px; line-height: 44px; white-space: nowrap;
+      }
+      #t2 { display: inline-block; overflow: hidden; width: 0; opacity: 0; white-space: pre; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="3.02" data-width="1080" data-height="1920">
+      <div id="drift">
+      <div class="row" id="pillrow">
+        <div id="pill">
+          <div id="glyph">
+            <svg id="g1" width="28" height="28" viewBox="0 0 24 24" fill="#0B0B0F"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
+            <svg id="g2" width="28" height="28" viewBox="0 0 24 24" fill="#0B0B0F" style="opacity:0"><path d="M2.5 3.2 22 12 2.5 20.8 4.6 13.2 14 12 4.6 10.8z"/></svg>
+          </div>
+          <span id="ptext"><span class="in">Comment "<b>Scrape</b>"</span></span>
+        </div>
+      </div>
+      <div class="row" id="tagrow"><div id="tag"><span id="t1">setup steps,</span><span id="t2"> sent to you</span></div></div>
+      </div>
+    </div>
+    <script>
+      const ok = document.fonts.check('600 34px "Inter"') && document.fonts.check('500 34px "JetBrains Mono"');
+      console.log("fonts loaded:", ok);
+      const w1 = document.querySelector("#ptext .in").offsetWidth;
+      const w2 = (() => { const e = document.querySelector("#t2"); e.style.width = "auto"; const w = e.offsetWidth; e.style.width = "0px"; return w; })();
+      const tl = gsap.timeline({ paused: true });
+      gsap.set("#pill", { opacity: 0 });
+      gsap.set("#ptext", { width: 0 });
+      // 120 ms early: word times minus 33.98 s clip origin minus 0.12 s
+      tl.fromTo("#pill", { y: 20, scale: 0.8, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.17, ease: "power3.out" }, 0.0);
+      tl.to("#ptext", { width: w1, opacity: 1, duration: 0.17, ease: "power3.out" }, 0.48);
+      tl.to("#g1", { opacity: 0, scale: 0.7, duration: 0.25, ease: "power3.in", transformOrigin: "50% 50%" }, 1.20);
+      tl.fromTo("#g2", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power3.out", transformOrigin: "50% 50%" }, 1.20);
+      tl.fromTo("#tag", { y: 12, scale: 0.8, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.17, ease: "power3.out" }, 1.60);
+      tl.to("#t2", { width: w2, opacity: 1, duration: 0.17, ease: "power3.out" }, 2.08);
+      tl.to("#drift", { y: -4, duration: 0.94, ease: "sine.inOut" }, 2.08);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

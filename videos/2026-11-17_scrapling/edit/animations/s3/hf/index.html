@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<style>
+:root { --ink:#141418; --muted:#6E6A64; --line:#DCD6CA; --paper:#F3EEE4; --flame:#F4502A; --cobalt:#1F5BFF; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:#F3EEE4; }
+#root { position:relative; width:1080px; height:1920px; overflow:hidden; font-family:"Inter",sans-serif; color:var(--ink); background-color:var(--paper);
+  background-image:radial-gradient(circle at 14px 14px, rgba(20,20,24,.06) 0 1.5px, rgba(20,20,24,0) 1.7px); background-size:28px 28px; }
+.abs { position:absolute; }
+.mono { font-family:"JetBrains Mono"; font-weight:500; }
+.wrap { position:absolute; left:48px; width:892px; }
+.drift { position:absolute; inset:0; }
+.win { position:absolute; inset:0; background:#fff; border:1px solid var(--line); border-radius:24px; overflow:hidden; box-shadow:0 18px 40px rgba(20,20,24,.16); }
+.chrome { position:absolute; left:0; top:0; width:892px; height:48px; border-bottom:1px solid var(--line); background:#fff; }
+.chrome i { position:absolute; top:19px; width:10px; height:10px; border-radius:5px; background:var(--line); }
+.chrome span { position:absolute; left:96px; top:0; font:500 28px/48px "JetBrains Mono"; color:var(--muted); white-space:pre; }
+.cont { position:absolute; left:0; top:48px; width:892px; overflow:hidden; }
+/* window A */
+#aWrap { top:192px; height:640px; }
+#aWrap .cont { height:592px; }
+#aRow { position:absolute; left:48px; top:60px; display:flex; align-items:center; gap:28px; }
+#aTitle { position:relative; font:800 72px/84px "Inter"; }
+#aTitle u { position:absolute; left:0; right:0; bottom:2px; height:6px; border-radius:3px; background:var(--flame); }
+#aPill { height:44px; padding:0 22px; border-radius:22px; background:var(--flame); font:600 28px/44px "Inter"; color:var(--ink); margin-top:8px; }
+#aRepo { left:48px; top:160px; font:500 28px/32px "JetBrains Mono"; color:var(--muted); white-space:pre; }
+.gbar { position:absolute; left:48px; height:10px; border-radius:5px; background:var(--line); }
+/* card 01 */
+#bWrap { top:230px; height:1000px; }
+#bWrap .cont { height:952px; }
+#kick { left:48px; top:22px; font:500 30px/36px "JetBrains Mono"; color:var(--flame); white-space:pre; }
+.tl { position:absolute; left:48px; white-space:nowrap; font:800 88px/96px "Inter"; letter-spacing:-1px; }
+#t1 { top:58px; } #t2 { top:154px; color:var(--flame); }
+.ch { opacity:0; }
+#mini { left:48px; top:282px; width:796px; height:420px; border:1px solid var(--line); border-radius:16px; background:#FBF9F4; overflow:hidden; }
+#mHead { position:absolute; left:0; top:0; width:796px; height:56px; background:var(--paper); border-bottom:1px solid var(--line); }
+#mHead b { position:absolute; top:21px; height:14px; border-radius:7px; background:var(--line); }
+.blk { position:absolute; left:16px; width:762px; height:100px; background:#fff; border:1px solid var(--line); border-radius:12px; }
+.blk .th { position:absolute; left:16px; top:17px; width:64px; height:64px; border-radius:10px; background:var(--line); }
+.blk .g1, .blk .g2 { position:absolute; left:96px; height:10px; border-radius:5px; background:var(--line); }
+.blk .g1 { top:62px; width:360px; } .blk .g2 { top:80px; width:230px; }
+.blk .nm { position:absolute; left:96px; top:10px; font:800 36px/44px "Inter"; white-space:nowrap; }
+#boxW { position:absolute; left:0; top:0; width:0; height:0; }
+.bx { position:absolute; left:0; top:0; border-radius:10px; opacity:0; }
+#boxS { border:3px solid var(--flame); }
+#boxD { border:3px dashed var(--muted); }
+#chip { left:48px; top:762px; width:372px; height:70px; border-radius:12px; background:var(--paper); border:1px solid var(--line); opacity:0; }
+.ct { position:absolute; left:20px; top:0; font:500 30px/68px "JetBrains Mono"; color:var(--cobalt); white-space:pre; }
+#ctA { text-decoration-thickness:3px; }
+#check { left:444px; top:773px; width:48px; height:48px; border-radius:24px; background:var(--flame); opacity:0; }
+#check svg { position:absolute; left:11px; top:12px; }
+/* pointer */
+#ptr { position:absolute; left:0; top:0; width:26px; height:36px; }
+#ptr svg { position:absolute; left:-2px; top:-2px; overflow:visible; filter:drop-shadow(0 3px 4px rgba(20,20,24,.30)); }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="6.36" data-width="1080" data-height="1920">
+
+  <!-- window A: s2's last frame -->
+  <div id="aWrap" class="wrap">
+    <div id="aDrift" class="drift">
+      <div class="win">
+        <div class="chrome"><i style="left:20px"></i><i style="left:42px"></i><i style="left:64px"></i><span>README.md</span></div>
+        <div class="cont">
+          <div id="aRow"><div id="aTitle">Scrapling<u></u></div><div id="aPill">open source</div></div>
+          <div id="aRepo" class="abs">github.com/D4Vinci/Scrapling</div>
+          <div class="gbar" style="top:240px;width:760px"></div>
+          <div class="gbar" style="top:272px;width:700px"></div>
+          <div class="gbar" style="top:304px;width:740px"></div>
+          <div class="gbar" style="top:336px;width:430px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- card 01 -->
+  <div id="bWrap" class="wrap">
+    <div id="bDrift" class="drift">
+      <div class="win">
+        <div class="chrome"><i style="left:20px"></i><i style="left:42px"></i><i style="left:64px"></i><span>feature 01</span></div>
+        <div class="cont">
+          <div id="kick" class="abs"></div>
+          <div id="t1" class="tl"></div>
+          <div id="t2" class="tl"></div>
+          <div id="mini" class="abs">
+            <div id="mHead"><b style="left:20px;width:96px"></b><b style="left:560px;width:60px"></b><b style="left:636px;width:60px"></b><b style="left:712px;width:60px"></b></div>
+            <div class="blk" id="blk0" style="top:72px"><div class="th"></div><div class="g1"></div><div class="g2"></div></div>
+            <div class="blk" id="blkA" style="top:184px"><div class="th"></div><div class="nm" id="acme">Acme Co</div><div class="g1"></div><div class="g2"></div></div>
+            <div class="blk" id="blk2" style="top:296px"><div class="th"></div><div class="g1"></div><div class="g2"></div></div>
+            <div id="boxW"><div id="boxS" class="bx"></div><div id="boxD" class="bx"></div></div>
+          </div>
+          <div id="chip" class="abs"><div id="ctA" class="ct">div.card &gt; h2</div><div id="ctB" class="ct">article.item &gt; h3</div></div>
+          <div id="check" class="abs"><svg width="26" height="24" viewBox="0 0 26 24" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12.5l7 7L23 4"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ptr"><div id="sway"><svg width="30" height="40" viewBox="0 0 26 36"><path d="M2 2 L2 29 L9 22.5 L13.5 33.5 L19 31 L14.5 20.5 L24 20 Z" fill="#141418" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+</div>
+
+<script>
+window.__timelines = window.__timelines || {};
+const OUT = "power3.out", IN = "power3.in", IO = "power3.inOut";
+const $ = (s) => document.querySelector(s);
+const FLAME = "#F4502A", MUTED = "#6E6A64";
+const tl = gsap.timeline({ paused: true });
+
+function splitChars(el, text) {
+  const txt = text !== undefined ? text : el.textContent; el.textContent = "";
+  return [...txt].map((ch) => { const s = document.createElement("span"); s.textContent = ch; s.style.opacity = 0; el.appendChild(s); return s; });
+}
+function typeChars(spans, t0, t1) { const dt = (t1 - t0) / spans.length; spans.forEach((s, i) => tl.set(s, { opacity: 1 }, t0 + i * dt)); }
+const pop = (el, t, d = 0.17, s0 = 0.8, o = "0% 50%") => tl.fromTo(el, { scale: s0, opacity: 0, transformOrigin: o }, { scale: 1, opacity: 1, duration: d, ease: OUT }, t);
+
+// ---- fonts must be loaded (brand: Inter + JetBrains Mono bundled with HyperFrames)
+window.__fontsOk = document.fonts.check('800 72px "Inter"') && document.fonts.check('500 28px "JetBrains Mono"');
+
+// ---- typed text pieces
+const kick = splitChars($("#kick"), "01");
+const t1 = splitChars($("#t1"), "Adaptive");
+const t2 = splitChars($("#t2"), "selectors");
+const ctA = splitChars($("#ctA")); const ctB = splitChars($("#ctB"));
+$("#ctB").style.opacity = 1;
+
+// ---- measure at rest (before any transform)
+const R = (el) => el.getBoundingClientRect();
+const mini = R($("#mini")), acme = R($("#acme")), sel = R($("#t2")), chipR = R($("#chip"));
+const tSelEnd = R(t2[t2.length - 1]);
+// box in mini coordinates around "Acme Co"
+const bx = { l: acme.left - mini.left - 12 - 1, t: acme.top - mini.top - 1 + 4, w: acme.width + 24, h: acme.height - 8 };
+["#boxS", "#boxD"].forEach((id) => { const e = $(id); e.style.left = bx.l + "px"; e.style.top = bx.t + "px"; e.style.width = bx.w + "px"; e.style.height = bx.h + "px"; });
+
+// ---- drift (card 01): sine in-out over the hold
+const D0 = 0.98, D1 = 6.36, C = { x: 494, y: 730 };
+const prog = (t) => { const u = Math.min(1, Math.max(0, (t - D0) / (D1 - D0))); return 0.5 * (1 - Math.cos(Math.PI * u)); };
+const mapPt = (P, t) => { const p = prog(t), s = 1 + 0.02 * p; return { x: C.x + s * (P.x - C.x), y: C.y + s * (P.y - C.y) - 8 * p }; };
+
+// ---- initial states
+gsap.set("#aDrift", { y: -8, scale: 1.02, transformOrigin: "50% 50%" });       // s2 end state
+gsap.set("#bDrift", { transformOrigin: "50% 50%" });
+gsap.set("#bWrap", { x: 1080 });
+
+// ---- swap (0.56 = 7.78 - 120 ms, 300 ms cubic): A out left, card in from the right
+tl.to("#aWrap", { x: -1080, duration: 0.3, ease: IN }, 0.56);
+tl.to("#bWrap", { x: 0, duration: 0.3, ease: OUT }, 0.56);
+typeChars(kick, 0.56, 0.66);
+typeChars(t1, 0.56, 0.81);
+tl.fromTo("#bDrift", { y: 0, scale: 1 }, { y: -8, scale: 1.02, duration: D1 - D0, ease: "sine.inOut" }, D0);
+
+// ---- selectors (1.40): word, chip, box (start 1.28)
+typeChars(t2, 1.28, 1.40);
+pop("#chip", 1.28, 0.17, 0.8);
+typeChars(ctA, 1.40, 1.70);
+tl.fromTo("#boxS", { opacity: 0, scale: 1.18, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.25, ease: OUT }, 1.28);
+
+// ---- changes (3.24): reshuffle at 3.12, 300 ms
+tl.to("#blkA", { y: 112, duration: 0.3, ease: IO }, 3.12);
+tl.to("#blk2", { y: -112, duration: 0.3, ease: IO }, 3.12);
+tl.to("#boxS", { opacity: 0, duration: 0.15, ease: OUT }, 3.12);
+tl.to("#boxD", { opacity: 1, duration: 0.15, ease: OUT }, 3.12);
+tl.set("#ctA", { textDecorationLine: "line-through" }, 3.12);
+tl.to("#ctA", { color: MUTED, duration: 0.2, ease: OUT }, 3.12);
+
+// ---- working (5.72): box finds Acme again, chip retypes, check pops (start 5.60)
+tl.to("#boxW", { y: 112, duration: 0.25, ease: IO }, 5.60);
+tl.to("#boxD", { opacity: 0, duration: 0.15, ease: OUT }, 5.60);
+tl.to("#boxS", { opacity: 1, duration: 0.15, ease: OUT }, 5.60);
+tl.to("#ctA", { opacity: 0, duration: 0.1, ease: OUT }, 5.60);
+typeChars(ctB, 5.62, 5.86);
+pop("#check", 5.80, 0.17, 0.5, "50% 50%");
+
+// ---- pointer: starts where s2 left it, beside the repo line
+const REPO = R($("#aRepo"));
+const aRepoEnd = { x: 48 + 48 + 487, y: 192 + 48 + 160 };  // nominal text end (window coords, no drift)
+const start = mapPt({ x: 0, y: 0 }, 0); // unused, keep API simple
+const P0 = { x: 600, y: 432 };
+const ptrTargets = [
+  { move: 0.90, at: 1.20, p: { x: tSelEnd.right + 16, y: (tSelEnd.top + tSelEnd.bottom) / 2 + 16 } },
+  { move: 2.74, at: 3.04, p: { x: mini.left + bx.l + bx.w + 16, y: mini.top + bx.t + bx.h / 2 + 16 } },
+  { move: 5.22, at: 5.52, p: { x: chipR.left + 250, y: chipR.bottom + 16 } },
+];
+gsap.set("#ptr", { x: P0.x, y: P0.y });
+const swayTo = (a, b) => { const n = Math.floor((b - a) / 0.8); for (let i = 0; i < n; i++) { tl.to("#sway", { x: 2, y: 1, duration: 0.4, ease: "sine.inOut" }, a + i * 0.8); tl.to("#sway", { x: 0, y: 0, duration: 0.4, ease: "sine.inOut" }, a + i * 0.8 + 0.4); } };
+let prevAt = 0; const ends = [];
+ptrTargets.forEach((g) => {
+  const q = mapPt(g.p, g.at);
+  tl.to("#ptr", { x: q.x, y: q.y, duration: 0.3, ease: IO }, g.move);
+  swayTo(prevAt, g.move);
+  prevAt = g.at; ends.push(q);
+});
+swayTo(prevAt, 6.36);
+window.__END = { ptr: ends[ends.length - 1], all: ends, card: { y: -8, scale: 1.02 }, box: bx, chip: chipR, acme };
+
+
+window.__timelines["main"] = tl;
+tl.seek(0);
+</script>
+</body>
+</html>

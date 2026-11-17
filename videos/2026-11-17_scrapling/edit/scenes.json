@@ -1,653 +1,251 @@
 {
-  "profile": "vertical",
-  "width": 1080,
-  "height": 1920,
-  "fps": 30,
+  "profile": "vertical", "width": 1080, "height": 1920, "fps": 30,
   "total_s": 37.0,
-  "timeline_note": "All times are OUTPUT times (source - 0.30). Word indices match `captions_ass.py --dump-words`.",
+  "round": 4,
+  "timeline_note": "OUTPUT times (source - 0.30). Beat t = the word's spoken onset; motion starts each change 120 ms early so it is landed on the word (brand/motion.md 4c). Word indices match `captions_ass.py --dump-words`. Every cut sits inside a transcript silence.",
+  "assets_note": "No videos/2026-11-17_scrapling/assets/ folder exists, so every window is a DRAWN mockup (window-mockup-slide-up, paper version: white card #FFFFFF, 1 px #DCD6CA, 24 px radius, shadow 0 18 40 rgba(20,20,24,.16), 48 px chrome bar with three 10 px #DCD6CA dots, chrome label JetBrains Mono Medium 22 px #6E6A64, ink text, flame accent, cobalt second emphasis).",
+  "shared_motion": {
+    "drift": "every window hold drifts continuously: translateY 0 -> -8 px and scale 1.00 -> 1.02, sine in-out over the hold, never stopping; restart from the current value after each swap (no jump)",
+    "swap": "window replaces window by sliding: old slides out left (x -> -1080, 300 ms cubic in), new slides in from the right (x +1080 -> rest, 300 ms cubic out), overlapping; no hard cut inside a stretch",
+    "pointer": "drawn macOS-style arrow pointer, 36 px, ink #141418 fill with 2 px #FFFFFF edge and a soft shadow; travels 60-120 px (cubic, 300 ms) to each target, arriving 200 ms before the beat's word, and parks 16 px right/below the target, never on top of it; idles with a 2 px sway between beats",
+    "pop": "chips/pills pop scale 0.8 -> 1 + fade 170 ms; typed text appears word by word on each word's onset (typing follows speech), not on a clock",
+    "never": "no text on screen before its spoken word; no change on a word not in the beats list (drift and pointer travel excepted)"
+  },
+  "geometry": {
+    "split_top_window_px": [48, 192, 892, 640],
+    "graphic_full_window_px": [48, 230, 892, 1000],
+    "split_top_panel_px": [0, 0, 1080, 960],
+    "note": "split_top: paper #F3EEE4 + dot grid (3 px, 28 px pitch, ink 6 %) on y 0-960, captions at y 0.465 so nothing below 840 px. graphic_full: opaque paper + dot grid over the full 1080x1920 (my video hidden on purpose), content band y 0.10-0.66, captions at 0.72. Everything inside x 48-940 (140 px clear right), nothing in the bottom 20 %."
+  },
   "stretches": [
     {
-      "id": "s1",
-      "start": 0.0,
-      "end": 34.1,
-      "layout": "split_top",
-      "caption": "panel",
+      "id": "s1", "start": 0.0, "end": 3.42, "layout": "face_full",
+      "caption": {"y_fraction": 0.24, "size_px": 100, "words_per_cue": {"target": 2, "max": 3}, "outline_px": 2, "shadow_px": 4, "outline_color": "ink"},
+      "caption_note": "all words of this stretch (0-8) are dropped in captions_plan.json; the dict is only a guard so nothing lands on the face",
       "graphic": {
-        "slot": "panel",
-        "card": "cards/window-mockup-slide-up.md",
-        "cards_used": [
-          "cards/kinetic-title-accent-word.md",
-          "cards/window-mockup-slide-up.md (drawn document variant, paper version)",
-          "cards/icon-grid-chapters.md (panel + dot grid spec only)"
-        ],
-        "kind": "overlay_transparent",
-        "payoff_word": "scraper.",
-        "payoff_t": 2.74,
-        "enter_t": 0.0,
-        "exit_t": 34.1,
-        "brief": "One HyperFrames composition, 1080x1920 with alpha, 0.00-34.10 s: the paper panel (y 0-960 px) is on from frame 0 and never moves; four sub-scenes play on it in order: hook title, window A (README card), window B (JSON config), window C (terminal session). Everything drawn, no screenshots. Hard cut out at 34.10 (the CTA stretch starts on 'comment').",
+        "slot": "s1", "card": "cards/kinetic-title-accent-word.md", "kind": "overlay_transparent",
+        "payoff_word": "scraper.", "payoff_t": 2.74, "enter_t": 0.18, "exit_t": 3.42,
         "data": {
-          "panel": {
-            "rect_px": [
-              0,
-              0,
-              1080,
-              960
-            ],
-            "fill": "#F3EEE4",
-            "dot_grid": {
-              "dot_px": 3,
-              "pitch_px": 28,
-              "color": "#141418",
-              "opacity": 0.06
-            },
-            "static": true
-          },
-          "safe": {
-            "content_x_px": [
-              48,
-              940
-            ],
-            "content_y_px": [
-              150,
-              830
-            ],
-            "note": "captions (panel preset, 64 px) sit at y 0.465 = 893 px, so nothing below 840 px; 140 px clear right; the face starts at 0.47 and is never covered"
-          },
-          "window_frame": {
-            "rect_px": [
-              48,
-              150,
-              892,
-              680
-            ],
-            "fill": "#FFFFFF",
-            "stroke": "1px #DCD6CA",
-            "radius_px": 24,
-            "shadow": "0 18 40 rgba(20,20,24,.16)",
-            "chrome_bar_px": 48,
-            "dots": "three 10 px #DCD6CA top-left",
-            "chrome_label_font": "JetBrains Mono Medium 22 px #6E6A64",
-            "note": "paper-panel version of the card's dark window: white card on paper, ink text, flame accent, cobalt only for a second emphasis"
-          }
+          "kicker": {"text": "One tool", "font": "Inter SemiBold 36 px, letter-spacing 0.18 em, #6E6A64 (sentence case)", "center_y_fraction": 0.14},
+          "line_1": {"text": "Claude Code,", "font": "Inter ExtraBold 112 px #141418", "center_y_fraction": 0.20},
+          "line_2": {"text": "lead scraper", "font": "Inter ExtraBold 112 px #141418", "accent_word": "scraper", "accent_font": "Instrument Serif Italic 124 px #F4502A", "center_y_fraction": 0.28},
+          "placement": "left-aligned at x 48, max x 940, on the cream wall above my head (head top 0.47); no scrim, ink reads on the wall; frame 0 is my face alone"
         },
-        "sub_scenes": [
-          {
-            "id": "hook_title",
-            "card": "cards/kinetic-title-accent-word.md",
-            "enter_t": 0.0,
-            "exit_t": 3.46,
-            "exit": "all words fade together 250 ms starting on 'It's' onset 3.46",
-            "payoff_word": "scraper.",
-            "payoff_t": 2.74,
-            "data": {
-              "kicker": {
-                "text": "ONE TOOL",
-                "font": "Inter SemiBold 36 px, letter-spacing 0.18 em, #6E6A64",
-                "y_px": 250,
-                "x_px": 48
-              },
-              "line_1": {
-                "text": "Claude Code,",
-                "font": "Inter ExtraBold 112 px #141418",
-                "y_px": 400,
-                "x_px": 48
-              },
-              "line_2": {
-                "text": "lead scraper",
-                "font": "Inter ExtraBold 112 px #141418",
-                "accent_word": "scraper",
-                "accent_font": "Instrument Serif Italic 124 px #F4502A",
-                "y_px": 530,
-                "x_px": 48
-              }
-            },
-            "beats": [
-              {
-                "word": "One",
-                "t": 0.18,
-                "change": "kicker ONE TOOL fades in 125 ms"
-              },
-              {
-                "word": "Claude",
-                "t": 1.22,
-                "change": "'Claude' pops (scale 0.92->1 + fade 350 ms)"
-              },
-              {
-                "word": "Code",
-                "t": 1.7,
-                "change": "'Code,' pops"
-              },
-              {
-                "word": "lead",
-                "t": 2.34,
-                "change": "'lead' pops on line 2"
-              },
-              {
-                "word": "scraper.",
-                "t": 2.74,
-                "change": "'scraper' pops in flame serif italic: title landed"
-              }
-            ],
-            "sfx_event": "title lands (soft_impact, low gain) at 2.74"
-          },
-          {
-            "id": "window_A_readme",
-            "card": "cards/window-mockup-slide-up.md (drawn document variant)",
-            "enter_t": 3.78,
-            "exit_t": 21.54,
-            "enter": "slide up 80 px + fade 350 ms from 'called' onset 3.78, landed 4.13",
-            "exit": "hard cut at the end of 'server.' 21.54",
-            "payoff_word": "Scrapling.",
-            "payoff_t": 4.26,
-            "data": {
-              "chrome_label": "README.md",
-              "title": {
-                "text": "Scrapling",
-                "font": "Inter ExtraBold 72 px #141418"
-              },
-              "tag_pill": {
-                "text": "open source",
-                "font": "Inter SemiBold 26 px #141418",
-                "fill": "#F4502A",
-                "position": "right of the title, ends <= x 900"
-              },
-              "repo_line": {
-                "text": "github.com/D4Vinci/Scrapling",
-                "font": "JetBrains Mono Medium 26 px #6E6A64"
-              },
-              "rows": [
-                {
-                  "n": "01",
-                  "icon": "simple target/crosshair glyph",
-                  "label": "Adaptive selectors",
-                  "grey_line": "survives site changes",
-                  "chip_before": "div.card > h2",
-                  "chip_after": "article.item > h3"
-                },
-                {
-                  "n": "02",
-                  "icon": "simple shield glyph",
-                  "label": "Stealth fetchers",
-                  "grey_line": "gets past anti-bot walls",
-                  "chip": "Cloudflare"
-                },
-                {
-                  "n": "03",
-                  "icon": "simple plug glyph",
-                  "label": "MCP server",
-                  "grey_line": "plugs into Claude Code"
-                }
-              ],
-              "row_style": "each row 800x120 px: 72 px tile (#FFFFFF, 1 px #DCD6CA, 16 px radius, #141418 glyph), label Inter ExtraBold 44 px #141418, grey line Inter SemiBold 26 px #6E6A64, mono chip JetBrains Mono 22 px on #F3EEE4 right side; empty state = 2 px dashed #DCD6CA outline with the mono number '01'..'03' in #6E6A64",
-              "highlight_band": "rgba(244,80,42,.12) with a 4 px #F4502A left bar, on the active row only; moves 250 ms",
-              "zoom_beats": []
-            },
-            "beats": [
-              {
-                "word": "Scrapling.",
-                "t": 4.26,
-                "change": "title 'Scrapling' pops; the three empty dashed row slots are already in the frame"
-              },
-              {
-                "word": "Open",
-                "t": 5.46,
-                "change": "'open source' pill pops 170 ms"
-              },
-              {
-                "word": "GitHub.",
-                "t": 6.34,
-                "change": "mono repo line types in (fast, done by 6.90)"
-              },
-              {
-                "word": "adaptive",
-                "t": 7.78,
-                "change": "row 01 fills: tile, label 'Adaptive selectors', grey line; band on row 01"
-              },
-              {
-                "word": "changes",
-                "t": 10.34,
-                "change": "row 01 chip swaps 'div.card > h2' -> 'article.item > h3' (old slides up + fades, new rises, 250 ms)"
-              },
-              {
-                "word": "working.",
-                "t": 12.82,
-                "change": "flame check pops 150 ms on row 01"
-              },
-              {
-                "word": "stealth",
-                "t": 14.34,
-                "change": "row 02 fills 'Stealth fetchers'; band moves to row 02"
-              },
-              {
-                "word": "walls",
-                "t": 16.74,
-                "change": "grey chip 'Cloudflare' with a small lock glyph pops on row 02"
-              },
-              {
-                "word": "Cloudflare.",
-                "t": 17.46,
-                "change": "lock swaps to a check, chip turns flame"
-              },
-              {
-                "word": "MCP",
-                "t": 20.18,
-                "change": "row 03 fills 'MCP server'; band moves to row 03"
-              }
-            ],
-            "sfx_event": "window enters (whoosh_short) at 3.78"
-          },
-          {
-            "id": "window_B_config",
-            "card": "cards/window-mockup-slide-up.md (drawn code variant)",
-            "enter_t": 21.54,
-            "exit_t": 24.54,
-            "enter": "slide up 80 px + fade 350 ms from 21.54 (end of 'server.'), landed 21.89",
-            "exit": "hard cut at 24.54 (silence after 'ask,')",
-            "payoff_word": "Claude",
-            "payoff_t": 22.5,
-            "data": {
-              "chrome_label": ".claude.json  (mcpServers only)",
-              "code_font": "JetBrains Mono Medium 34 px, keys #141418, strings #1F5BFF, punctuation #6E6A64, line numbers 22 px #6E6A64",
-              "lines": [
-                "{",
-                "  \"mcpServers\": {",
-                "    \"scrapling\": {",
-                "      \"command\": \"\u2026\",",
-                "      \"args\": [\"\u2026\"]",
-                "    }",
-                "  }",
-                "}"
-              ],
-              "placeholder_note": "command and args are placeholders ('\u2026' in #6E6A64); do not invent the real command",
-              "highlight_band": "same band style as window A; full line width",
-              "zoom_beats": [
-                {
-                  "word": "Claude",
-                  "t": 22.5,
-                  "box": [
-                    0.06,
-                    0.3,
-                    0.7,
-                    0.4
-                  ],
-                  "scale": 1.35,
-                  "note": "box = lines 3-5 (the scrapling entry) as fractions of the window content area below the chrome bar; push 350 ms cubic, ring 150 ms later; hard cut out, no ease back needed"
-                }
-              ]
-            },
-            "beats": [
-              {
-                "word": "Plug",
-                "t": 21.89,
-                "change": "frame landed; the 8 code lines draw top-down in 250 ms; band on line 2 '\"mcpServers\"'"
-              },
-              {
-                "word": "Claude",
-                "t": 22.5,
-                "change": "band moves to line 3 '\"scrapling\"' + inner view pushes in (zoom beat), flame ring"
-              },
-              {
-                "word": "ask,",
-                "t": 24.02,
-                "change": "the two '\u2026' placeholders blink once to ink (small change so the hold is never static); optional"
-              }
-            ],
-            "sfx_event": "window enters (whoosh_short) at 21.54"
-          },
-          {
-            "id": "window_C_session",
-            "card": "cards/window-mockup-slide-up.md (drawn terminal variant) + cards/prompt-card-on-colour.md (composer typing rule only)",
-            "enter_t": 24.54,
-            "exit_t": 34.1,
-            "enter": "slide up 80 px + fade 350 ms from 24.54, landed 24.89",
-            "exit": "hard cut on 'comment' onset 34.10 (shot cut to face_full)",
-            "payoff_word": "directory.",
-            "payoff_t": 25.7,
-            "data": {
-              "chrome_label": "claude  \u00b7  demo-folder",
-              "prompt": {
-                "prefix": "> ",
-                "text": "Scrape this directory",
-                "url_chip": "directory.example/companies",
-                "font": "Inter SemiBold 40 px #141418, cursor 3 px #F4502A blinking 1 Hz",
-                "typing": "each word appears on its spoken onset (typing follows speech): 'Scrape' 24.89 (on landing), 'this' 25.46, 'directory' 25.70; url chip pops on 25.70"
-              },
-              "tool_call": {
-                "line_1": "scrapling  fetch(directory.example/companies)",
-                "line_2_selector": "css: \"div.listing > a[href^='mailto:']\"",
-                "font": "JetBrains Mono Medium 28 px; line_1 #6E6A64 with a #F4502A dot; selector string #1F5BFF"
-              },
-              "table": {
-                "header": [
-                  "name",
-                  "site",
-                  "email"
-                ],
-                "rows": [
-                  [
-                    "Acme Co",
-                    "acme.example",
-                    "hello@acme.example"
-                  ],
-                  [
-                    "Birch Labs",
-                    "birchlabs.example",
-                    "info@birchlabs.example"
-                  ],
-                  [
-                    "Cedar & Co",
-                    "cedar.example",
-                    "team@cedar.example"
-                  ]
-                ],
-                "font": "header JetBrains Mono Medium 24 px #6E6A64 uppercase-free; cells Inter SemiBold 28 px #141418; 1 px #DCD6CA row rules",
-                "note": "placeholder companies on reserved .example domains only"
-              },
-              "layout_in_window": "content area (below chrome): prompt y 0.04-0.14, tool call y 0.20-0.38, table y 0.46-0.94",
-              "zoom_beats": [
-                {
-                  "word": "selectors.",
-                  "t": 28.5,
-                  "box": [
-                    0.06,
-                    0.28,
-                    0.62,
-                    0.1
-                  ],
-                  "scale": 1.6,
-                  "note": "push on the selector string; ring 150 ms later; hold to 31.14"
-                },
-                {
-                  "word": "table,",
-                  "t": 31.14,
-                  "box": [
-                    0.0,
-                    0.0,
-                    1.0,
-                    1.0
-                  ],
-                  "scale": 1.0,
-                  "note": "ease back to 1.0 (250 ms) so the table builds at full view; this is the last beat, the window then hard-cuts"
-                }
-              ]
-            },
-            "beats": [
-              {
-                "word": "scrape",
-                "t": 24.89,
-                "change": "frame landed; 'Scrape' typed (spoken onset 24.82, shown on landing)"
-              },
-              {
-                "word": "this",
-                "t": 25.46,
-                "change": "'this' typed"
-              },
-              {
-                "word": "directory.",
-                "t": 25.7,
-                "change": "'directory' typed + url chip pops; send arrow turns flame"
-              },
-              {
-                "word": "picks",
-                "t": 27.3,
-                "change": "tool-call line 1 pops 170 ms"
-              },
-              {
-                "word": "CSS",
-                "t": 27.86,
-                "change": "selector line types in"
-              },
-              {
-                "word": "selectors.",
-                "t": 28.5,
-                "change": "zoom beat: inner view pushes in on the selector string, flame band + ring"
-              },
-              {
-                "word": "table,",
-                "t": 31.14,
-                "change": "view eases back to 1.0; table header 'name | site | email' draws"
-              },
-              {
-                "word": "name,",
-                "t": 31.86,
-                "change": "row 1 slides in (170 ms); header 'name' flashes flame"
-              },
-              {
-                "word": "site,",
-                "t": 32.58,
-                "change": "row 2 slides in; header 'site' flashes flame"
-              },
-              {
-                "word": "email,",
-                "t": 33.3,
-                "change": "row 3 slides in; header 'email' flashes flame"
-              }
-            ],
-            "sfx_event": "window enters (whoosh_short) at 24.54; table rows (tick) at 31.86, 32.58, 33.30"
-          }
-        ],
+        "brief": "Hook over my face: the claim builds word by word above my head, nothing before its word.",
         "beats": [
-          {
-            "word": "One",
-            "t": 0.18
-          },
-          {
-            "word": "Claude",
-            "t": 1.22
-          },
-          {
-            "word": "Code",
-            "t": 1.7
-          },
-          {
-            "word": "lead",
-            "t": 2.34
-          },
-          {
-            "word": "scraper.",
-            "t": 2.74
-          },
-          {
-            "word": "Scrapling.",
-            "t": 4.26
-          },
-          {
-            "word": "Open",
-            "t": 5.46
-          },
-          {
-            "word": "GitHub.",
-            "t": 6.34
-          },
-          {
-            "word": "adaptive",
-            "t": 7.78
-          },
-          {
-            "word": "changes",
-            "t": 10.34
-          },
-          {
-            "word": "working.",
-            "t": 12.82
-          },
-          {
-            "word": "stealth",
-            "t": 14.34
-          },
-          {
-            "word": "walls",
-            "t": 16.74
-          },
-          {
-            "word": "Cloudflare.",
-            "t": 17.46
-          },
-          {
-            "word": "MCP",
-            "t": 20.18
-          },
-          {
-            "word": "Plug",
-            "t": 21.89
-          },
-          {
-            "word": "Claude",
-            "t": 22.5
-          },
-          {
-            "word": "ask,",
-            "t": 24.02
-          },
-          {
-            "word": "scrape",
-            "t": 24.89
-          },
-          {
-            "word": "this",
-            "t": 25.46
-          },
-          {
-            "word": "directory.",
-            "t": 25.7
-          },
-          {
-            "word": "picks",
-            "t": 27.3
-          },
-          {
-            "word": "CSS",
-            "t": 27.86
-          },
-          {
-            "word": "selectors.",
-            "t": 28.5
-          },
-          {
-            "word": "table,",
-            "t": 31.14
-          },
-          {
-            "word": "name,",
-            "t": 31.86
-          },
-          {
-            "word": "site,",
-            "t": 32.58
-          },
-          {
-            "word": "email,",
-            "t": 33.3
-          }
+          {"word": "One", "t": 0.18, "change": "kicker 'One' lands"},
+          {"word": "tool", "t": 0.58, "change": "kicker 'tool' lands"},
+          {"word": "Claude", "t": 1.22, "change": "'Claude' pops (scale 0.92->1 + fade 350 ms)"},
+          {"word": "Code", "t": 1.70, "change": "'Code,' pops"},
+          {"word": "lead", "t": 2.34, "change": "'lead' pops on line 2"},
+          {"word": "scraper.", "t": 2.74, "change": "'scraper' pops in flame serif italic: landed"}
         ],
+        "motion": "No pointer, no window. After 'scraper' the whole title drifts -6 px until the hard cut at 3.42 (cut is the exit; no fade).",
         "sfx_event": "title lands",
+        "sfx_events": [{"t": 2.74, "event": "title lands", "sfx": "soft_impact", "gain": "low"}]
+      }
+    },
+    {
+      "id": "s2", "start": 3.42, "end": 7.10, "layout": "split_top", "caption": "panel",
+      "graphic": {
+        "slot": "s2", "card": "cards/window-mockup-slide-up.md", "kind": "overlay_transparent",
+        "payoff_word": "Scrapling.", "payoff_t": 4.26, "enter_t": 3.42, "exit_t": 7.10,
+        "data": {
+          "includes_panel": true,
+          "window_A_readme": {"rect_px": [48, 192, 892, 640], "chrome_label": "README.md",
+            "title": {"text": "Scrapling", "font": "Inter ExtraBold 72 px #141418", "pos": "x 96, y 300"},
+            "pill": {"text": "open source", "font": "Inter SemiBold 26 px #141418 on #F4502A, 999 px radius", "pos": "right of the title, ends <= x 900"},
+            "repo_line": {"text": "github.com/D4Vinci/Scrapling", "font": "JetBrains Mono Medium 28 px #6E6A64", "pos": "x 96, y 400"},
+            "body": "below the repo line, 4 placeholder grey bars (10 px, #DCD6CA) as README text, present from landing"}
+        },
+        "brief": "Name the thing beside me: the README card slides into the panel and names Scrapling, open source, GitHub on their words.",
+        "beats": [
+          {"word": "It's", "t": 3.46, "change": "window A slides up 80 px + fade 350 ms (landed 3.81) with an empty title line and the placeholder bars"},
+          {"word": "Scrapling.", "t": 4.26, "change": "title 'Scrapling' types in (whole word, 250 ms), flame underline draws"},
+          {"word": "Open", "t": 5.46, "change": "pill pops blank and types 'open'"},
+          {"word": "source", "t": 5.86, "change": "pill types 'source'"},
+          {"word": "GitHub.", "t": 6.34, "change": "repo line types 'github.com/D4Vinci/Scrapling' (done by 6.90)"}
+        ],
+        "motion": "Window drifts from landing to 7.10. Pointer enters with the window at (700, 760), moves to beside the title by 4.06, to beside the pill slot by 5.26, to beside the repo line by 6.14, parks. The last frame (7.10) is the exact state s3 opens on: window rect, content, drift offset and pointer position are written to reasoning.md so s3 matches them.",
+        "sfx_event": "window enters",
+        "sfx_events": [{"t": 3.46, "event": "window A enters", "sfx": "whoosh_short"}]
+      }
+    },
+    {
+      "id": "s3", "start": 7.10, "end": 13.46, "layout": "graphic_full", "caption": "paper_full",
+      "graphic": {
+        "slot": "s3", "card": "cards/window-mockup-slide-up.md", "kind": "overlay_transparent",
+        "opaque_note": "full-frame paper + dot grid, opaque: my video is hidden on purpose",
+        "payoff_word": "working.", "payoff_t": 12.82, "enter_t": 7.10, "exit_t": 13.46,
+        "data": {
+          "continuity": "frame 7.10 = s2's last frame inside the panel (window A at [48,192,892,640], same drift offset, same pointer spot); the paper simply extends to the full frame",
+          "card_01": {"rect_px": [48, 230, 892, 1000], "chrome_label": "feature 01",
+            "kicker": {"text": "01", "font": "JetBrains Mono Medium 30 px #F4502A"},
+            "title": {"line": "Adaptive selectors", "font": "Inter ExtraBold 88 px #141418", "accent": "selectors in #F4502A"},
+            "mini_page": "a drawn web page at y 560-980: header bar + 3 listing blocks (grey bars); the target block holds the text 'Acme Co' with a 3 px flame box around it",
+            "selector_chip": {"before": "div.card > h2", "after": "article.item > h3", "font": "JetBrains Mono Medium 30 px #1F5BFF on #F3EEE4, 12 px radius", "pos": "y 1040-1110"},
+            "check": "48 px #F4502A circle with a #FFFFFF check, right of the chip"}
+        },
+        "brief": "Informational, face off: feature 01 shows a selector surviving a site change.",
+        "beats": [
+          {"word": "adaptive", "t": 7.78, "change": "window A slides out left, card 01 slides in from the right (300 ms); kicker '01' and 'Adaptive' type in"},
+          {"word": "selectors.", "t": 8.50, "change": "'selectors' types in flame; selector chip pops blank and types 'div.card > h2'; flame box draws around 'Acme Co'"},
+          {"word": "changes", "t": 10.34, "change": "mini page reshuffles (blocks swap places, 300 ms); 'Acme Co' moves; the flame box is left on the empty spot and turns grey dashed; chip text strikes"},
+          {"word": "working.", "t": 12.82, "change": "flame box slides to 'Acme Co' at its new spot (250 ms), chip retypes 'article.item > h3', check pops"}
+        ],
+        "motion": "Card 01 drifts from 8.08 to 13.46. Pointer parks beside the title by 8.30, moves beside the mini page by 10.14, then beside the chip by 12.62. The last frame (13.46) is the exact state s4 opens on (record rect, drift offset, pointer in reasoning.md).",
+        "sfx_event": "none (cap)",
+        "sfx_events": []
+      }
+    },
+    {
+      "id": "s4", "start": 13.46, "end": 18.62, "layout": "graphic_full", "caption": "paper_full",
+      "graphic": {
+        "slot": "s4", "card": "cards/window-mockup-slide-up.md", "kind": "overlay_transparent",
+        "opaque_note": "full-frame paper + dot grid, opaque",
+        "payoff_word": "Cloudflare.", "payoff_t": 17.46, "enter_t": 13.46, "exit_t": 18.62,
+        "data": {
+          "continuity": "frame 13.46 = s3's last frame (card 01 final state, same drift offset and pointer)",
+          "card_02": {"rect_px": [48, 230, 892, 1000], "chrome_label": "feature 02",
+            "kicker": {"text": "02", "font": "JetBrains Mono Medium 30 px #F4502A"},
+            "title": {"line": "Stealth fetchers", "font": "Inter ExtraBold 88 px #141418", "accent": "fetchers in #F4502A"},
+            "scene": "at y 600-1000: a fetcher glyph (small rounded square with a down-arrow, ink) on the left, a dashed request path to a page glyph on the right",
+            "wall": "a brick wall glyph (3x4 #DCD6CA bricks, 1 px ink stroke) on the path at x ~ 520",
+            "chip": {"text": "Cloudflare", "font": "JetBrains Mono Medium 30 px", "pos": "under the wall, y 1060-1130", "before_text": "blank #F3EEE4 chip with a small ink lock glyph", "after": "#F4502A fill, #141418 text, lock -> check"}}
+        },
+        "brief": "Informational, face off: feature 02, the fetcher gets past an anti-bot wall.",
+        "beats": [
+          {"word": "stealth", "t": 14.34, "change": "card 01 slides out left, card 02 in from the right; kicker '02' and 'Stealth' type in"},
+          {"word": "fetchers.", "t": 14.98, "change": "'fetchers' types in flame; the fetcher glyph and dashed path draw left->right 250 ms"},
+          {"word": "walls", "t": 16.74, "change": "wall glyph pops on the path (170 ms); blank lock chip pops under it (no text)"},
+          {"word": "Cloudflare.", "t": 17.46, "change": "chip types 'Cloudflare', turns flame, lock -> check; the request dot passes through the wall to the page (300 ms)"}
+        ],
+        "motion": "Card 02 drifts from 14.64 to 18.62. Pointer moves beside the title by 14.14, beside the fetcher by 14.78, beside the wall by 16.54, beside the chip by 17.26, parks. Hard cut out at 18.62.",
+        "sfx_event": "none (cap)",
+        "sfx_events": []
+      }
+    },
+    {
+      "id": "s5", "start": 18.62, "end": 23.38, "layout": "split_top", "caption": "panel",
+      "graphic": {
+        "slot": "s5", "card": "cards/window-mockup-slide-up.md", "kind": "overlay_transparent",
+        "payoff_word": "Code.", "payoff_t": 22.98, "enter_t": 18.62, "exit_t": 23.38,
+        "data": {
+          "includes_panel": true,
+          "card_03": {"rect_px": [48, 192, 892, 640], "chrome_label": "feature 03",
+            "kicker": {"text": "03", "font": "JetBrains Mono Medium 30 px #F4502A"},
+            "title": {"line": "MCP server", "font": "Inter ExtraBold 80 px #141418", "accent": "server in #F4502A"},
+            "glyph": "simple plug glyph 96 px ink, right side"},
+          "window_B_config": {"rect_px": [48, 192, 892, 640], "chrome_label": ".claude.json  (mcpServers only)",
+            "lines": ["{", "  \"mcpServers\": {", "    \"scrapling\": {", "      \"command\": \"…\",", "      \"args\": [\"…\"]", "    }", "  }", "}"],
+            "code_font": "JetBrains Mono Medium 32 px; keys #141418, strings #1F5BFF, '…' placeholders #6E6A64, punctuation #6E6A64",
+            "placeholder_note": "command/args stay '…': no real command invented",
+            "tab": {"text": "Claude Code", "pos": "flame tab on the window's top-right edge, ends <= x 900", "font": "Inter SemiBold 28 px #141418 on #F4502A, 12 px radius", "glyph": "small connected dot"}}
+        },
+        "brief": "Bridge back to me: feature 03 names the MCP server, then the config window shows it plugged into Claude Code.",
+        "beats": [
+          {"word": "Third,", "t": 18.74, "change": "card 03 frame (empty) is on from the cut; kicker '03' pops"},
+          {"word": "MCP", "t": 20.18, "change": "'MCP' types in"},
+          {"word": "server.", "t": 20.90, "change": "'server' types in flame; plug glyph pops"},
+          {"word": "Plug", "t": 21.78, "change": "card 03 slides out left, window B slides in from the right; the 8 code lines draw top-down 250 ms; band on line 2 \"mcpServers\""},
+          {"word": "Claude", "t": 22.50, "change": "band moves to line 3 \"scrapling\"; tab pops blank and types 'Claude'"},
+          {"word": "Code.", "t": 22.98, "change": "tab types 'Code', connected dot turns flame; zoom push 1.0 -> 1.3 on lines 3-5 (box [0.06, 0.30, 0.70, 0.40] of the content area), ring 150 ms later"}
+        ],
+        "motion": "Card 03 drifts 18.62-21.78; window B drifts 22.08-23.38 (inner zoom independent of drift). Pointer starts beside the kicker by 18.54, beside the title by 19.98, beside the plug by 20.70; after the swap beside line 2 by 21.98, beside the \"scrapling\" line by 22.30, beside the tab by 22.78. Hard cut out at 23.38 (no ease back needed).",
+        "sfx_event": "window enters",
+        "sfx_events": [{"t": 21.78, "event": "window B slides in", "sfx": "whoosh_short"}]
+      }
+    },
+    {
+      "id": "s6", "start": 23.38, "end": 29.74, "layout": "graphic_full", "caption": "paper_full",
+      "graphic": {
+        "slot": "s6", "card": "cards/window-mockup-slide-up.md + cards/prompt-card-on-colour.md (composer typing rule only)", "kind": "overlay_transparent",
+        "opaque_note": "full-frame paper + dot grid, opaque",
+        "payoff_word": "selectors.", "payoff_t": 28.50, "enter_t": 23.38, "exit_t": 29.74,
+        "data": {
+          "window_C_session": {"rect_px": [48, 230, 892, 1000], "chrome_label": "claude  ·  demo-folder",
+            "layout_in_content": "prompt row y 0.04-0.16, tool call y 0.24-0.44, rest empty terminal lines",
+            "prompt": {"prefix": "> ", "text": "Scrape this directory", "font": "Inter SemiBold 44 px #141418", "caret": "3 px #F4502A blinking 1 Hz", "url_chip": {"text": "directory.example/companies", "font": "JetBrains Mono Medium 26 px #1F5BFF on #F3EEE4"}},
+            "tool_call": {"line_1": "scrapling  fetch(directory.example/companies)", "line_2": "css: \"div.listing > a[href^='mailto:']\"", "font": "JetBrains Mono Medium 30 px; line_1 #6E6A64 with a #F4502A dot; selector string #1F5BFF"}},
+          "zoom_beats": [{"word": "selectors.", "t": 28.50, "box": [0.06, 0.32, 0.70, 0.10], "scale": 1.6, "note": "push on the selector string, ring 150 ms later; hard cut out at 29.74"}]
+        },
+        "brief": "Informational, face off: the Claude Code session, prompt types with my words, then the selector is picked.",
+        "beats": [
+          {"word": "ask,", "t": 24.02, "change": "window frame is on (empty) from the cut; on 'ask' the prompt row's outline turns flame and the caret appears"},
+          {"word": "scrape", "t": 24.82, "change": "'Scrape' typed"},
+          {"word": "this", "t": 25.46, "change": "'this' typed"},
+          {"word": "directory.", "t": 25.70, "change": "'directory' typed; url chip pops blank and types the url; send arrow turns flame"},
+          {"word": "picks", "t": 27.30, "change": "tool-call line 1 pops (170 ms)"},
+          {"word": "CSS", "t": 27.86, "change": "line 2 types 'css:' and the selector string"},
+          {"word": "selectors.", "t": 28.50, "change": "zoom push 1.6 on the selector string + flame band + ring"}
+        ],
+        "motion": "Window C drifts 23.38-29.74 (zoom on its own wrapper). Pointer enters beside the prompt row by 23.82, beside the url chip spot by 25.50, beside the tool call by 27.10, beside the selector by 28.30 (scaled with the zoom), parks.",
+        "sfx_event": "window enters",
+        "sfx_events": [{"t": 23.38, "event": "window C cut in", "sfx": "whoosh_short"}]
+      }
+    },
+    {
+      "id": "s7", "start": 29.74, "end": 33.98, "layout": "split_top", "caption": "panel",
+      "graphic": {
+        "slot": "s7", "card": "cards/window-mockup-slide-up.md", "kind": "overlay_transparent",
+        "payoff_word": "email,", "payoff_t": 33.30, "enter_t": 29.74, "exit_t": 33.98,
+        "data": {
+          "includes_panel": true,
+          "window_result": {"rect_px": [48, 192, 892, 640], "chrome_label": "claude  ·  demo-folder",
+            "top_line": "scrapling  fetch(directory.example/companies) with a small spinning ring (the spinner is the hold motion, already-said content)",
+            "table": {"pos": "y 330-800 inside the panel", "grid": "3 columns x (header + 3 rows), 1 px #DCD6CA rules",
+              "columns": [
+                {"header": "name", "cells": ["Acme Co", "Birch Labs", "Cedar & Co"]},
+                {"header": "site", "cells": ["acme.example", "birchlabs.example", "cedar.example"]},
+                {"header": "email", "cells": ["hello@acme.example", "info@birchlabs.example", "team@cedar.example"]}
+              ],
+              "font": "headers JetBrains Mono Medium 24 px #6E6A64; cells Inter SemiBold 26 px #141418; the column being named gets a flame band for 600 ms",
+              "note": "placeholder companies on reserved .example domains only"}}
+        },
+        "brief": "Result reveal with my face reacting: the table builds column by column as I name the fields.",
+        "beats": [
+          {"word": "table,", "t": 31.14, "change": "spinner resolves to a flame check; empty ruled table draws (rules left->right 250 ms)"},
+          {"word": "name,", "t": 31.86, "change": "column 1: header 'name' + 3 names fill top-down (170 ms each, 60 ms stagger); flame band"},
+          {"word": "site,", "t": 32.58, "change": "column 2 fills; band moves"},
+          {"word": "email,", "t": 33.30, "change": "column 3 fills; band moves"}
+        ],
+        "motion": "Window is on from the cut (no enter animation: the demo continues) and drifts 29.74-33.98; spinner turns until 31.14. Pointer starts beside the top line, moves beside the table by 30.94, beside each column header by 31.66 / 32.38 / 33.10. Hard cut out at 33.98.",
+        "sfx_event": "table fills",
         "sfx_events": [
-          {
-            "t": 2.74,
-            "event": "title lands",
-            "sfx": "soft_impact",
-            "gain": "low"
-          },
-          {
-            "t": 3.78,
-            "event": "window A enters",
-            "sfx": "whoosh_short"
-          },
-          {
-            "t": 21.54,
-            "event": "window B enters",
-            "sfx": "whoosh_short"
-          },
-          {
-            "t": 24.54,
-            "event": "window C enters",
-            "sfx": "whoosh_short"
-          },
-          {
-            "t": 31.86,
-            "event": "table row 1",
-            "sfx": "tick"
-          },
-          {
-            "t": 32.58,
-            "event": "table row 2",
-            "sfx": "tick"
-          },
-          {
-            "t": 33.3,
-            "event": "table row 3",
-            "sfx": "tick"
-          }
+          {"t": 31.86, "event": "column name fills", "sfx": "tick"},
+          {"t": 32.58, "event": "column site fills", "sfx": "tick"},
+          {"t": 33.30, "event": "column email fills", "sfx": "tick"}
         ]
       }
     },
     {
-      "id": "s2",
-      "start": 34.1,
-      "end": 37.0,
-      "layout": "face_full",
-      "caption": {
-        "y_fraction": 0.24,
-        "size_px": 100,
-        "words_per_cue": {
-          "target": 2,
-          "max": 3
-        }
-      },
+      "id": "s8", "start": 33.98, "end": 37.0, "layout": "face_full",
+      "caption": {"y_fraction": 0.24, "size_px": 100, "words_per_cue": {"target": 2, "max": 3}, "outline_px": 2, "shadow_px": 4, "outline_color": "ink"},
       "graphic": {
-        "slot": "cta",
-        "card": "cards/big-words-cta-caption.md",
-        "kind": "overlay_transparent",
-        "payoff_word": "scrape,",
-        "payoff_t": 34.58,
-        "enter_t": 34.1,
-        "exit_t": 37.0,
+        "slot": "s8", "card": "cards/big-words-cta-caption.md", "kind": "overlay_transparent",
+        "payoff_word": "scrape,", "payoff_t": 34.58, "enter_t": 34.10, "exit_t": 37.0,
         "data": {
-          "pill": {
-            "text": "Comment \"Scrape\"",
-            "y_fraction": 0.34,
-            "height_px": 72,
-            "fill": "#F4502A",
-            "font": "Inter SemiBold 34 px #0B0B0F",
-            "glyph": "28 px #0B0B0F speech bubble",
-            "enter": "slide up 20 px + fade 125 ms on 'comment' 34.10, then still"
-          },
-          "tagline": {
-            "text": "setup steps, sent to you",
-            "y_fraction": 0.4,
-            "font": "JetBrains Mono Medium 26 px #F5F5F7 at 80 %, 2 px #000 shadow for the wall",
-            "enter": "hard appear on 'send' 35.30"
-          },
-          "placement_note": "both sit above the head (head top at 0.47) on the cream wall, under the big captions at y 0.24; nothing reaches the eyes (0.62) or the bottom 20 %; pill width <= 600 px centred so x stays < 940"
+          "pill": {"final_text": "Comment \"Scrape\"", "center_y_fraction": 0.34, "height_px": 72, "fill": "#F4502A", "font": "Inter SemiBold 34 px #0B0B0F", "glyph": "28 px #0B0B0F speech bubble", "max_width_px": 600, "note": "centred, stays < x 940"},
+          "tagline": {"final_text": "setup steps", "center_y_fraction": 0.40, "font": "JetBrains Mono Medium 28 px #F5F5F7, 2 px ink edge + soft shadow (STYLE face look)"},
+          "placement": "both above the head (top 0.47) under the captions at 0.24; nothing at the eyes (0.62) or in the bottom 20 %"
         },
-        "brief": "CTA payoff on my full face: the comment keyword as a flame pill and the promise as a mono tagline, both on the wall above my head because the face sits low in this take.",
+        "brief": "CTA on my face: one pill that fills on the keyword, then the promise lands word by word.",
         "beats": [
-          {
-            "word": "comment",
-            "t": 34.1,
-            "change": "pill slides up 20 px + fade 125 ms"
-          },
-          {
-            "word": "send",
-            "t": 35.3,
-            "change": "tagline hard-appears"
-          }
+          {"word": "comment", "t": 34.10, "change": "pill pops empty (glyph only), slide up 20 px + fade 125 ms"},
+          {"word": "scrape,", "t": 34.58, "change": "pill text 'Comment \"Scrape\"' fills, \"Scrape\" bold"},
+          {"word": "send", "t": 35.30, "change": "pill glyph swaps speech bubble -> send arrow (250 ms)"},
+          {"word": "setup", "t": 35.70, "change": "tagline 'setup' lands"},
+          {"word": "steps.", "t": 36.18, "change": "tagline 'steps' lands"}
         ],
+        "motion": "No window, no pointer, my face never moves. Pill and tagline drift -4 px together after 36.18. Cut out with the video end (37.0).",
         "sfx_event": "pill lands",
-        "sfx_events": [
-          {
-            "t": 34.1,
-            "event": "pill lands",
-            "sfx": "pop"
-          }
-        ]
+        "sfx_events": [{"t": 34.10, "event": "pill lands", "sfx": "pop"}]
       }
     }
   ],
   "notes": {
-    "captions": "Write edit/captions_plan.json. Drop words 0-8 ('One tool turns Claude Code into a lead scraper.', 0.18-3.38) entirely: the hook title carries them. Words 9-63 ('It's' 3.46 ... 'email,' 33.86): preset 'panel' (64 px, y 0.465), 2-3 words per cue, cues never cross 21.54 or 24.54 (window cuts) if avoidable. Words 64-72 ('comment' 34.10 ... 'steps.' 36.82): preset {\"y_fraction\": 0.24, \"size_px\": 120, \"words_per_cue\": {\"target\": 2, \"max\": 3}}; keyword written \"Scrape\" with straight quotes in #F4502A, sentence case; suggested cues [64,65] Comment \"Scrape\", [66,68] and I'll send, [69,72] -> split [69,70] you the / [71,72] setup steps. On the paper panel use the card's split variant (light text with 4 px outline, spoken word flame).",
-    "sound": "8 events total (whoosh x3, soft_impact x1 low gain, tick x3, pop x1) listed in each graphic's sfx_events; no sfx on zoom beats or row fills in window A to stay within the cap.",
-    "motion": "Two slots: 'panel' (0-34.10, one HyperFrames comp with four sub-scenes) and 'cta' (34.10-37.0). Both 1080x1920 transparent ProRes 4444. Panel never moves; windows never move after landing; zooms only inside windows."
+    "captions": "Write edit/captions_plan.json (indices from --dump-words). DROP 0-8 ('One tool turns Claude Code into a lead scraper.', 0.18-3.38): the kinetic title carries them. 9-15 (It's ... GitHub., s2): preset 'panel'. 16-25 (First, ... working., s3): preset 'paper_full'. 26-34 (Second, ... Cloudflare., s4): 'paper_full'. 35-45 (Third, ... Code., s5): 'panel'. 46-56 (Then ... selectors., s6): 'paper_full'. 57-63 (Back ... email,, s7): 'panel'. 64-72 (comment ... steps., s8): inline {\"y_fraction\": 0.24, \"size_px\": 100, \"words_per_cue\": {\"target\": 2, \"max\": 3}, \"outline_px\": 2, \"shadow_px\": 4, \"outline_color\": \"ink\"} (white, 2 px edge, soft shadow); suggested cues [64,65] Comment \"Scrape\" (keyword flame, straight quotes, sentence case), [66,68] and I'll send, [69,70] you the, [71,72] setup steps. No cue may cross a stretch cut (3.42, 7.10, 13.46, 18.62, 23.38, 29.74, 33.98). Words stay word for word ('your scrapers. Keep working.' as spoken).",
+    "sound": "8 events: soft_impact 2.74 (low gain), whoosh_short 3.46 / 21.78 / 23.38, tick 31.86 / 32.58 / 33.30, pop 34.10. Nothing on swaps in s3/s4, pointer moves or zooms.",
+    "motion": "Eight slots s1-s8, one per stretch, all 1080x1920 transparent ProRes 4444, built in parallel. graphic_full slots (s3, s4, s6) are opaque paper over the full frame. split_top slots (s2, s5, s7) include their own paper panel (y 0-960). Continuity pairs: s2 -> s3 (window A at [48,192,892,640]) and s3 -> s4 (card 01 at [48,230,892,1000]): the later slot rebuilds the earlier slot's last frame exactly (rect, drift offset, pointer position); the s2 and s3 agents write those values in their reasoning.md, and the s3/s4 agents read them (or compute them from this file's drift rule: offset at the stretch end = -8 px / scale 1.02)."
   }
 }

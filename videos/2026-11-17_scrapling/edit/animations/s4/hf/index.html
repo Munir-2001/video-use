@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #F3EEE4; }
+      #root {
+        position: relative; width: 1080px; height: 1920px; overflow: hidden; background-color: #F3EEE4;
+        background-image: radial-gradient(circle at 1.5px 1.5px, rgba(20,20,24,0.06) 1.5px, transparent 1.6px);
+        background-size: 28px 28px;
+        font-family: "Inter", sans-serif; color: #141418;
+      }
+      .slide { position: absolute; left: 48px; top: 230px; width: 892px; height: 1000px; }
+      .drift { position: absolute; inset: 0; transform-origin: 50% 50%; }
+      .card {
+        position: absolute; inset: 0; background: #FFFFFF; border: 1px solid #DCD6CA; border-radius: 24px;
+        box-shadow: 0 18px 40px rgba(20,20,24,0.16); overflow: hidden;
+      }
+      .abs { position: absolute; }
+      .chrome { left: 0; top: 0; width: 892px; height: 48px; border-bottom: 1px solid #DCD6CA; }
+      .dot { position: absolute; top: 19px; width: 10px; height: 10px; border-radius: 50%; background: #DCD6CA; }
+      .label { position: absolute; left: 96px; top: 11px; font: 500 22px/26px "JetBrains Mono", monospace; color: #6E6A64; }
+      .kicker { font: 500 30px/36px "JetBrains Mono", monospace; color: #F4502A; left: 48px; top: 80px; white-space: pre; }
+      .title { font: 800 88px/96px "Inter", sans-serif; left: 48px; white-space: pre; letter-spacing: -1px; }
+      .flame { color: #F4502A; }
+      .c { opacity: 0; }
+      .chip {
+        height: 70px; border-radius: 12px; background: #F3EEE4; border: 1px solid #DCD6CA;
+        font: 500 30px/68px "JetBrains Mono", monospace; color: #1F5BFF; white-space: pre; padding-left: 24px;
+      }
+      .circ { width: 48px; height: 48px; border-radius: 50%; background: #F4502A; }
+      .brick { position: absolute; width: 50px; height: 56px; background: #DCD6CA; border: 1px solid #141418; }
+      #pointer { position: absolute; left: 0; top: 0; width: 36px; height: 36px; filter: drop-shadow(0 3px 5px rgba(20,20,24,0.3)); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="5.16" data-width="1080" data-height="1920">
+
+      <!-- CARD 01: final state of s3 -->
+      <div class="slide" id="slide1"><div class="drift" id="drift1"><div class="card">
+        <div class="abs chrome"><div class="dot" style="left:24px"></div><div class="dot" style="left:42px"></div><div class="dot" style="left:60px"></div><div class="label" style="left:90px">feature 01</div></div>
+        <div class="abs kicker">01</div>
+        <div class="abs title" style="top:120px">Adaptive</div>
+        <div class="abs title flame" style="top:216px">selectors</div>
+        <!-- mini page, reshuffled: Acme Co on top -->
+        <div class="abs" style="left:48px;top:350px;width:796px;height:400px;border:1px solid #DCD6CA;border-radius:14px;background:#FBF9F4;overflow:hidden">
+          <div class="abs" style="left:0;top:0;width:796px;height:48px;background:#EDE8DD;border-bottom:1px solid #DCD6CA"></div>
+          <div class="abs" style="left:18px;top:14px;width:20px;height:20px;border-radius:50%;background:#DCD6CA"></div>
+          <div class="abs" style="left:56px;top:16px;width:300px;height:16px;border-radius:8px;background:#DCD6CA"></div>
+        </div>
+        <div class="abs" style="left:64px;top:416px;width:764px;height:84px;border:3px solid #F4502A;border-radius:12px;background:#FFFFFF">
+          <div class="abs" style="left:22px;top:22px;font:800 34px/40px 'Inter',sans-serif;white-space:pre">Acme Co</div>
+        </div>
+        <div class="abs" style="left:64px;top:512px;width:764px;height:84px;border-radius:12px;background:#EDE8DD"><div class="abs" style="left:22px;top:30px;width:240px;height:22px;border-radius:11px;background:#DCD6CA"></div></div>
+        <div class="abs" style="left:64px;top:608px;width:764px;height:84px;border-radius:12px;background:#EDE8DD"><div class="abs" style="left:22px;top:30px;width:180px;height:22px;border-radius:11px;background:#DCD6CA"></div></div>
+        <div class="abs chip" style="left:48px;top:810px;width:380px">article.item &gt; h3</div>
+        <div class="abs circ" style="left:452px;top:821px"><svg width="48" height="48" viewBox="0 0 48 48"><path d="M13 25 L21 33 L36 16" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div></div></div>
+
+      <!-- CARD 02 -->
+      <div class="slide" id="slide2"><div class="drift" id="drift2"><div class="card">
+        <div class="abs chrome"><div class="dot" style="left:24px"></div><div class="dot" style="left:42px"></div><div class="dot" style="left:60px"></div><div class="label" style="left:90px">feature 02</div></div>
+        <div class="abs kicker" id="kick2"></div>
+        <div class="abs title" id="t2a" style="top:120px"></div>
+        <div class="abs title flame" id="t2b" style="top:216px"></div>
+
+        <div id="scene" class="abs" style="left:0;top:0;width:892px;height:1000px">
+          <div id="draw" class="abs" style="left:0;top:480px;width:892px;height:230px">
+            <!-- path (local to draw: y offset 480) -->
+            <svg class="abs" style="left:0;top:0" width="892" height="230" viewBox="0 480 892 230">
+              <line x1="170" y1="590" x2="742" y2="590" stroke="#141418" stroke-width="3" stroke-dasharray="14 12" stroke-linecap="round"/>
+              <!-- fetcher glyph -->
+              <rect x="48" y="540" width="100" height="100" rx="22" fill="#FFFFFF" stroke="#141418" stroke-width="3"/>
+              <path d="M98 562 V610 M78 592 L98 614 L118 592" fill="none" stroke="#141418" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- page glyph -->
+              <path d="M752 528 H816 L842 554 V652 H752 Z" fill="#FFFFFF" stroke="#141418" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M816 528 V554 H842" fill="none" stroke="#141418" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M768 580 H826 M768 600 H826 M768 620 H810" stroke="#DCD6CA" stroke-width="6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div id="wall" class="abs" style="left:366px;top:470px;width:160px;height:240px"></div>
+          <div id="dotreq" class="abs" style="left:0;top:0;width:16px;height:16px;border-radius:50%;background:#F4502A;opacity:0"></div>
+          <div id="chip2" class="abs chip" style="left:316px;top:830px;width:300px;color:#141418;padding-left:0">
+            <svg id="lock" class="abs" style="left:18px;top:19px" width="26" height="30" viewBox="0 0 26 30"><rect x="2" y="12" width="22" height="16" rx="4" fill="#141418"/><path d="M7 12 V8 a6 6 0 0 1 12 0 V12" fill="none" stroke="#141418" stroke-width="3"/></svg>
+            <svg id="chk" class="abs" style="left:14px;top:11px;opacity:0" width="48" height="48" viewBox="0 0 48 48"><path d="M10 25 L20 35 L38 14" fill="none" stroke="#141418" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="chiptxt" class="abs" style="left:62px;top:0"></span>
+          </div>
+        </div>
+      </div></div></div>
+
+      <div id="pointer"><div id="psway"><svg width="36" height="36" viewBox="0 0 36 36"><path d="M5 3 L5 28 L11.5 22.5 L16 32 L21 29.8 L16.6 20.6 L25 20 Z" fill="#141418" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+    </div>
+
+    <script>
+      if (!document.fonts.check('800 88px Inter') || !document.fonts.check('500 30px "JetBrains Mono"')) console.warn('FONT NOT LOADED');
+      const tl = gsap.timeline({ paused: true });
+      const E_OUT = "power3.out", E_IN = "power3.in", E_IO = "power3.inOut";
+
+      // type helper: chars as spans, revealed evenly over [t0, t0+dur]
+      function type(el, text, t0, dur, cls) {
+        const chars = [...text];
+        chars.forEach((ch, i) => {
+          const s = document.createElement("span"); s.className = "c"; s.textContent = ch;
+          if (cls) s.classList.add(cls);
+          el.appendChild(s);
+          tl.set(s, { opacity: 1 }, t0 + (dur * i) / chars.length);
+        });
+      }
+      // wall bricks
+      const wall = document.getElementById("wall");
+      const rows = [[], [], [], []];
+      for (let r = 0; r < 4; r++) for (let c = 0; c < 3; c++) {
+        const b = document.createElement("div"); b.className = "brick";
+        b.style.left = (c * 54 - (r % 2 ? 0 : 0)) + "px"; b.style.top = (r * 60) + "px";
+        wall.appendChild(b); rows[r].push(b);
+      }
+      gsap.set("#wall", { opacity: 0, scale: 0.8 });
+      gsap.set("#chip2", { opacity: 0, scale: 0.8 });
+
+      // ---- drift (continuous) ----
+      tl.fromTo("#drift1", { y: -8, scale: 1.02 }, { y: -9, scale: 1.0225, duration: 1.06, ease: "none" }, 0);
+      tl.fromTo("#drift2", { y: 0, scale: 1 }, { y: -8, scale: 1.02, duration: 5.16 - 0.76, ease: "sine.inOut" }, 0.76);
+
+      // ---- swap: card 01 out left, card 02 in from right (starts 120 ms before "stealth" at 0.88) ----
+      gsap.set("#slide2", { x: 1080 });
+      tl.to("#slide1", { x: -1080, duration: 0.30, ease: E_IN }, 0.76);
+      tl.to("#slide2", { x: 0, duration: 0.30, ease: E_OUT }, 0.76);
+      type(document.getElementById("kick2"), "02", 0.76, 0.12);
+      type(document.getElementById("t2a"), "Stealth", 0.76, 0.12);
+
+      // ---- "fetchers" 1.52: type flame + glyph/path draw ----
+      type(document.getElementById("t2b"), "fetchers", 1.40, 0.12);
+      gsap.set("#draw", { clipPath: "inset(0 100% 0 0)" });
+      tl.to("#draw", { clipPath: "inset(0 0% 0 0)", duration: 0.25, ease: "power3.inOut" }, 1.40);
+
+      // ---- "walls" 3.28: wall pop + blank lock chip pop ----
+      tl.to("#wall", { opacity: 1, scale: 1, duration: 0.17, ease: E_OUT }, 3.16);
+      tl.to("#chip2", { opacity: 1, scale: 1, duration: 0.17, ease: E_OUT }, 3.16);
+
+      // ---- "Cloudflare" 4.00 (landing): request passes the wall 3.70-4.00; chip types 3.88-4.00 ----
+      tl.to(rows[1], { y: -14, duration: 0.16, ease: E_OUT }, 3.60);
+      tl.to(rows[2], { y: 14, duration: 0.16, ease: E_OUT }, 3.60);
+      gsap.set("#dotreq", { x: 156, y: 582 });
+      tl.set("#dotreq", { opacity: 1 }, 3.70);
+      tl.to("#dotreq", { x: 746, duration: 0.30, ease: E_IO }, 3.70);
+      type(document.getElementById("chiptxt"), "Cloudflare", 3.88, 0.12);
+      tl.to("#chip2", { backgroundColor: "#F4502A", borderColor: "#F4502A", duration: 0.12, ease: E_OUT }, 3.88);
+      tl.to("#lock", { opacity: 0, duration: 0.12, ease: E_OUT }, 3.88);
+      tl.to("#chk", { opacity: 1, duration: 0.12, ease: E_OUT }, 3.88);
+
+      // ---- pointer: absolute px, arrives 200 ms before each word ----
+      gsap.set("#pointer", { x: 546, y: 1112 });
+      tl.to("#pointer", { x: 492, y: 424, duration: 0.30, ease: E_IO }, 0.38);   // by 0.68 beside "Stealth"
+      tl.to("#pointer", { x: 214, y: 884, duration: 0.30, ease: E_IO }, 1.02);   // by 1.32 beside fetcher
+      tl.to("#pointer", { x: 616, y: 950, duration: 0.30, ease: E_IO }, 2.78);   // by 3.08 beside wall
+      tl.to("#pointer", { x: 676, y: 1150, duration: 0.30, ease: E_IO }, 3.50);  // by 3.80 beside chip
+      tl.fromTo("#psway", { y: -1 }, { y: 1, duration: 0.9, ease: "sine.inOut", repeat: 5, yoyo: true }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

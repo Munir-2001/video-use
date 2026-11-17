@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<style>
+:root { --ink:#141418; --muted:#6E6A64; --line:#DCD6CA; --paper:#F3EEE4; --flame:#F4502A; --cobalt:#1F5BFF; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:#F3EEE4; }
+#root { position:relative; width:1080px; height:1920px; background:var(--paper); font-family:"Inter",sans-serif; color:var(--ink); }
+.abs { position:absolute; }
+#bg { left:0; top:0; width:1080px; height:1920px; background-color:var(--paper);
+  background-image:radial-gradient(circle at 14px 14px, rgba(20,20,24,.06) 0 1.5px, rgba(20,20,24,0) 1.7px); background-size:28px 28px; }
+#wrap { position:absolute; left:48px; top:230px; width:892px; height:1000px; transform-origin:50% 50%; }
+.win { position:absolute; inset:0; background:#fff; border:1px solid var(--line); border-radius:24px; overflow:hidden; box-shadow:0 18px 40px rgba(20,20,24,.16); }
+.chrome { position:absolute; left:0; top:0; width:892px; height:48px; border-bottom:1px solid var(--line); background:#fff; }
+.chrome i { position:absolute; top:19px; width:10px; height:10px; border-radius:5px; background:var(--line); }
+.chrome span { position:absolute; left:96px; top:0; font:500 28px/48px "JetBrains Mono"; color:var(--muted); white-space:pre; }
+.cont { position:absolute; left:0; top:48px; width:892px; height:952px; overflow:hidden; }
+#zoom { left:0; top:0; width:892px; height:952px; transform-origin:0 0; }
+.rule { position:absolute; left:24px; width:844px; height:1px; background:var(--line); opacity:.5; }
+#pBox { left:24px; top:38px; width:844px; height:114px; border:2px solid var(--line); border-radius:18px; }
+#pText { left:48px; top:50px; font:600 44px/56px "Inter"; white-space:pre; }
+
+#cur { display:inline-block; width:3px; height:44px; background:var(--flame); vertical-align:-8px; margin-left:3px; opacity:0; }
+#send { left:804px; top:50px; width:44px; height:44px; border-radius:22px; background:var(--line); }
+#send svg { position:absolute; left:11px; top:11px; }
+#chip { left:72px; top:104px; height:40px; padding:0 14px; border-radius:10px; background:var(--paper); font:500 28px/40px "JetBrains Mono"; color:var(--cobalt); white-space:pre; opacity:0; }
+
+#t1 { left:24px; top:232px; font:500 28px/36px "JetBrains Mono"; color:var(--muted); white-space:pre; opacity:0; }
+#t1 em { display:inline-block; width:12px; height:12px; border-radius:6px; background:var(--flame); margin-right:12px; vertical-align:1px; }
+#t2 { left:24px; top:330px; font:500 28px/36px "JetBrains Mono"; color:var(--muted); white-space:pre; }
+
+#t2 .sel { color:var(--cobalt); }
+#band { left:0; top:324px; width:892px; height:48px; background:rgba(244,80,42,.12); opacity:0; }
+.bar { position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--flame); border-radius:2px; }
+#ring { position:absolute; border:3px solid var(--flame); border-radius:14px; opacity:0; }
+#ptr { left:0; top:0; width:26px; height:36px; opacity:0; }
+#ptrIn { position:absolute; left:-2px; top:-2px; width:26px; height:36px; filter:drop-shadow(0 3px 4px rgba(20,20,24,.28)); }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="6.36" data-width="1080" data-height="1920">
+  <div id="bg" class="abs clip" data-start="0" data-duration="6.36" data-track-index="0"></div>
+  <div id="wrap" class="clip" data-start="0" data-duration="6.36" data-track-index="1">
+    <div class="win">
+      <div class="chrome"><i style="left:20px"></i><i style="left:42px"></i><i style="left:64px"></i><span>claude  ·  demo-folder</span></div>
+      <div class="cont">
+        <div id="zoom" class="abs">
+          <div class="rule" style="top:500px"></div><div class="rule" style="top:572px"></div><div class="rule" style="top:644px"></div><div class="rule" style="top:716px"></div><div class="rule" style="top:788px"></div><div class="rule" style="top:860px"></div>
+          <div id="band" class="abs"><div class="bar"></div></div>
+          <div id="pBox" class="abs"></div>
+          <div id="pText" class="abs">&gt; <b id="pChars" style="font-weight:600"></b><span id="cur"></span></div>
+          <div id="send" class="abs"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#141418" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 18V4M5 10l6-6 6 6"/></svg></div>
+          <div id="chip" class="abs"><b id="chipChars" style="font-weight:500"></b></div>
+          <div id="t1" class="abs" data-layout-allow-occlusion><em></em>scrapling  fetch(directory.example/companies)</div>
+          <div id="t2" class="abs"><b id="t2pre" style="font-weight:500">css: </b><b id="selstr" class="sel" style="font-weight:500">"div.listing &gt; a[href^='mailto:']"</b></div>
+          <div id="ptr" class="abs"><svg id="ptrIn" viewBox="0 0 26 36"><path d="M3 3 L3 29 L9.5 22.5 L14.5 34 L19.5 31.8 L14.5 20.5 L23.5 20.5 Z" fill="#141418" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div id="ring"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+const OUT = "power3.out", IN = "power3.in", IO = "power3.inOut";
+const $ = (s) => document.querySelector(s);
+const FLAME = "#F4502A";
+const T0 = 23.38;                // clip time 0 = output 23.38
+const c = (t) => +(t - T0).toFixed(3);   // output time -> clip time
+const EARLY = 0.12;
+console.log("fonts", document.fonts.check('600 44px "Inter"'), document.fonts.check('500 28px "JetBrains Mono"'));
+
+function addChars(host, text, keep) {
+  if (!keep) host.textContent = "";
+  return [...text].map((ch) => { const s = document.createElement("span"); s.textContent = ch; s.style.display = "none"; host.appendChild(s); return s; });
+}
+function typeChars(spans, t0, cps) { spans.forEach((s, i) => tl.set(s, { display: "inline" }, t0 + i / cps)); }
+
+// ---- drift: whole window, sine in-out over the full hold ----
+tl.fromTo("#wrap", { y: 0, scale: 1 }, { y: -8, scale: 1.02, duration: 6.36, ease: "sine.inOut" }, 0);
+
+// ---- prompt (word onsets: scrape 24.82, this 25.46, directory 25.70), each starts 120 ms early, ~24 cps
+const P = $("#pChars");
+const w1 = addChars(P, "Scrape"), w2 = addChars(P, " this", true), w3 = addChars(P, " directory", true);
+typeChars(w1, c(24.82 - EARLY), 24);
+typeChars(w2, c(25.46 - EARLY), 24);
+typeChars(w3, c(25.70 - EARLY), 24);
+// ask 24.02: prompt outline turns flame, caret appears
+tl.to("#pBox", { borderColor: FLAME, duration: 0.12, ease: OUT }, c(24.02 - EARLY));
+// caret: solid while typing, blinks 1 Hz in gaps, gone when the tool call starts
+const typeEnd = [c(24.82 - EARLY) + 6 / 24, c(25.46 - EARLY) + 5 / 24, c(25.70 - EARLY) + 10 / 24];
+const gaps = [[c(24.02 - EARLY), c(24.82 - EARLY)], [typeEnd[0], c(25.46 - EARLY)], [typeEnd[1], c(25.70 - EARLY)], [typeEnd[2], c(27.18)]];
+gaps.forEach(([a, b], gi) => {
+  tl.set("#cur", { opacity: 1 }, a);
+  for (let t = a + 0.5; t < b; t += 0.5) tl.set("#cur", { opacity: Math.round((t - a) / 0.5) % 2 ? 0 : 1 }, t);
+  if (gi < gaps.length - 1) tl.set("#cur", { opacity: 1 }, b);
+});
+tl.set("#cur", { opacity: 0 }, c(27.18));
+// url chip (directory 25.70): pops blank, then types; send turns flame
+tl.fromTo("#chip", { scale: 0.8, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.17, ease: OUT }, c(25.70 - EARLY));
+const urlSpans = addChars($("#chipChars"), "directory.example/companies");
+typeChars(urlSpans, c(25.70 - EARLY) + 0.17, 40);
+tl.to("#send", { backgroundColor: FLAME, duration: 0.12, ease: OUT }, c(25.70 - EARLY));
+
+// ---- tool call (picks 27.30) and selector line (CSS 27.86)
+tl.fromTo("#t1", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.17, ease: OUT }, c(27.30 - EARLY));
+const selText = $("#selstr").textContent;
+const pre = addChars($("#t2pre"), "css: ");
+const sel = addChars($("#selstr"), selText);
+typeChars(pre.concat(sel), c(27.86 - EARLY), (pre.length + sel.length) / 0.56);
+
+// ---- zoom on the selector line (selectors 28.50): starts 120 ms early, 350 ms power3.out
+const W = 892, H = 952;
+const cont = $(".cont").getBoundingClientRect();
+const zr = $("#zoom").getBoundingClientRect();
+const t2s = [...document.querySelectorAll("#t2 span")];
+t2s.forEach((e) => (e.style.display = "inline"));
+const lr = $("#t2").getBoundingClientRect();
+t2s.forEach((e) => (e.style.display = "none"));
+// layout coords (wrap is at scale 1 at t=0 apart from the 1px border; zoom origin at cont top-left)
+const lx = lr.left - zr.left, ly = lr.top - zr.top, lw = lr.width, lh = lr.height;
+const padX = 10, padY = 6;
+const ringW0 = lw + 2 * padX, ringH0 = lh + 2 * padY;
+const S = Math.min(1.35, Math.floor((W - 2 * 24) / ringW0 * 100) / 100);
+const cx = lx + lw / 2, cy = ly + lh / 2;
+const zt = c(28.50 - EARLY), zEnd = 6.333, zBack = zEnd - 0.25;
+console.log("ZOOM", JSON.stringify({ lx, ly, lw, lh, S, ringW: ringW0 * S, inset: (W - ringW0 * S) / 2 }));
+const band = $("#band");
+band.style.left = (cx - W / (2 * S)) + "px"; band.style.width = (W / S) + "px";
+const dim = ["#pBox", "#pText", "#send", "#chip", "#t1"];
+tl.to("#zoom", { scale: S, x: W / 2 - S * cx, y: H / 2 - S * cy, duration: 0.35, ease: OUT }, zt);
+tl.to(dim, { opacity: 0.15, duration: 0.25, ease: OUT }, zt);
+tl.to("#band", { opacity: 1, duration: 0.2, ease: OUT }, zt);
+const ring = $("#ring");
+ring.style.width = ringW0 * S + "px"; ring.style.height = ringH0 * S + "px";
+ring.style.left = (W / 2 - ringW0 * S / 2) + "px"; ring.style.top = (H / 2 - ringH0 * S / 2) + "px";
+tl.to(ring, { opacity: 1, duration: 0.15, ease: OUT }, zt + 0.35);
+// ease back to 1.0 in the last 250 ms, everything visible again
+tl.to("#zoom", { scale: 1, x: 0, y: 0, duration: 0.25, ease: IO }, zBack);
+tl.to(dim, { opacity: 1, duration: 0.25, ease: OUT }, zBack);
+tl.to([ring, "#band"], { opacity: 0, duration: 0.125, ease: IN }, zBack);
+
+// ---- pointer (tip coords in zoom space): prompt -> chip spot -> tool call -> selector
+const stops = [
+  [c(23.82), 640, 62, 0.30],   // beside the prompt row, 200 ms before "ask"
+  [c(25.50), 600, 132, 0.30],  // beside the url chip spot, 200 ms before "directory"
+  [c(27.10), 672, 292, 0.30],  // beside the tool call, 200 ms before "picks"
+  [c(28.30), 610, 388, 0.30],  // beside the selector, 200 ms before "selectors"
+];
+tl.set("#ptr", { x: 936, y: 40 }, 0);
+tl.set("#ptr", { opacity: 1 }, 0.01);
+stops.forEach(([t, x, y, d]) => tl.to("#ptr", { x, y, duration: d, ease: IO }, t - d));
+// idle sway 2 px between beats (inner element)
+[[c(23.82), c(25.20)], [c(25.50), c(26.80)], [c(27.10), c(28.00)]].forEach(([a, b]) => {
+  const n = Math.max(1, Math.floor((b - a) / 0.9));
+  tl.fromTo("#ptrIn", { y: -2 }, { y: 0, duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 2 * n - 1 }, a);
+});
+
+window.__timelines["main"] = tl;
+tl.seek(0);
+</script>
+</div>
+</body>
+</html>

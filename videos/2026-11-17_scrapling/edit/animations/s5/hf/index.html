@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<style>
+:root { --ink:#141418; --muted:#6E6A64; --line:#DCD6CA; --paper:#F3EEE4; --flame:#F4502A; --cobalt:#1F5BFF; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; background:transparent; }
+#root { position:relative; width:1080px; height:1920px; background:transparent; font-family:"Inter",sans-serif; color:var(--ink); }
+.abs { position:absolute; }
+#panel { left:0; top:0; width:1080px; height:960px; background-color:var(--paper);
+  background-image:radial-gradient(circle at 14px 14px, rgba(20,20,24,.06) 0 1.5px, rgba(20,20,24,0) 1.7px); background-size:28px 28px; }
+.wrap { position:absolute; left:48px; top:192px; width:892px; height:640px; transform-origin:100% 50%; }
+.win { position:absolute; inset:0; background:#fff; border:1px solid var(--line); border-radius:24px; overflow:hidden; box-shadow:0 18px 40px rgba(20,20,24,.16); }
+.chrome { position:absolute; left:0; top:0; width:892px; height:48px; border-bottom:1px solid var(--line); background:#fff; }
+.chrome i { position:absolute; top:19px; width:10px; height:10px; border-radius:5px; background:var(--line); }
+.chrome span.lb { position:absolute; left:96px; top:0; font:500 28px/48px "JetBrains Mono"; color:var(--muted); white-space:pre; }
+.cont { position:absolute; left:0; top:48px; width:892px; height:592px; overflow:hidden; }
+/* card 03 */
+#kick { left:46px; top:130px; font:500 30px/36px "JetBrains Mono"; color:var(--flame); opacity:0; }
+#title { left:46px; top:176px; font:800 80px/96px "Inter"; white-space:nowrap; letter-spacing:-1px; }
+#title span { opacity:0; }
+#title .sv { color:var(--flame); }
+#plug { left:570px; top:168px; width:96px; height:96px; opacity:0; }
+/* window B */
+.ln { position:absolute; left:0; width:892px; height:64px; white-space:pre; font:500 32px/64px "JetBrains Mono"; opacity:0; }
+.ln b { position:absolute; left:24px; font:500 28px/64px "JetBrains Mono"; color:var(--muted); }
+.ln u { position:absolute; left:72px; text-decoration:none; color:var(--ink); }
+.ln i { font-style:normal; } .p, .ph { color:var(--muted); } .st { color:var(--cobalt); }
+#bBand { position:absolute; left:0; top:88px; width:892px; height:64px; background:rgba(244,80,42,.12); opacity:0; }
+#bBand .bar { position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--flame); }
+#bRing { position:absolute; border:3px solid var(--flame); border-radius:14px; opacity:0; }
+#tab { position:absolute; left:626px; top:6px; width:224px; height:36px; border-radius:12px; background:var(--paper); border:2px solid var(--flame); opacity:0; }
+#tab em { position:absolute; left:12px; top:9px; width:14px; height:14px; border-radius:7px; background:var(--line); }
+#tab .tx { position:absolute; left:36px; top:0; font:600 28px/32px "Inter"; color:var(--ink); white-space:pre; }
+.tc { opacity:0; }
+/* pointer */
+#ptr { position:absolute; left:0; top:0; width:30px; height:40px; z-index:50; filter:drop-shadow(0 3px 4px rgba(20,20,24,.28)); }
+#ptrIn { position:absolute; left:-2px; top:-2px; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="4.76" data-width="1080" data-height="1920">
+  <div id="panel" class="abs"></div>
+
+  <!-- card 03 (empty from the cut) -->
+  <div id="wA" class="wrap clip" data-start="0" data-duration="4.76" data-track-index="2">
+    <div class="win">
+      <div class="chrome"><i style="left:20px"></i><i style="left:42px"></i><i style="left:64px"></i><span class="lb">feature 03</span></div>
+      <div class="cont">
+        <div id="kick" class="abs">03</div>
+        <div id="title" class="abs"><span id="t1">MCP</span> <span class="sv" id="t2">server</span></div>
+        <svg id="plug" class="abs" viewBox="0 0 36 36" fill="none" stroke="#141418" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v8M24 3v8M7 11h22v6a11 11 0 01-22 0zM18 28v5"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- window B: config -->
+  <div id="wB" class="wrap clip" data-start="0" data-duration="4.76" data-track-index="3" style="opacity:0">
+    <div class="win">
+      <div class="chrome"><i style="left:20px"></i><i style="left:42px"></i><i style="left:64px"></i><span class="lb">.claude.json  (mcpServers only)</span>
+        <div id="tab"><em id="dot"></em><div class="tx"><span class="tc">C</span><span class="tc">l</span><span class="tc">a</span><span class="tc">u</span><span class="tc">d</span><span class="tc">e</span><span class="tc"> </span><span class="tc">C</span><span class="tc">o</span><span class="tc">d</span><span class="tc">e</span></div></div>
+      </div>
+      <div class="cont">
+        <div id="bZoom" class="abs" style="left:0;top:0;width:892px;height:592px;transform-origin:0 0">
+          <div id="bBand"><div class="bar"></div></div>
+          <div class="ln" style="top:24px"><b>1</b><u class="p">{</u></div>
+          <div class="ln" style="top:88px"><b>2</b><u>  <i>"mcpServers"</i><i class="p">: {</i></u></div>
+          <div class="ln" style="top:152px"><b>3</b><u>    <i>"scrapling"</i><i class="p">: {</i></u></div>
+          <div class="ln" style="top:216px"><b>4</b><u>      <i>"command"</i><i class="p">: </i><i class="ph">"…"</i><i class="p">,</i></u></div>
+          <div class="ln" style="top:280px"><b>5</b><u>      <i>"args"</i><i class="p">: [</i><i class="ph">"…"</i><i class="p">]</i></u></div>
+          <div class="ln" style="top:344px"><b>6</b><u class="p">    }</u></div>
+          <div class="ln" style="top:408px"><b>7</b><u class="p">  }</u></div>
+          <div class="ln" style="top:472px"><b>8</b><u class="p">}</u></div>
+        </div>
+        <div id="bRing"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ptr"><div id="ptrIn"><svg width="30" height="40" viewBox="0 0 24 34"><path d="M3 2v24l6-5.5 4.5 10 4-1.8-4.4-9.8h8.4z" fill="#141418" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+const OUT = "power3.out", IN = "power3.in", IO = "power3.inOut";
+const $ = (s) => document.querySelector(s);
+const T = (t) => +(t - 18.62).toFixed(3);   // output time -> clip time
+const FLAME = "#F4502A";
+const pop = (el, t, d = 0.17, s0 = 0.8) => tl.fromTo(el, { scale: s0, opacity: 0 }, { scale: 1, opacity: 1, duration: d, ease: OUT }, t);
+function typeSpans(spans, t0, t1) { const dt = (t1 - t0) / spans.length; spans.forEach((s, i) => tl.set(s, { opacity: 1 }, t0 + i * dt)); }
+function splitChars(el) { const txt = el.textContent; el.textContent = ""; return [...txt].map((ch) => { const s = document.createElement("span"); s.textContent = ch; s.style.opacity = 0; el.appendChild(s); return s; }); }
+
+// continuous drift, sine in-out, never stops; card 03 until it is gone, window B from its landing
+tl.fromTo("#wA", { y: 0, scale: 1 }, { y: -8, scale: 1.02, duration: T(21.96), ease: "sine.inOut" }, 0);
+tl.fromTo("#wB", { y: 0, scale: 1 }, { y: -8, scale: 1.02, duration: T(23.38) - T(22.08), ease: "sine.inOut" }, T(22.08));
+
+// pointer: tip positions in root px; each travel 300 ms, arriving 200 ms before the word
+const P = [ [162, 408, 18.54], [572, 524, 19.98], [730, 520, 20.70], [462, 378, 21.98], [482, 442, 22.30], [860, 236, 22.78] ];
+tl.set("#ptr", { x: P[0][0], y: P[0][1] }, 0);
+P.slice(1).forEach(([x, y, arrive]) => tl.to("#ptr", { x, y, duration: 0.3, ease: "power3.inOut" }, T(arrive) - 0.3));
+tl.to("#ptrIn", { x: 2, y: 2, duration: 0.55, ease: "sine.inOut", repeat: 8, yoyo: true }, 0);
+
+// card 03
+pop("#kick", T(18.74) - 0.12);                                                   // '03' pops on "Third"
+typeSpans([$("#t1")], T(20.18) - 0.12, T(20.18) - 0.12);                          // 'MCP' lands on its word
+tl.fromTo("#t1", { x: -8, scale: 0.94 }, { x: 0, scale: 1, duration: 0.14, ease: OUT }, T(20.18) - 0.12);
+tl.set("#t1", { opacity: 1 }, T(20.18) - 0.12);
+tl.fromTo("#t2", { x: -8, scale: 0.94 }, { x: 0, scale: 1, duration: 0.14, ease: OUT }, T(20.90) - 0.12);
+tl.set("#t2", { opacity: 1 }, T(20.90) - 0.12);
+pop("#plug", T(20.90) - 0.12, 0.17, 0.8);
+
+// swap on "Plug" (21.78): old out left, new in from the right, overlapping
+tl.set("#wB", { opacity: 1 }, T(21.78) - 0.12);
+tl.fromTo("#wB", { x: 1080 }, { x: 0, duration: 0.3, ease: OUT }, T(21.78) - 0.12);
+tl.to("#wA", { x: -1080, duration: 0.3, ease: IN }, T(21.78) - 0.12);
+document.querySelectorAll("#wB .ln").forEach((el, i) =>
+  tl.fromTo(el, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.12, ease: OUT }, T(21.78) - 0.12 + 0.06 + i * 0.018));
+tl.to("#bBand", { opacity: 1, duration: 0.17, ease: OUT }, T(21.78) - 0.12);
+
+// "Claude" (22.50): band to line 3, tab pops blank, 'Claude' types
+tl.to("#bBand", { y: 64, duration: 0.25, ease: IO }, T(22.50) - 0.12);
+pop("#tab", T(22.50) - 0.12, 0.17, 0.8);
+const tcs = [...document.querySelectorAll("#tab .tc")];
+typeSpans(tcs.slice(0, 7), T(22.50) - 0.06, T(22.50) + 0.04);
+// "Code." (22.98): tab types 'Code', dot turns flame, push 1.3x on lines 3-5, line numbers hidden
+typeSpans(tcs.slice(7), T(22.98) - 0.12, T(22.98));
+tl.to("#dot", { backgroundColor: FLAME, duration: 0.15, ease: OUT }, T(22.98) - 0.12);
+const PUSH = T(22.98) - 0.35;   // push lands exactly on 'Code.' (landing frame 4.36)
+tl.to("#wB .ln b", { opacity: 0, duration: 0.12, ease: OUT }, PUSH);
+{
+  const W = 892, H = 592, s = 1.3, bx = 40, by = 144, bw = 600, bh = 208;
+  const cx = bx + bw / 2, cy = by + bh / 2;
+  tl.to("#bZoom", { scale: s, x: W / 2 - s * cx, y: H / 2 - s * cy, duration: 0.35, ease: OUT }, PUSH);
+  const r = $("#bRing"); r.style.width = bw * s + "px"; r.style.height = bh * s + "px";
+  r.style.left = (W / 2 - bw * s / 2) + "px"; r.style.top = (H / 2 - bh * s / 2) + "px";
+  tl.to(r, { opacity: 1, duration: 0.15, ease: OUT }, PUSH + 0.35 + 0.15);
+}
+window.__timelines["main"] = tl;
+tl.seek(0);
+</script>
+</div>
+</body>
+</html>

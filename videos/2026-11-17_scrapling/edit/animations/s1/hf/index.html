@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; src: url("assets/fonts/InstrumentSerif-Italic.ttf") format("truetype"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: transparent; }
+      #root { position: relative; width: 1080px; height: 1920px; background: transparent; }
+      #title { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      .line { position: absolute; left: 48px; white-space: nowrap; display: flex; align-items: baseline; gap: 28px; color: #141418; font-family: "Inter", sans-serif; }
+      .w { display: inline-block; opacity: 0; transform-origin: 50% 60%; }
+      #kicker { top: 245px; font-weight: 600; font-size: 36px; letter-spacing: 6px; color: #6E6A64; gap: 18px; }
+      #l1 { top: 316px; font-weight: 800; font-size: 112px; line-height: 136px; }
+      #l2 { top: 470px; font-weight: 800; font-size: 112px; line-height: 136px; }
+      #scraper { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; font-size: 124px; color: #F4502A; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="3.42" data-width="1080" data-height="1920">
+      <div id="title">
+        <div class="line" id="kicker"><span class="w">One</span><span class="w">tool</span></div>
+        <div class="line" id="l1"><span class="w">Claude</span><span class="w">Code,</span></div>
+        <div class="line" id="l2"><span class="w">lead</span><span class="w" id="scraper">scraper</span></div>
+      </div>
+    </div>
+    <script>
+      document.fonts.load('italic 124px "Instrument Serif"').then(() => {
+        if (!document.fonts.check('italic 124px "Instrument Serif"')) throw new Error("Instrument Serif not loaded");
+      });
+      const tl = gsap.timeline({ paused: true });
+      const POP = 0.17, LEAD = 0.12;
+      const beats = [[0, 0.18], [1, 0.58], [2, 1.22], [3, 1.7], [4, 2.34], [5, 2.74]];
+      const words = gsap.utils.toArray(".w");
+      gsap.set(words, { opacity: 0, scale: 0.92 });
+      beats.forEach(([i, t]) => {
+        tl.to(words[i], { opacity: 1, scale: 1, duration: POP, ease: "power3.out" }, t - LEAD);
+      });
+      tl.fromTo("#title", { y: 0 }, { y: -6, duration: 3.42 - 2.74, ease: "sine.inOut" }, 2.74);
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
