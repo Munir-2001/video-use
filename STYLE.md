@@ -21,7 +21,7 @@ One rule per line. Each line ends with `(date · origin)`. Origins: `seed` = ini
 - The scenery changes every 5–8 s. My face is for the personal lines (hook, an opinion, the CTA), a couple of seconds each; the informational parts drop my video and show the animation alone (graphic_full, up to ~8 s, a change every ≤ 3 s). (2026-11-17 · review)
 
 ## Cuts and pacing
-- Hard cuts only. No crossfades, no dissolves, no wipes. (2026-11-16 · seed)
+- Hard cuts only between shots. No crossfades, no dissolves, no wipes. Elements inside a shot may slide, pop and fade (brand/motion.md). (2026-11-16 · seed; clarified 2026-11-17)
 - Cut on word boundaries, pad 30–200 ms, prefer silences ≥ 400 ms. (2026-11-16 · seed)
 - When I repeat a sentence, the last complete attempt wins. (2026-11-16 · seed)
 - Never more than one new graphic element per 3 seconds. (2026-11-16 · seed)
