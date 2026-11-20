@@ -50,14 +50,169 @@ function wireUpload(form) {
   });
 }
 
+/* ---------- New reel wizard (idea → type → goal → audience → review) ---------- */
+const WIZ_STEPS = ["Idea", "Type", "Goal", "Audience", "Review"];
+const slugOf = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 40).replace(/^-+|-+$/g, "");
+let WIZ = null;
+
+function kindCards(group, chosen, name) {
+  return `<div class="kinds">${Object.entries(STATE.kinds[group] || {}).map(([k, v]) => `
+    <label class="kind ${k === chosen ? "on" : ""}"><input type="radio" name="${name}" value="${k}" ${k === chosen ? "checked" : ""}>
+      <b>${esc(v.label || k)}</b><span>${esc(v.hint || "")}</span></label>`).join("")}</div>`;
+}
+
+function wizardStep(step, w) {
+  const kinds = STATE.kinds;
+  switch (step) {
+    case 0: return `
+      <h2>What is the reel about?</h2>
+      <p class="lead">One line. The writer turns it into a script you can read to camera.</p>
+      <label class="field"><span>The idea</span><textarea name="idea" rows="2" placeholder="e.g. Scrapling turns Claude Code into a lead scraper in one MCP server" required>${esc(w.idea)}</textarea></label>
+      <label class="field"><span>Folder name <em>videos/${esc(new Date().toISOString().slice(0, 10))}_<b id="slugprev">${esc(w.slug || slugOf(w.idea) || "…")}</b>/</em></span><input name="slug" value="${esc(w.slug)}" placeholder="auto from the idea"></label>
+      <label class="field"><span>Links to read first <em>one per line: repo, docs, the page you will show</em></span><textarea name="links" rows="3">${esc(w.links)}</textarea></label>`;
+    case 1: return `
+      <h2>What kind of reel?</h2>
+      <p class="lead">The type sets the rhythm: how often the screen changes and what the planner puts in the windows.</p>
+      ${kindCards("types", w.type, "type")}`;
+    case 2: return `
+      <h2>What should it do?</h2>
+      <p class="lead">The goal sets the hook, the length and the ending. One goal per reel.</p>
+      ${kindCards("goals", w.goal, "goal")}`;
+    case 3: return `
+      <h2>Who is it for, and what do they get?</h2>
+      <label class="field"><span>Audience <em>who, and what they already know</em></span><input name="audience" value="${esc(w.audience)}" placeholder="e.g. founders who use Claude Code but have never scraped anything"></label>
+      <label class="field"><span>The offer <em>what you promise at the end</em></span><input name="offer" value="${esc(w.offer)}" placeholder="e.g. the setup steps as a PDF"></label>
+      ${w.goal === "comments" ? `<label class="field"><span>Comment keyword</span><input name="cta_keyword" value="${esc(w.cta_keyword)}" placeholder="e.g. Scrape" style="max-width:220px"></label>` : ""}
+      <label class="field"><span>Anything else for the writer <em>tone, what to avoid, a line you want in</em></span><textarea name="notes" rows="3">${esc(w.notes)}</textarea></label>`;
+    default: {
+      const t = kinds.types[w.type] || {}, g = kinds.goals[w.goal] || {};
+      return `
+      <h2>Review</h2>
+      <div class="review">
+        <div class="idea">${esc(w.idea)}</div>
+        <div class="row"><span class="pill kind-type">${esc(t.label || w.type)}</span><span class="pill kind-goal">${esc(g.label || w.goal)}</span><span class="muted mono">videos/${esc(new Date().toISOString().slice(0, 10))}_${esc(w.slug || slugOf(w.idea))}/</span></div>
+        <div class="kv" style="margin-top:12px">
+          <b>writer will</b><span>${esc(t.writer || "")} ${esc(g.writer || "")}</span>
+          <b>planner will</b><span>${esc(t.planner || "")}</span>
+          ${w.audience ? `<b>audience</b><span>${esc(w.audience)}</span>` : ""}
+          ${w.offer ? `<b>offer</b><span>${esc(w.offer)}</span>` : ""}
+          ${w.cta_keyword ? `<b>keyword</b><span>“${esc(w.cta_keyword)}”</span>` : ""}
+          ${w.links.trim() ? `<b>links</b><span>${esc(w.links.trim().split("\n").length)} to read</span>` : ""}
+        </div>
+      </div>
+      <div class="next"><b>What happens next</b><ol><li>Create saves the plan to <code>edit/brief.json</code> and adds an <i>idea</i> line to the library.</li><li>In chat, say <code>write a script for videos/…</code>. The writer reads the plan and writes <code>script.md</code> with the assets to capture.</li><li>Drop the screens on the Plan tab, record from the script, upload the take, then <code>edit videos/…</code>.</li></ol></div>`;
+    }
+  }
+}
+
+function newReel() {
+  setNav("");
+  WIZ = WIZ || { step: 0, idea: "", slug: "", links: "", type: "", goal: "", audience: "", offer: "", cta_keyword: "", notes: "" };
+  const w = WIZ;
+  app.innerHTML = `
+    <div class="wizard">
+      <ol class="steps">${WIZ_STEPS.map((s, i) => `<li class="${i === w.step ? "on" : i < w.step ? "done" : ""}"><span>${i + 1}</span>${s}</li>`).join("")}</ol>
+      <form id="wiz" class="sheet">${wizardStep(w.step, w)}
+        <div class="row wizbar"><button type="button" class="ghost" id="back" ${w.step === 0 ? "disabled" : ""}>← Back</button><span class="muted err" id="wizerr"></span><button class="primary" type="submit">${w.step === WIZ_STEPS.length - 1 ? "Create reel" : "Next →"}</button></div>
+      </form>
+    </div>`;
+  const form = document.getElementById("wiz");
+  const collect = () => { const fd = new FormData(form); for (const [k, v] of fd.entries()) w[k] = String(v).trim(); };
+  const ideaEl = form.querySelector("[name=idea]");
+  if (ideaEl) ideaEl.addEventListener("input", () => { document.getElementById("slugprev").textContent = w.slug || slugOf(ideaEl.value) || "…"; });
+  form.querySelectorAll(".kind input").forEach((r) => r.addEventListener("change", () => { form.querySelectorAll(".kind").forEach((k) => k.classList.toggle("on", k.querySelector("input").checked)); }));
+  document.getElementById("back").addEventListener("click", () => { collect(); w.step -= 1; newReel(); });
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault(); collect();
+    const err = document.getElementById("wizerr");
+    if (w.step === 0 && !w.idea) return (err.textContent = "write the idea first");
+    if (w.step === 1 && !w.type) return (err.textContent = "pick a type");
+    if (w.step === 2 && !w.goal) return (err.textContent = "pick a goal");
+    if (w.step < WIZ_STEPS.length - 1) { w.step += 1; return newReel(); }
+    const r = await (await fetch("/api/reel/new", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...w, slug: w.slug || slugOf(w.idea) }) })).json();
+    if (r.error) return (err.textContent = r.error);
+    WIZ = null; toast(`created videos/${r.folder}`); await loadState(); location.hash = "#/video/" + encodeURIComponent(r.folder);
+  });
+}
+
+/* ---------- Plan tab (brief + script + assets checklist) ---------- */
+const NEXT_STEP = {
+  idea: (f) => `Say in chat: <code>write a script for videos/${esc(f)}</code>. The writer reads this plan and writes the script plus the assets to capture.`,
+  scripted: () => `Capture every asset in the list below (drop each on its row), then record from “Say this”.`,
+  assets: (f) => `Record the take from the script, then upload it under <b>Add files</b> on the right. Then say <code>edit videos/${esc(f)}</code>.`,
+  raw: (f) => `Say in chat: <code>edit videos/${esc(f)}</code>.`,
+};
+const scriptSections = (text) => { const out = {}; let key = "_"; (text || "").split("\n").forEach((l) => { if (l.startsWith("## ")) { key = l.slice(3).trim().toLowerCase(); out[key] = []; } else (out[key] = out[key] || []).push(l); }); return Object.fromEntries(Object.entries(out).map(([k, v]) => [k, v.join("\n").trim()])); };
+
+function planTab(d, folder) {
+  const p = d.plan, kinds = STATE.kinds;
+  const t = p ? kinds.types[p.type] || {} : {}, g = p ? kinds.goals[p.goal] || {} : {};
+  const sec = scriptSections(d.script_text);
+  const say = sec["say this (read to camera)"] || sec["say this"] || "";
+  const notes = sec["recording notes"] || "";
+  const next = NEXT_STEP[d.status];
+  const a = d.assets || { rows: [], extra: [], complete: false };
+  const dropped = a.rows.filter((r) => r.dropped).length;
+  return `
+    ${p ? `<div class="panel plan">
+      <div class="row" style="justify-content:space-between"><h3 style="margin:0">Plan</h3><button class="ghost" id="editplan">edit</button></div>
+      <div class="idea">${esc(p.idea)}</div>
+      <div class="row" style="margin:8px 0"><span class="pill kind-type">${esc(t.label || p.type)}</span><span class="pill kind-goal">${esc(g.label || p.goal)}</span>${p.cta_keyword ? `<span class="pill">“${esc(p.cta_keyword)}”</span>` : ""}</div>
+      <div class="kv">${p.audience ? `<b>audience</b><span>${esc(p.audience)}</span>` : ""}${p.offer ? `<b>offer</b><span>${esc(p.offer)}</span>` : ""}${(p.links || []).length ? `<b>links</b><span>${p.links.map((l) => `<a href="${esc(l)}" target="_blank" rel="noopener" style="color:var(--accent-2)">${esc(l)}</a>`).join("<br>")}</span>` : ""}${p.notes ? `<b>notes</b><span>${esc(p.notes)}</span>` : ""}<b>writer</b><span class="muted">${esc(t.writer || "")} ${esc(g.writer || "")}</span></div>
+      <form id="planf" class="upload" hidden>
+        <label>Idea <textarea name="idea" rows="2">${esc(p.idea)}</textarea></label>
+        <div class="row"><label>Type <select name="type">${Object.entries(kinds.types).map(([k, v]) => `<option value="${k}" ${k === p.type ? "selected" : ""}>${esc(v.label)}</option>`).join("")}</select></label>
+        <label>Goal <select name="goal">${Object.entries(kinds.goals).map(([k, v]) => `<option value="${k}" ${k === p.goal ? "selected" : ""}>${esc(v.label)}</option>`).join("")}</select></label></div>
+        <label>Audience <input name="audience" value="${esc(p.audience || "")}"></label>
+        <label>Offer <input name="offer" value="${esc(p.offer || "")}"></label>
+        <label>Keyword <input name="cta_keyword" value="${esc(p.cta_keyword || "")}" style="width:140px"></label>
+        <label>Links <textarea name="links" rows="2">${esc((p.links || []).join("\n"))}</textarea></label>
+        <label>Notes <textarea name="notes" rows="2">${esc(p.notes || "")}</textarea></label>
+        <div class="row"><button class="primary" type="submit">Save plan</button><button type="button" class="ghost" id="cancelplan">cancel</button></div>
+      </form>
+    </div>` : `<div class="empty">No plan for this reel. It was created before the funnel existed, or by dropping clips. <a href="#/new" style="color:var(--accent)">Start a new reel</a> to plan one.</div>`}
+    ${next ? `<div class="next"><b>Next step</b><p>${next(folder)}</p></div>` : ""}
+    ${say ? `<div class="panel"><h3>Say this <span class="muted">(read to camera)</span></h3><div class="say">${say.split("\n").filter(Boolean).map((l) => `<p>${esc(l).replace(/\[pause\]/g, '<span class="pause">pause</span>').replace(/\(([^)]+)\)/g, '<b>$1</b>')}</p>`).join("")}</div></div>` : d.script ? "" : `<div class="muted" style="margin:0 0 14px">No script yet.</div>`}
+    ${d.script ? `<div class="panel"><div class="row" style="justify-content:space-between"><h3 style="margin:0">Assets to capture <span class="muted">${dropped}/${a.rows.length} dropped${a.complete ? " · complete" : ""}</span></h3></div>
+      ${a.rows.length ? `<table class="assets"><tr><th>#</th><th>file</th><th>what</th><th>highlight on</th><th>type</th><th>status</th></tr>${a.rows.map((r) => `<tr class="${r.dropped ? "ok" : ""}"><td class="mono">${esc(r.n)}</td><td class="mono">${esc(r.file)}</td><td>${esc(r.what)}</td><td>${esc(r.highlight)}</td><td class="muted">${esc(r.type)}</td>
+        <td>${r.dropped ? `<a href="${r.url}" target="_blank" class="dropped">${/\.(png|jpe?g|gif|webp)$/i.test(r.dropped) ? `<img src="${r.url}" alt="">` : "▶"} ${esc(r.dropped)}</a>` : `<form class="drop" data-beat="${esc(r.n)}"><input type="file" name="file" accept="image/*,video/*,.png,.jpg,.jpeg,.gif,.webp,.mp4,.mov,.webm" required><button type="submit">drop</button></form>`}</td></tr>`).join("")}</table>` : `<div class="muted">The script has no assets table.</div>`}
+      <form class="drop other" data-beat=""><span class="muted">Other files for this reel</span><input type="file" name="file" multiple accept="image/*,video/*"><button type="submit">add</button></form>
+      ${a.extra.length ? `<div class="row extra">${a.extra.map((x) => `<a href="${x.url}" target="_blank" class="dropped">${esc(x.name)}</a>`).join("")}</div>` : ""}
+    </div>` : ""}
+    ${notes ? `<div class="panel"><h3>Recording notes</h3><pre>${esc(notes)}</pre></div>` : ""}
+    ${d.script_text ? `<details class="panel"><summary>Full script.md</summary><pre>${esc(d.script_text)}</pre></details>` : ""}`;
+}
+
+function wirePlanTab(folder, reload) {
+  const planf = document.getElementById("planf"), editb = document.getElementById("editplan");
+  if (editb) editb.addEventListener("click", () => { planf.hidden = !planf.hidden; });
+  const cancel = document.getElementById("cancelplan");
+  if (cancel) cancel.addEventListener("click", () => { planf.hidden = true; });
+  if (planf) planf.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const body = Object.fromEntries(new FormData(planf).entries());
+    const r = await (await fetch("/api/plan/" + encodeURIComponent(folder), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })).json();
+    toast(r.error ? r.error : "plan saved"); if (!r.error) reload();
+  });
+  document.querySelectorAll("form.drop").forEach((f) => f.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const fd = new FormData(f); fd.set("beat", f.dataset.beat);
+    if (![...f.querySelector("input[type=file]").files].length) return toast("pick a file");
+    const r = await (await fetch("/api/assets/" + encodeURIComponent(folder), { method: "POST", body: fd })).json();
+    toast(r.error ? r.error : `saved ${r.saved.join(", ")}` + (r.skipped.length ? ` · skipped ${r.skipped.join(", ")}` : "")); if (!r.error) reload();
+  }));
+}
+
 /* ---------- Library ---------- */
 function library() {
   setNav("library");
   const v = STATE.videos;
   const done = v.filter((x) => x.status === "done").length;
+  const planned = v.filter((x) => ["idea", "scripted", "assets"].includes(x.status)).length;
   app.innerHTML = `
-    <h1>Library</h1><div class="sub">${v.length} video folder${v.length === 1 ? "" : "s"} · ${done} done · ${STATE.cards.length}/12 cards · ${STATE.inbox.length} drop${STATE.inbox.length === 1 ? "" : "s"} in the inbox</div>
-    <details class="panel" id="newvideo"><summary><b>＋ New video</b> <span class="muted">— upload phone clips and, if you recorded one, a separate voice file</span></summary>${uploadForm(null)}</details>
+    <h1>Library</h1><div class="sub">${v.length} reel${v.length === 1 ? "" : "s"} · ${planned} in planning · ${done} done · ${STATE.cards.length}/12 cards · ${STATE.inbox.length} drop${STATE.inbox.length === 1 ? "" : "s"} in the inbox</div>
+    <div class="start"><a class="cta" href="#/new"><b>＋ New reel</b><span>idea → type → goal → script → assets → record</span></a>
+      <details class="panel" id="newvideo"><summary><b>Just upload clips</b> <span class="muted">— a take or phone clips without a plan, plus a separate voice file if you recorded one</span></summary>${uploadForm(null)}</details></div>
     <div class="grid">${v.map((x, i) => `
       <a class="card" href="#/video/${encodeURIComponent(x.folder)}" style="animation-delay:${i * 40}ms">
         <div class="thumb ${x.clips[0] && x.clips[0].height > x.clips[0].width ? "vertical" : ""}" style="${x.thumb ? `background-image:url('${x.thumb}')` : ""}">
@@ -65,10 +220,10 @@ function library() {
         </div>
         <div class="body">
           <div class="title">${esc(x.slug)}</div>
-          <div class="row"><span class="pill status-${esc(x.status)}">${esc(x.status)}</span><span class="muted">${esc(x.date)}</span><span class="muted">· ${x.clips.length} clip${x.clips.length === 1 ? "" : "s"}</span>${x.voice && x.voice.length ? `<span class="pill kind-sound" title="${esc(x.brief ? x.brief.mode : "")}">🎙 ${x.brief ? esc(x.brief.mode) : "voice"}</span>` : ""}</div>
-          ${x.note ? `<div class="muted" style="margin-top:6px;font-size:13px">${esc(x.note)}</div>` : ""}
-          <div class="dots" title="transcript · EDL · scenes · captions · sound · critic">
-            ${["takes_packed.md", "edl.json", "scenes.json", "master.ass", "sound.json", "critic.md"].map((k) => `<span class="dot ${x.has[k] ? "on" : ""}"></span>`).join("")}
+          <div class="row"><span class="pill status-${esc(x.status)}">${esc(x.status)}</span><span class="muted">${esc(x.date)}</span>${x.plan ? `<span class="pill kind-type">${esc((STATE.kinds.types[x.plan.type] || {}).label || x.plan.type)}</span><span class="pill kind-goal">${esc((STATE.kinds.goals[x.plan.goal] || {}).label || x.plan.goal)}</span>` : `<span class="muted">· ${x.clips.length} clip${x.clips.length === 1 ? "" : "s"}</span>`}${x.voice && x.voice.length ? `<span class="pill kind-sound" title="${esc(x.brief ? x.brief.mode : "")}">🎙 ${x.brief ? esc(x.brief.mode) : "voice"}</span>` : ""}</div>
+          ${x.plan ? `<div class="ideaLine">${esc(x.plan.idea)}</div>` : x.note ? `<div class="muted" style="margin-top:6px;font-size:13px">${esc(x.note)}</div>` : ""}
+          <div class="dots" title="plan · script · assets · clips · transcript · EDL · scenes · captions · sound · critic">
+            ${[!!x.plan, x.script, x.assets_n > 0, x.clips.length > 0].map((on) => `<span class="dot plan ${on ? "on" : ""}"></span>`).join("")}${["takes_packed.md", "edl.json", "scenes.json", "master.ass", "sound.json", "critic.md"].map((k) => `<span class="dot ${x.has[k] ? "on" : ""}"></span>`).join("")}
           </div>
         </div>
       </a>`).join("")}
@@ -104,8 +259,8 @@ async function video(folder) {
     <div class="sub">${esc(d.date)} · ${d.clips.length} source clip${d.clips.length === 1 ? "" : "s"}${d.preview_name ? ` · showing <code>${esc(d.preview_name)}</code>` : ""}${d.note ? ` · ${esc(d.note)}` : ""}</div>
     <div class="video-layout">
       <div>
-        ${d.preview ? `<div class="player"><video id="vid" controls preload="metadata" src="${d.preview}"></video></div>` : `<div class="empty">No preview rendered yet. ${d.clips.length ? `Say <b>"edit videos/${esc(d.folder)}"</b> to start.` : "No clips in this folder."}</div>`}
-        <div class="timeline" id="tl">
+        ${d.preview ? `<div class="player"><video id="vid" controls preload="metadata" src="${d.preview}"></video></div>` : `<div class="empty">No preview rendered yet. ${d.clips.length ? `Say <b>"edit videos/${esc(d.folder)}"</b> to start.` : d.plan ? "No take uploaded yet; the Plan tab says what comes next." : "No clips in this folder."}</div>`}
+        <div class="timeline" id="tl" ${beats.length || stretches.length || d.captions.length ? "" : "hidden"}>
           ${beats.length ? `<div class="track" style="margin-top:14px"><span class="label">cuts · ${beats.length} ranges</span>${beats.map((b) => `<div class="seg beat" data-t="${b.s}" style="left:${(b.s / dur) * 100}%;width:${((b.e - b.s) / dur) * 100}%" title="${esc(b.beat)} · ${esc(b.source)} ${(+b.start).toFixed(2)}–${(+b.end).toFixed(2)}\n${esc(b.quote || "")}">${esc(b.beat || "")}</div>`).join("")}</div>` : ""}
           ${stretches.length ? `<div class="track" style="margin-top:18px"><span class="label">scenes</span>${stretches.map((s) => `<div class="seg" data-t="${s.start}" style="left:${(s.start / dur) * 100}%;width:${((s.end - s.start) / dur) * 100}%;background:var(--${esc(s.layout)},#333)" title="${esc(s.id)} ${esc(s.layout)}${s.graphic ? " · " + esc(s.graphic.slot) + " · " + esc(s.graphic.brief || "") : ""}">${esc(s.layout)}${s.graphic ? " ✦" : ""}</div>`).join("")}
             ${payoffs.map((s) => `<div class="mark payoff" data-t="${s.graphic.payoff_t}" style="left:${(s.graphic.payoff_t / dur) * 100}%"><span class="tip">payoff “${esc(s.graphic.payoff_word)}” @ ${fmt(s.graphic.payoff_t)}</span></div>`).join("")}</div>` : ""}
@@ -118,7 +273,7 @@ async function video(folder) {
         </div>
         <div id="cue" class="muted" style="margin-top:8px;min-height:22px;font-size:18px;font-weight:700"></div>
 
-        <div class="tabs" id="tabs">${["Cut", "Scenes", "Sound", "Captions", "Animations", "Critic", "Transcript", "Memory"].map((t, i) => `<button data-tab="${t}" class="${i === 0 ? "active" : ""}">${t}</button>`).join("")}</div>
+        <div class="tabs" id="tabs">${["Plan", "Cut", "Scenes", "Sound", "Captions", "Animations", "Critic", "Transcript", "Memory"].map((t) => `<button data-tab="${t}">${t}</button>`).join("")}</div>
         <div id="tabbody"></div>
       </div>
       <aside>
@@ -201,6 +356,7 @@ async function video(folder) {
   /* tabs */
   const body = document.getElementById("tabbody");
   const tabs = {
+    Plan: () => planTab(d, folder),
     Cut: () => edl ? `<table><tr><th>#</th><th>beat</th><th>source</th><th>in → out</th><th>len</th><th>quote / reason</th></tr>${beats.map((b, i) => `<tr><td class="mono">${i + 1}</td><td>${esc(b.beat)}</td><td class="mono">${esc(b.source)}</td><td class="mono">${(+b.start).toFixed(2)} → ${(+b.end).toFixed(2)}</td><td class="mono">${(b.e - b.s).toFixed(2)}s</td><td><div>${esc(b.quote || "")}</div><div class="muted">${esc(b.reason || "")}</div></td></tr>`).join("")}</table><div class="row" style="margin-top:12px"><span class="stat"><b>${fmt(dur)}</b><span>total</span></span><span class="stat"><b>${beats.length}</b><span>ranges</span></span><span class="stat"><b>${esc(edl.grade || "—")}</b><span>grade</span></span><span class="stat"><b>${esc(edl.profile || "—")}</b><span>profile</span></span></div>` : `<div class="empty">No EDL yet.</div>`,
     Scenes: () => scenes ? `<table><tr><th>id</th><th>start → end</th><th>layout</th><th>graphic</th></tr>${stretches.map((s) => `<tr><td class="mono">${esc(s.id)}</td><td class="mono">${fmt(s.start)} → ${fmt(s.end)}</td><td>${esc(s.layout)}</td><td>${s.graphic ? `<b>${esc(s.graphic.slot)}</b> · ${esc(s.graphic.card || "")}<br><span class="muted">payoff “${esc(s.graphic.payoff_word)}” @ ${fmt(s.graphic.payoff_t)} · enter ${fmt(s.graphic.enter_t)} · exit ${fmt(s.graphic.exit_t)}</span><br>${esc(s.graphic.brief || "")}` : "—"}</td></tr>`).join("")}</table>` : `<div class="empty">No scenes.json yet.</div>`,
     Sound: () => d.sound ? `${d.sound_report && d.sound_report.final ? `<div class="row" style="margin-bottom:12px"><span class="stat"><b>${d.sound_report.final.integrated_lufs ?? "—"}</b><span>LUFS</span></span><span class="stat"><b>${d.sound_report.final.true_peak_dbtp ?? "—"}</b><span>dBTP</span></span>${d.sound_report.music && d.sound_report.music.bed_under_speech_db != null ? `<span class="stat"><b>${d.sound_report.music.bed_under_speech_db} dB</b><span>music under speech</span></span>` : ""}</div>` : ""}<table><tr><th>effect</th><th>contact</th><th>event</th><th>file</th></tr>${sfx.map((f) => `<tr><td>${esc(f.effect)}</td><td class="mono">${fmt(f.contact_s)}</td><td>${esc(f.event || "")}</td><td class="mono muted">${esc(f.file)}</td></tr>`).join("")}</table>${d.sound.music ? `<p class="muted">music: <code>${esc(d.sound.music.file)}</code> at ${d.sound.music.gain_db} dB</p>` : ""}${d.sound_report && d.sound_report.sections && d.sound_report.sections.length ? `<h3>Sections</h3><table><tr><th>name</th><th>range</th><th>LUFS</th><th>TP</th></tr>${d.sound_report.sections.map((s) => `<tr><td>${esc(s.name)}</td><td class="mono">${fmt(s.start)}–${fmt(s.end)}</td><td class="mono">${s.integrated_lufs ?? "—"}</td><td class="mono">${s.true_peak_dbtp ?? "—"}</td></tr>`).join("")}</table>` : ""}` : `<div class="empty">No sound.json yet.</div>`,
@@ -210,9 +366,9 @@ async function video(folder) {
     Transcript: () => d.takes_packed ? `<pre>${esc(d.takes_packed)}</pre>` : `<div class="empty">Not transcribed yet.</div>`,
     Memory: () => d.project ? `<pre>${esc(d.project)}</pre>` : `<div class="empty">No project.md yet (written at the end of the first session).</div>`,
   };
-  const show = (name) => { body.innerHTML = tabs[name](); document.querySelectorAll("#tabs button").forEach((b) => b.classList.toggle("active", b.dataset.tab === name)); };
+  const show = (name) => { body.innerHTML = tabs[name](); document.querySelectorAll("#tabs button").forEach((b) => b.classList.toggle("active", b.dataset.tab === name)); if (name === "Plan") wirePlanTab(folder, () => video(folder)); };
   document.querySelectorAll("#tabs button").forEach((b) => b.addEventListener("click", () => show(b.dataset.tab)));
-  show("Cut");
+  show(edl ? "Cut" : "Plan");
 }
 
 /* ---------- Cards ---------- */
@@ -255,6 +411,7 @@ async function route() {
   if (!STATE) await loadState();
   const h = location.hash || "#/";
   if (h.startsWith("#/video/")) return video(decodeURIComponent(h.slice(8)));
+  if (h === "#/new") return newReel();
   if (h === "#/cards") return cards();
   if (h === "#/rules") return rules();
   if (h === "#/decisions") return decisions();

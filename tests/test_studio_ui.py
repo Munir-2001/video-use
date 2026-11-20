@@ -123,3 +123,138 @@ def test_parse_ass_events_accepts_explicit_highlight_close():
     ev = ui.parse_ass_events(ass)
 
     assert ev[0]["text"] == "a b c" and ev[0]["hl"] == 1
+
+
+# -------- new-reel funnel ----------------------------------------------------
+
+KINDS = {"types": {"explainer": {"label": "Explainer"}}, "goals": {"views": {"label": "Views"}}, "statuses": ["idea"]}
+
+
+def _funnel(tmp_path, monkeypatch):
+    monkeypatch.setattr(ui, "VIDEOS_DIR", tmp_path)
+    kinds = tmp_path / "reel_kinds.json"
+    kinds.write_text(json.dumps(KINDS))
+    monkeypatch.setattr(ui, "REEL_KINDS_PATH", kinds)
+
+
+def test_clean_plan_validates_type_goal_and_splits_links():
+    plan = ui.clean_plan({"idea": "  Scrape leads with Claude Code ", "type": "explainer", "goal": "views",
+                          "links": "https://a\n\nhttps://b", "cta_keyword": "Scrape"}, KINDS)
+
+    assert plan["idea"] == "Scrape leads with Claude Code" and plan["links"] == ["https://a", "https://b"]
+    assert plan["audience"] == "" and plan["cta_keyword"] == "Scrape"
+    for bad in ({"idea": "", "type": "explainer", "goal": "views"}, {"idea": "x", "type": "nope", "goal": "views"},
+                {"idea": "x", "type": "explainer", "goal": "nope"}):
+        try:
+            ui.clean_plan(bad, KINDS)
+            assert False, f"expected ValueError for {bad}"
+        except ValueError:
+            pass
+
+
+def test_create_reel_makes_folder_brief_plan_and_idea_index_line(tmp_path, monkeypatch):
+    _funnel(tmp_path, monkeypatch)
+
+    r = ui.create_reel({"idea": "Five Claude Code hooks I use daily", "type": "explainer", "goal": "views", "audience": "devs"})
+
+    folder = tmp_path / r["folder"]
+    assert r["folder"].endswith("_five-claude-code-hooks-i-use-daily") and (folder / "assets").is_dir()
+    brief = json.loads((folder / "edit" / "brief.json").read_text())
+    assert brief["plan"]["type"] == "explainer" and brief["plan"]["audience"] == "devs" and brief["mode"] == "clips"
+    assert "· five-claude-code-hooks-i-use-daily · idea (Five Claude Code hooks I use daily)" in (tmp_path / "index.md").read_text()
+    try:
+        ui.create_reel({"idea": "Five Claude Code hooks I use daily", "type": "explainer", "goal": "views"})
+        assert False, "expected ValueError on a duplicate folder"
+    except ValueError:
+        pass
+
+
+def test_write_plan_keeps_voice_fields_and_merges(tmp_path, monkeypatch):
+    _funnel(tmp_path, monkeypatch)
+    folder = tmp_path / "2026-11-20_x"
+    folder.mkdir()
+    ui.write_brief(folder, "voiceover", ["a.mp4"], ["voice/v.m4a"], 1.5, "keep")
+
+    brief = ui.write_plan(folder, {"idea": "one", "type": "explainer", "goal": "views"})
+    brief = ui.write_plan(folder, {"offer": "the list"})
+
+    assert brief["mode"] == "voiceover" and brief["voice_offset_s"] == 1.5 and brief["notes"] == "keep"
+    assert brief["plan"]["idea"] == "one" and brief["plan"]["offer"] == "the list"
+
+
+def test_set_index_status_replaces_line_keeps_note_or_appends(tmp_path, monkeypatch):
+    _funnel(tmp_path, monkeypatch)
+    (tmp_path / "index.md").write_text("# videos\n\n- 2026-11-20 · x · idea (my idea)\n")
+    folder = tmp_path / "2026-11-20_x"
+
+    ui.set_index_status(folder, "scripted")
+    assert "- 2026-11-20 · x · scripted (my idea)" in (tmp_path / "index.md").read_text()
+    assert ui.index_status(folder) == "scripted"
+
+    ui.set_index_status(folder, "assets", "all 3 screens dropped")
+    assert "- 2026-11-20 · x · assets (all 3 screens dropped)" in (tmp_path / "index.md").read_text()
+
+    ui.set_index_status(tmp_path / "2026-11-21_y", "idea", "new")
+    assert (tmp_path / "index.md").read_text().endswith("- 2026-11-21 · y · idea (new)\n")
+
+
+SCRIPT = """# Title
+
+## Say this
+Hi.
+
+## Assets to capture
+| # | file | what | highlight on which word | type |
+|---|---|---|---|---|
+| 1 | `01_readme.png` | GitHub README | "Scrapling" | screenshot |
+| 2 | 02_config.png | ~/.claude.json | "MCP" | screenshot |
+
+## Recording notes
+- none
+"""
+
+
+def test_parse_assets_table_reads_rows_only_from_its_section():
+    rows = ui.parse_assets_table(SCRIPT)
+
+    assert [r["file"] for r in rows] == ["01_readme.png", "02_config.png"] and rows[1]["highlight"] == '"MCP"'
+    assert ui.parse_assets_table("# no table\n| a | b | c | d | e |\n") == []
+
+
+def test_asset_upload_maps_beat_matches_names_and_advances_status(tmp_path, monkeypatch):
+    _funnel(tmp_path, monkeypatch)
+    folder = tmp_path / "2026-11-20_x"
+    folder.mkdir()
+    (folder / "script.md").write_text(SCRIPT)
+    (tmp_path / "index.md").write_text("- 2026-11-20 · x · scripted (idea)\n")
+
+    body, b = _mp({"beat": "2"}, {"file": ("Screenshot 2026.png", b"png"), "junk": ("notes.txt", b"x")})
+    r = ui.save_asset_upload(ui.parse_multipart(body, b), "2026-11-20_x")
+    assert r["saved"] == ["Screenshot_2026.png"] and r["skipped"] == ["notes.txt"]
+    assert r["assets"]["rows"][1]["dropped"] == "Screenshot_2026.png" and r["assets"]["rows"][0]["dropped"] is None
+    assert not r["assets"]["complete"] and ui.index_status(folder) == "scripted"
+
+    body, b = _mp({}, {"file": ("01_README.png", b"png")})
+    r = ui.save_asset_upload(ui.parse_multipart(body, b), "2026-11-20_x")
+    assert r["assets"]["rows"][0]["dropped"] == "01_README.png" and r["assets"]["complete"] and r["assets"]["extra"] == []
+    assert ui.index_status(folder) == "assets"
+    manifest = json.loads((folder / "assets" / "manifest.json").read_text())
+    assert manifest["items"] == [{"beat": "2", "file": "Screenshot_2026.png", "added": manifest["items"][0]["added"]}]
+
+
+def test_clip_upload_moves_a_planned_reel_to_raw(tmp_path, monkeypatch):
+    _funnel(tmp_path, monkeypatch)
+    r = ui.create_reel({"idea": "x", "type": "explainer", "goal": "views"})
+    body, b = _mp({"mode": "clips"}, {"footage": ("take.mov", b"vid")})
+
+    ui.save_upload(ui.parse_multipart(body, b), r["folder"])
+
+    assert ui.index_status(tmp_path / r["folder"]) == "raw"
+
+
+def test_effective_status_moves_planned_reels_forward_only():
+    assert ui.effective_status("idea", True, False, False) == "scripted"
+    assert ui.effective_status("idea", True, True, False) == "assets"
+    assert ui.effective_status("scripted", True, True, True) == "raw"
+    assert ui.effective_status("idea", False, False, False) == "idea"
+    assert ui.effective_status("preview", True, True, True) == "preview"

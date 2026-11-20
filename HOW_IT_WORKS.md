@@ -2,7 +2,9 @@
 
 | # | I say / it does | File produced |
 |---|---|---|
-| 0 | **"write a script for <topic>"** — the **writer** turns a topic into `script.md`: a hook, named beats (each one maps to a card and a layout), the CTA, recording notes, and the **assets to capture** (screenshots/recordings, one per beat) into `videos/<folder>/assets/`. Natural spoken sentences, never fragments. I read it to camera. | `videos/<date>_<slug>/script.md`, `assets/` |
+| 0a | **Studio → “＋ New reel”**: idea → type (explainer / list / screen demo / opinion / story) → goal (views / follows / comments / clicks / saves) → audience + offer → review. Creates the folder and the `plan` block; the library shows it as `idea`. | `videos/<date>_<slug>/edit/brief.json` (`plan`), `videos/index.md` line |
+| 0b | **"write a script for videos/<folder>"** — the **writer** reads the plan and `brand/reel_kinds.json` (what each type and goal means for the hook, rhythm, length and CTA) and writes `script.md`: a hook, named beats (each one maps to a card and a layout), the CTA, recording notes, and the **assets to capture** (screenshots/recordings, one per beat). Natural spoken sentences, never fragments. Index line → `scripted`. | `script.md` |
+| 0c | **Studio → Plan tab**: the script and the assets checklist; I drop each screen on its row (status `assets` when complete). The planner uses them as real screens with camera moves. | `assets/<file>`, `assets/manifest.json` |
 | 1 | I drop clips into `videos/2026-11-16_first-reel/` and add a line to `videos/index.md` (status: `raw`). | — |
 | 1a | A laptop (16:9) clip for a reel is reframed first: `reframe.py --to vertical --x <face>` crops a 9:16 column around my face (soft above 1.5x upscale, the helper warns). | `<clip>_vertical.mp4` |
 | 1b | Or upload from the studio (“New video”): clips land at the folder top level, recordings in `voice/`, and `edit/brief.json` records the mode (voiceover / commentary / clips), the offset and my notes. | `edit/brief.json`, `videos/index.md` line |

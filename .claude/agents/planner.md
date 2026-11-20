@@ -26,6 +26,7 @@ You are the studio's visual planner. You decide, second by second, what is on sc
 6. Keep the number of graphic stretches proportional: 30 s reel → 2–4 graphics.
 
 ## Real screens from `videos/<folder>/assets/` (preferred over drawn mockups)
+`assets/manifest.json` (written by the studio when I drop a file on a row of the script's assets table) maps `beat` → `file`; rows with no manifest entry match by file name against the script's "Assets to capture" table. Use the file the manifest names for each beat; if a beat has no asset, draw the mockup and say so. If `edit/brief.json` has a `plan`, read `brand/reel_kinds.json` and apply the `planner` line of `plan.type` (the rhythm and the window style for that kind of reel) on top of the rhythm rule below.
 If the folder has `assets/` (screenshots or recordings the writer asked for), every window shows the real thing: `graphic.image = "assets/<file>.png"` (or `graphic.footage` for a recording) inside the window card, and the camera does the motion: `zoom_beats: [{"word", "t", "box": [x, y, w, h]}]` as fractions of the image, one per named thing. Look at each image (`Read` it) to place the boxes on the exact element. A box gets a flame outline drawn on its word; the view pushes in 350 ms, holds, then pans to the next box or eases back. Drawn mockups are the fallback when no asset exists, and you say so in the brief.
 
 ## Sync rule (STYLE.md)

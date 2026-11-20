@@ -24,7 +24,8 @@ Conversation-driven video editing, everything local and free. No paid APIs, ever
 
 ## Layout
 - `videos/YYYY-MM-DD_slug/` raw clips at top level, `edit/` inside (upstream layout). `videos/index.md` one line per video.
-- `videos/<folder>/assets/` screenshots/recordings the script asked for (real screens in the windows, camera moves on the named thing).
+- `videos/<folder>/assets/` screenshots/recordings the script asked for (real screens in the windows, camera moves on the named thing); `assets/manifest.json` maps script beat → file (written by the studio's Plan tab).
+- `videos/<folder>/edit/brief.json` → `plan` block from the studio's New-reel funnel (idea, type, goal, audience, offer, cta_keyword, links, notes). `brand/reel_kinds.json` defines the types and goals and what the writer and planner do with each; edit it there, never in the UI or an agent file.
 - `videos/<folder>/voice/` separate recordings + `edit/brief.json` (mode voiceover | commentary | clips, offset, notes). Voiceover: cut the voice, clips are footage, `helpers/voiceover.py build`. Commentary: clip keeps its sound, voice rides on top.
 - `brand/` style.json, `motion.md` (how things move: build / hold / change / exit; read by planner, motion, designer, critic), `fonts/`, `sfx/` (palette in its README), `music/`.
 - `cards/` max 12 cards; `cards/_inbox/` drops + `links.md`.
@@ -46,12 +47,12 @@ Sub-agents never ask questions; they pick the obvious option and say so.
 **Claude edits; helpers only execute.** Every creative decision (cuts, layouts, beats, cue grouping, effects, music placement) is made by an agent and written to a JSON/MD the helper consumes (`edl.json`, `scenes.json`, `captions_plan.json`, `sound.json`, `brief.json`). A helper never chooses; if a helper has to guess, that is a bug: give the agent a knob instead.
 
 ## Standing commands
-- **"write a script for <topic>"** — writer agent → `videos/<date>_<slug>/script.md` (hook, beats mapped to cards, CTA, recording notes). I record from it, drop the clips, then "edit videos/<folder>".
+- **"write a script for videos/<folder>"** (or "for <topic>") — writer agent reads `edit/brief.json` → `plan` (from the studio's New-reel wizard) or the topic from chat, writes `script.md` (hook, beats mapped to cards, assets to capture, CTA, recording notes) and sets the index line to `scripted`. I drop the screens on the Plan tab, record from it, upload the take, then "edit videos/<folder>".
 - **"edit videos/<folder>"** — inventory → pre-scan → converse → strategy → WAIT for my yes → editor → planner → motion (parallel) + captions + sound → render → critic → fix loop (max 3) → preview.
 - **"apply my notes"** — read `edit/feedback.json` or my message; update EDL/scenes; re-render only changed scenes; critic again.
 - **"process the inbox"** — run the designer agent on `cards/_inbox/`.
 - **"learn from my reviews"** — propose dated STYLE.md lines from repeated notes or "make this a rule"; apply only what I approve.
 - **"where are we?"** — HOW_IT_WORKS.md in 5 lines, last 3 DECISIONS entries, status of every video from `videos/index.md`.
-- **"open the studio"** — `.venv/bin/python helpers/studio_ui.py` → http://127.0.0.1:8765 (library, per-video timeline, cards, rules, decisions; notes saved to `edit/feedback.json`).
+- **"open the studio"** — `.venv/bin/python helpers/studio_ui.py` → http://127.0.0.1:8765 (New-reel wizard: idea → type → goal → audience → review; per-reel Plan tab with the script, the assets checklist and drop zones; library, timeline, cards, rules, decisions; notes saved to `edit/feedback.json`). The studio only writes files; the agents run from chat.
 - Any change to tools, helpers, agents, folders or workflow: DECISIONS.md entry + HOW_IT_WORKS.md update in the same commit.
 - Commit with clear messages. Never push unless told.

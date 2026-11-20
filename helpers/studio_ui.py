@@ -35,6 +35,13 @@ VIDEO_EXTS = {".mp4", ".mov", ".mkv", ".webm", ".m4v"}
 VOICE_EXTS = {".mp3", ".m4a", ".wav", ".aac", ".aiff", ".aif", ".flac", ".ogg"}
 UPLOAD_MODES = ("voiceover", "commentary", "clips")
 MAX_UPLOAD_BYTES = 4 * 1024 ** 3
+REEL_KINDS_PATH = REPO / "brand" / "reel_kinds.json"
+ASSET_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".mp4", ".mov", ".webm", ".m4v"}
+ASSETS_HEADING = "## assets to capture"
+MANIFEST_NAME = "manifest.json"
+PLAN_TEXT_LIMITS = {"idea": 300, "audience": 300, "offer": 300, "cta_keyword": 40, "notes": 2000}
+PLAN_MAX_LINKS = 20
+EARLY_STATUSES = ("idea", "scripted")  # the server may advance these; later statuses belong to the agents
 SAFE_NAME = re.compile(r"[^A-Za-z0-9._-]+")
 PREVIEW_PRIORITY = ("final.mp4", "preview_mixed.mp4", "preview_subs.mp4", "preview.mp4")
 THUMB_NAME = "thumb.jpg"
@@ -261,6 +268,192 @@ def unique_dest(dest: Path) -> Path:
     raise ValueError(f"too many files named {dest.name}")
 
 
+# -------- new-reel funnel: plan, status, assets ----------------------------
+
+
+def now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def reel_kinds() -> dict:
+    """brand/reel_kinds.json: the types and goals the wizard offers and the agents apply."""
+    data = read_json(REEL_KINDS_PATH)
+    if not isinstance(data, dict) or "types" not in data or "goals" not in data:
+        return {"types": {}, "goals": {}, "statuses": []}
+    return data
+
+
+def clean_plan(fields: dict, kinds: dict | None = None) -> dict:
+    """Validate the funnel answers. Type and goal must exist in reel_kinds.json."""
+    kinds = kinds or reel_kinds()
+    text = {k: str(fields.get(k, "") or "").strip()[:limit] for k, limit in PLAN_TEXT_LIMITS.items()}
+    if not text["idea"]:
+        raise ValueError("the idea is required (one line)")
+    kind, goal = str(fields.get("type", "")).strip(), str(fields.get("goal", "")).strip()
+    if kind not in kinds["types"]:
+        raise ValueError(f"type must be one of: {', '.join(kinds['types'])}")
+    if goal not in kinds["goals"]:
+        raise ValueError(f"goal must be one of: {', '.join(kinds['goals'])}")
+    links = fields.get("links", [])
+    if isinstance(links, str):
+        links = links.splitlines()
+    links = [str(ln).strip()[:500] for ln in links if str(ln).strip()][:PLAN_MAX_LINKS]
+    return {**text, "type": kind, "goal": goal, "links": links}
+
+
+def write_plan(folder: Path, plan: dict) -> dict:
+    """Merge the funnel answers into edit/brief.json under `plan` (voice fields untouched)."""
+    edit = folder / "edit"
+    edit.mkdir(exist_ok=True)
+    path = edit / "brief.json"
+    old = read_json(path) if path.exists() else {}
+    if not isinstance(old, dict) or "_error" in old:
+        old = {}
+    stamp = now_iso()
+    brief = {
+        **old, "mode": old.get("mode", "clips"), "footage": old.get("footage", []), "voice": old.get("voice", []),
+        "voice_offset_s": float(old.get("voice_offset_s", 0.0)), "notes": old.get("notes", ""),
+        "plan": {**(old.get("plan") or {}), **plan, "updated": stamp}, "updated": stamp,
+    }
+    brief.setdefault("created", stamp)
+    path.write_text(json.dumps(brief, indent=2, ensure_ascii=False) + "\n")
+    return brief
+
+
+def index_line_pattern(folder: Path) -> re.Pattern:
+    d, _, slug = folder.name.partition("_")
+    return re.compile(rf"^- {re.escape(d)} · {re.escape(slug)} · ([^\s(]+)(?:\s*\((.*)\))?\s*$", re.M)
+
+
+def index_status(folder: Path) -> str | None:
+    index = VIDEOS_DIR / "index.md"
+    if not index.exists():
+        return None
+    m = index_line_pattern(folder).search(index.read_text())
+    return m.group(1) if m else None
+
+
+def set_index_status(folder: Path, status: str, note: str | None = None) -> str:
+    """Rewrite the folder's line in videos/index.md (append it when missing).
+    note=None keeps the existing note. Returns the line written."""
+    index = VIDEOS_DIR / "index.md"
+    text = index.read_text() if index.exists() else "# videos — index\n\n"
+    pat = index_line_pattern(folder)
+    m = pat.search(text)
+    kept = (m.group(2) or "") if (m and note is None) else (note or "")
+    d, _, slug = folder.name.partition("_")
+    line = f"- {d} · {slug} · {status}" + (f" ({kept})" if kept else "")
+    new = pat.sub(lambda _m: line, text, count=1) if m else text.rstrip("\n") + "\n" + line + "\n"
+    index.write_text(new)
+    return line
+
+
+def create_reel(fields: dict) -> dict:
+    """The wizard's last step: videos/<today>_<slug>/ with edit/brief.json (plan) and an
+    `idea` line in videos/index.md. Clips come later; the writer reads the plan."""
+    plan = clean_plan(fields)
+    slug = safe_slug(fields.get("slug") or plan["idea"])
+    if not slug:
+        raise ValueError("a name for the reel is required")
+    folder = VIDEOS_DIR / f"{date.today():%Y-%m-%d}_{slug}"
+    if folder.exists():
+        raise ValueError(f"videos/{folder.name} exists already; pick another name")
+    (folder / "edit").mkdir(parents=True)
+    (folder / "assets").mkdir()
+    brief = write_plan(folder, plan)
+    set_index_status(folder, "idea", plan["idea"][:80])
+    return {"folder": folder.name, "brief": brief}
+
+
+def parse_assets_table(script: str) -> list[dict]:
+    """Rows of the writer's '## Assets to capture' table -> [{n, file, what, highlight, type}]."""
+    rows, inside = [], False
+    for line in script.splitlines():
+        if line.startswith("## "):
+            inside = line.strip().lower().startswith(ASSETS_HEADING)
+            continue
+        if not inside or not line.lstrip().startswith("|"):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) < 5 or cells[0] in ("#", "") or set(cells[0]) <= set("-: "):
+            continue
+        rows.append({"n": cells[0], "file": cells[1].strip("`"), "what": cells[2], "highlight": cells[3], "type": cells[4]})
+    return rows
+
+
+def read_manifest(adir: Path) -> dict:
+    data = read_json(adir / MANIFEST_NAME)
+    return data if isinstance(data, dict) and isinstance(data.get("items"), list) else {"items": []}
+
+
+def asset_url(folder: Path, name: str) -> str:
+    return f"/media/videos/{folder.name}/assets/{name}"
+
+
+def assets_status(folder: Path, rows: list[dict]) -> dict:
+    """Match every script row to a dropped file: the manifest's beat first, then a
+    file whose stem equals the file the script asked for."""
+    adir = folder / "assets"
+    files = sorted(p.name for p in adir.iterdir() if p.is_file() and p.suffix.lower() in ASSET_EXTS) if adir.is_dir() else []
+    by_beat = {str(i.get("beat")): i.get("file") for i in read_manifest(adir)["items"] if i.get("file") in files}
+    matched, used = [], set()
+    for r in rows:
+        want = Path(r["file"]).stem.lower()
+        f = by_beat.get(r["n"]) or next((x for x in files if Path(x).stem.lower() == want), None)
+        if f:
+            used.add(f)
+        matched.append({**r, "dropped": f, "url": asset_url(folder, f) if f else None})
+    extra = [{"name": f, "url": asset_url(folder, f)} for f in files if f not in used]
+    return {"rows": matched, "extra": extra, "complete": bool(rows) and all(r["dropped"] for r in matched)}
+
+
+def effective_status(indexed: str, has_script: bool, assets_complete: bool, has_clips: bool) -> str:
+    """The index line is the record, but a planned reel moves on when its files appear
+    (the writer may not have touched the index yet). Later statuses are never changed."""
+    if indexed not in (*EARLY_STATUSES, "assets", "empty"):
+        return indexed
+    if has_clips:
+        return "raw"
+    if assets_complete:
+        return "assets"
+    if has_script:
+        return "scripted"
+    return indexed
+
+
+def script_text(folder: Path) -> str:
+    p = folder / "script.md"
+    return p.read_text() if p.exists() else ""
+
+
+def save_asset_upload(parts: list[dict], folder_name: str) -> dict:
+    """Drop screenshots / recordings into videos/<folder>/assets/; a `beat` field maps
+    the first file to that row of the script's assets table (assets/manifest.json)."""
+    folder = video_folder(folder_name)
+    fields = {p["name"]: p["data"].decode("utf-8", "replace").strip() for p in parts if p["filename"] is None}
+    files = [p for p in parts if p["filename"]]
+    adir = folder / "assets"
+    adir.mkdir(exist_ok=True)
+    saved, skipped = [], []
+    for f in files:
+        name = safe_filename(f["filename"])
+        if Path(name).suffix.lower() not in ASSET_EXTS:
+            skipped.append(name)
+            continue
+        dest = unique_dest(adir / name)
+        dest.write_bytes(f["data"])
+        saved.append(dest.name)
+    beat = fields.get("beat", "")
+    if beat and saved:
+        old = read_manifest(adir)
+        items = [i for i in old["items"] if str(i.get("beat")) != beat] + [{"beat": beat, "file": saved[0], "added": now_iso()}]
+        (adir / MANIFEST_NAME).write_text(json.dumps({"items": items, "updated": now_iso()}, indent=2) + "\n")
+    status = assets_status(folder, parse_assets_table(script_text(folder)))
+    if status["complete"] and index_status(folder) in EARLY_STATUSES:
+        set_index_status(folder, "assets")
+    return {"folder": folder.name, "saved": saved, "skipped": skipped, "assets": status}
+
+
 def save_upload(parts: list[dict], folder_name: str | None = None) -> dict:
     """Store uploaded clips at the folder top level and voice files in voice/;
     update brief.json and videos/index.md. New folder: videos/<today>_<slug>."""
@@ -292,7 +485,8 @@ def save_upload(parts: list[dict], folder_name: str | None = None) -> dict:
     offset = fields.get("voice_offset_s")
     brief = write_brief(folder, fields.get("mode") or None, footage, voice,
                         float(offset) if offset else None, fields.get("notes") or None)
-    ensure_index_line(folder, brief)
+    if not ensure_index_line(folder, brief) and (footage or voice) and index_status(folder) in (*EARLY_STATUSES, "assets"):
+        set_index_status(folder, "raw")  # a planned reel now has its take; the edit command moves it on from here
     return {"folder": folder.name, "footage": footage, "voice": voice, "skipped": skipped, "brief": brief}
 
 
@@ -312,11 +506,18 @@ def scan_video(folder: Path, index: dict[str, dict]) -> dict:
     vdir = folder / "voice"
     voice = sorted(p for p in vdir.iterdir() if p.is_file() and p.suffix.lower() in VOICE_EXTS) if vdir.is_dir() else []
     brief = read_json(edit / "brief.json") if (edit / "brief.json").exists() else None
+    brief = brief if isinstance(brief, dict) else None
+    adir = folder / "assets"
+    n_assets = sum(1 for p in adir.iterdir() if p.is_file() and p.suffix.lower() in ASSET_EXTS) if adir.is_dir() else 0
+    script = script_text(folder)
+    assets_done = assets_status(folder, parse_assets_table(script))["complete"] if script else False
+    status = effective_status(meta.get("status", "raw" if clips else "empty"), bool(script), assets_done, bool(clips))
     return {
         "folder": folder.name, "date": folder_date, "slug": slug or folder.name,
         "voice": [{"name": v.name, "url": "/media/" + rel(v), **probe(v)} for v in voice],
-        "brief": brief if isinstance(brief, dict) else None,
-        "status": meta.get("status", "raw" if clips else "empty"), "note": meta.get("note", ""),
+        "brief": brief, "plan": (brief or {}).get("plan"),
+        "script": bool(script), "assets_n": n_assets,
+        "status": status, "note": meta.get("note", ""),
         "clips": [{"name": c.name, "url": "/media/" + rel(c), **probe(c)} for c in clips],
         "preview": "/media/" + rel(preview) if preview else None,
         "preview_name": preview.name if preview else None,
@@ -353,8 +554,11 @@ def video_detail(folder_name: str) -> dict | None:
                                "render": "/media/" + rel(render) if render else None,
                                "landing": "/media/" + rel(slot / "landing.png") if (slot / "landing.png").exists() else None,
                                "reasoning": (slot / "reasoning.md").read_text() if (slot / "reasoning.md").exists() else ""})
+    script = script_text(folder)
     return {
         **base,
+        "script_text": script,
+        "assets": assets_status(folder, parse_assets_table(script)),
         "edl": read_json(edit / "edl.json"),
         "scenes": read_json(edit / "scenes.json"),
         "sound": read_json(edit / "sound.json"),
@@ -380,7 +584,7 @@ def state() -> dict:
     how = (REPO / "HOW_IT_WORKS.md").read_text() if (REPO / "HOW_IT_WORKS.md").exists() else ""
     return {"generated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "videos": scan_videos(), "cards": scan_cards(), "style": parse_style_rules(style),
-            "decisions": parse_decisions(decisions), "how": how,
+            "decisions": parse_decisions(decisions), "how": how, "kinds": reel_kinds(),
             "inbox": sorted(p.name for p in (CARDS_DIR / "_inbox").iterdir() if p.is_file() and p.name != "links.md")
             if (CARDS_DIR / "_inbox").is_dir() else []}
 
@@ -442,7 +646,23 @@ class Handler(SimpleHTTPRequestHandler):
         length = int(self.headers.get("Content-Length") or 0)
         if path == "/api/upload" or path.startswith("/api/upload/"):
             return self.handle_upload(path[len("/api/upload/"):] or None, length)
+        if path.startswith("/api/assets/"):
+            return self.handle_assets(path[len("/api/assets/"):], length)
         body = json.loads(self.rfile.read(length) or b"{}")
+        if path == "/api/reel/new":
+            try:
+                result = create_reel(body)
+            except ValueError as exc:
+                return self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+            self.log_message("new reel -> videos/%s", result["folder"])
+            return self.send_json({"ok": True, **result})
+        if path.startswith("/api/plan/"):
+            try:
+                folder = video_folder(path[len("/api/plan/"):])
+                brief = write_plan(folder, clean_plan(body))
+            except ValueError as exc:
+                return self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+            return self.send_json({"ok": True, "brief": brief})
         if path.startswith("/api/brief/"):
             try:
                 folder = video_folder(path[len("/api/brief/"):])
@@ -458,19 +678,38 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json({"ok": True, "file": rel(out)})
         return self.send_json({"error": "unknown endpoint"}, HTTPStatus.NOT_FOUND)
 
-    def handle_upload(self, folder_name: str | None, length: int):
+    def read_multipart(self, length: int) -> list[dict] | None:
+        """Parse a multipart body or answer 400 and return None."""
         ctype = self.headers.get("Content-Type", "")
         m = re.search(r"boundary=\"?([^\";]+)", ctype)
         if not ctype.startswith("multipart/form-data") or not m:
-            return self.send_json({"error": "multipart/form-data expected"}, HTTPStatus.BAD_REQUEST)
+            self.send_json({"error": "multipart/form-data expected"}, HTTPStatus.BAD_REQUEST)
+            return None
         if length <= 0 or length > MAX_UPLOAD_BYTES:
-            return self.send_json({"error": f"upload must be 1 byte to {MAX_UPLOAD_BYTES >> 30} GB"}, HTTPStatus.BAD_REQUEST)
-        body = self.rfile.read(length)
+            self.send_json({"error": f"upload must be 1 byte to {MAX_UPLOAD_BYTES >> 30} GB"}, HTTPStatus.BAD_REQUEST)
+            return None
+        return parse_multipart(self.rfile.read(length), m.group(1))
+
+    def handle_upload(self, folder_name: str | None, length: int):
+        parts = self.read_multipart(length)
+        if parts is None:
+            return None
         try:
-            result = save_upload(parse_multipart(body, m.group(1)), folder_name)
+            result = save_upload(parts, folder_name)
         except ValueError as exc:
             return self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
         self.log_message("upload -> videos/%s: %s", result["folder"], result["footage"] + result["voice"])
+        return self.send_json({"ok": True, **result})
+
+    def handle_assets(self, folder_name: str, length: int):
+        parts = self.read_multipart(length)
+        if parts is None:
+            return None
+        try:
+            result = save_asset_upload(parts, folder_name)
+        except ValueError as exc:
+            return self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+        self.log_message("assets -> videos/%s/assets: %s", result["folder"], result["saved"])
         return self.send_json({"ok": True, **result})
 
     def serve_media(self, relpath: str):

@@ -1,0 +1,75 @@
+{
+  "_note": "One source of truth for the New-reel funnel. The studio wizard shows `label` + `hint`; the writer applies `writer` for the chosen type and goal; the planner applies `planner`. Edit here, never in the UI or the agents.",
+  "types": {
+    "explainer": {
+      "label": "Explainer",
+      "hint": "One idea, 3-4 named beats, each becomes a card.",
+      "writer": "Hook, then 3-4 named beats in full sentences, each naming the thing that appears on screen; one idea per reel; 30-40 s.",
+      "planner": "Change something every 2-3 s; cards per beat; face for the hook and the CTA, graphic_full for the beats."
+    },
+    "list": {
+      "label": "List",
+      "hint": "'5 tools that…' Fast, one item per second or two.",
+      "writer": "Hook states the count; every item is named in a short full sentence with a payoff word; no filler between items; 20-35 s.",
+      "planner": "Icon grid or item cards, one change per 0.6-1.5 s; items land on their names; face only for the hook and the CTA."
+    },
+    "screen_demo": {
+      "label": "Screen demo",
+      "hint": "Walk through a tool. Real screens in the windows.",
+      "writer": "Every beat names what is on screen and what to click; the assets table asks for a screenshot or recording per beat with the exact element to highlight; 35-45 s.",
+      "planner": "Real screens from assets/ in split_top and graphic_full windows with push-ins on the named element; face for the hook, one opinion line and the CTA."
+    },
+    "opinion": {
+      "label": "Opinion",
+      "hint": "A take. Mostly your face, big captions, one or two cards.",
+      "writer": "Hook is the claim; two or three reasons as spoken sentences; one card for the proof point; 20-30 s.",
+      "planner": "face_full most of the time with big captions; one or two graphic_full moments on the proof; scenery still changes every 5-8 s."
+    },
+    "story": {
+      "label": "Story / result",
+      "hint": "Before and after, what changed, the number.",
+      "writer": "Open on the result or the number; then the before, the change, the after, in order; end on what it means; 30-45 s.",
+      "planner": "Counter or two-panel compare card on the number; face for the before and the after; graphic_full for the change."
+    }
+  },
+  "goals": {
+    "views": {
+      "label": "Views / reach",
+      "hint": "Broad topic, hardest hook, no ask at the end.",
+      "writer": "Hook in the first 8 words with a number or a contradiction; broad audience wording; 20-30 s; the CTA is at most 'follow for more', or nothing."
+    },
+    "follows": {
+      "label": "Follows",
+      "hint": "Series framing, open loop, follow CTA.",
+      "writer": "Frame it as part of a series ('part 1', 'every week I…'); leave an open loop for the next one; CTA: follow, with the reason."
+    },
+    "comments": {
+      "label": "Comments / leads",
+      "hint": "Comment keyword + a promise, DM funnel.",
+      "writer": "End with one comment keyword in quotes and the promise of what they get; mention the offer once in the middle; 30-40 s."
+    },
+    "clicks": {
+      "label": "Link clicks",
+      "hint": "One bio-link CTA, the offer named twice.",
+      "writer": "Name the offer once in the hook and once at the end; the CTA says where the link is; 30-40 s."
+    },
+    "saves": {
+      "label": "Saves / shares",
+      "hint": "Checklist or reference, slower holds.",
+      "writer": "Checklist or step list the viewer wants to keep; number the steps; slower pace, each step a full sentence; CTA: 'save this'; 35-50 s."
+    }
+  },
+  "statuses": [
+    "idea",
+    "scripted",
+    "assets",
+    "raw",
+    "transcribed",
+    "strategy",
+    "cut",
+    "preview",
+    "notes",
+    "done",
+    "archived"
+  ]
+}

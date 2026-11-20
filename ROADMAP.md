@@ -22,7 +22,8 @@ Verdict from the user: "not bad, significant room for improvement; the animation
 | 12 | (from the re-plan) Optional polish the critic listed: card 03 empty for 1.4 s before "MCP"; graphic_full cards could be 1.15x larger and centred; 29.74 content nudge. | Motion-agent tweaks, next pass or next reel. | open |
 
 ## Next reel checklist (what changes next time)
-1. "write a script for <topic>" → natural spoken script + assets list → user captures the screenshots/recordings into `videos/<folder>/assets/` and records with the pauses.
+0. Studio → "＋ New reel": idea, type, goal, audience, offer → the plan lands in `edit/brief.json` (2026-11-20).
+1. "write a script for videos/<folder>" → natural spoken script shaped by the type and goal + assets list → user drops the screenshots/recordings on the Plan tab (`assets/manifest.json`) and records with the pauses.
 2. Planner plans real screens with camera moves and marks every named word; layouts rotate every 5–8 s; face for the personal lines, animation-only for the informational ones.
 3. Captions: ink on paper, soft white over the face.
 4. Windows drift, slide and show a cursor; every change lands on its word.
